@@ -1,0 +1,183 @@
+schemas:
+  ValidationError:
+    type: object
+    properties:
+      message:
+        type: string
+        description: 'Error message indicating validation failure.'
+        example: 'The given data was invalid.'
+      error:
+        type: string
+        description: 'Alternative error message format (for simple validation errors).'
+        example: 'Invalid or mismatched currency code.'
+      errors:
+        type: object
+        description: 'Object containing field-specific validation errors.'
+        additionalProperties:
+          type: array
+          items:
+            type: string
+        example:
+          wallet_id:
+            - 'Wallet not found or does not belong to you.'
+          bank_code:
+            - 'Invalid Account Number'
+          amount:
+            - 'Insufficient wallet balance for this withdrawal.'
+          trx_id:
+            - 'Invalid transaction.'
+    oneOf:
+      - required: [message, errors]
+      - required: [error]
+  
+  NotFound:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
+        description: 'Error message indicating resource not found.'
+        example: 'Transaction not found.'
+      success:
+        type: boolean
+        description: 'Indicates the request was unsuccessful.'
+        example: false
+      error:
+        type: string
+        description: 'Alternative error message format.'
+        example: 'Withdraw account not found'
+    example:
+      message: 'Transaction not found.'
+      success: false
+  
+  ServerError:
+    type: object
+    properties:
+      message:
+        type: string
+        description: 'Error message describing the server error.'
+        example: 'Payment processing failed. Please try again.'
+      error:
+        type: string
+        description: 'Alternative error message format.'
+        example: 'Gateway error'
+      success:
+        type: boolean
+        description: 'Indicates the request was unsuccessful.'
+        example: false
+    oneOf:
+      - required: [message]
+      - required: [error]
+      - required: [success, message]
+    examples:
+      paymentError:
+        value:
+          error: 'Payment processing failed. Please try again.'
+      gatewayError:
+        value:
+          message: 'Gateway timeout'
+      upstreamError:
+        value:
+          message: 'Upstream gateway unavailable'
+      statusCheckError:
+        value:
+          success: false
+          message: 'Failed to check transaction status.'
+  
+  Unauthorized:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
+        description: 'Unauthorized access message.'
+        example: 'Unauthorized'
+    example:
+      message: 'Unauthorized'
+  
+  Forbidden:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
+        description: 'Forbidden access message indicating insufficient permissions.'
+        example: 'Access denied. You do not have permission to perform this action.'
+      success:
+        type: boolean
+        description: 'Indicates the request was unsuccessful.'
+        example: false
+    example:
+      message: 'Access denied. You do not have permission to perform this action.'
+      success: false
+  
+  SuccessMessage:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
+        description: 'Success message.'
+        example: 'Withdrawal has been created.'
+      status:
+        type: string
+        description: 'Status indicator (optional).'
+        example: 'COMPLETED'
+    example:
+      message: 'Withdrawal has been created.'
+  
+  SuccessWithData:
+    type: object
+    required:
+      - message
+      - data
+    properties:
+      message:
+        type: string
+        description: 'Success message.'
+        example: 'Account information retrieved successfully'
+      status:
+        type: string
+        description: 'Status indicator (optional).'
+        example: 'COMPLETED'
+      data:
+        type: object
+        description: 'Response data payload.'
+        additionalProperties: true
+    example:
+      message: 'Account information retrieved successfully'
+      data:
+        min_limit: 50000
+        max_limit: 50000000
+  
+  TransactionStatus:
+    type: string
+    enum:
+      - pending
+      - awaiting_fi_process
+      - awaiting_pg_process
+      - awaiting_user_action
+      - awaiting_admin_approval
+      - completed
+      - canceled
+      - failed
+      - refunded
+      - expired
+    description: |
+      Transaction status values:
+      - **pending** - Transaction has been created and is waiting to be processed
+      - **awaiting_fi_process** - Transaction is waiting for financial institution processing
+      - **awaiting_pg_process** - Transaction is waiting for payment gateway processing
+      - **awaiting_user_action** - Transaction requires user action (e.g., payment confirmation)
+      - **awaiting_admin_approval** - Transaction is pending administrative approval
+      - **completed** - Transaction has been successfully completed
+      - **canceled** - Transaction was canceled before completion
+      - **failed** - Transaction processing failed
+      - **refunded** - Transaction has been refunded
+      - **expired** - Transaction has expired and is no longer valid
+    example: completed
+

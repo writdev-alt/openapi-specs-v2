@@ -1,0 +1,58 @@
+- group: Getting Started
+  items:
+    - label: Overview
+      page: overview.md
+    - label: Authentication
+      page: authentication.md
+
+- group: Payments
+  items:
+    - label: Initiate QRIS Payment
+      id: initiate-payment-qris
+
+- group: Transactions
+  items:
+    - label: Check Transaction Status
+      id: check-status
+    - label: Resend Callback
+      id: resend-callback
+
+- group: Wallets
+  items:
+    - label: List Wallets
+      id: list-wallets
+    - label: Show Wallet Details
+      id: show-wallet-details
+
+- group: Withdraw Accounts
+  items:
+    - label: List Withdraw Methods
+      id: list-withdraw-methods
+    - label: Fetch Bank & Wallet Catalog
+      id: fetch-bank-wallet-catalog
+    - label: Inspect Account Limits
+      id: inspect-account-limits
+    - label: List Withdraw Accounts
+      id: list-withdraw-accounts
+    - label: Create Withdraw Account
+      id: create-withdraw-account
+    - label: Show Account Details
+      id: show-account-details
+    - label: Update Account
+      id: update-account
+    - label: Delete Account
+      id: delete-account
+
+- group: Withdrawals
+  items:
+    - label: Create Withdrawal
+      id: create-withdrawal
+
+- group: Reference
+  items:
+    - label: Transaction Statuses
+      page: reference/transaction-statuses.md
+    - label: Common Responses
+      page: reference/common-responses.md
+    - label: Error Codes
+      page: reference/error-codes.md

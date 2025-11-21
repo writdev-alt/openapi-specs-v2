@@ -1,0 +1,89 @@
+/api/v2/withdraw:
+  post:
+    summary: 'Create a withdrawal.'
+    operationId: createAWithdrawal
+    description: "Submit a withdrawal request for one of the authenticated merchant user's wallets."
+    parameters:
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+    responses:
+      201:
+        description: 'Withdrawal request created successfully. Returns transaction ID, amount, account ID, and wallet ID.'
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                message: 'Withdrawal has been created.'
+                data:
+                  trx_id: TRX20241101001
+                  amount: 250000
+                  account_id: 15
+                  wallet_id: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
+              properties:
+                message:
+                  type: string
+                  example: 'Withdrawal has been created.'
+                data:
+                  type: object
+                  properties:
+                    trx_id:
+                      type: string
+                      example: TRX20241101001
+                    amount:
+                      type: integer
+                      example: 250000
+                    account_id:
+                      type: integer
+                      example: 15
+                    wallet_id:
+                      type: string
+                      example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
+      422:
+        $ref: '#/components/responses/ValidationError'
+    tags:
+      - Withdrawals
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              trx_ref:
+                type: string
+                description: 'Unique merchant reference for the withdrawal.'
+                example: WD-2024-0001
+                nullable: true
+              account_id:
+                type: integer
+                description: 'Identifier of the saved withdraw account.'
+                example: 15
+                nullable: false
+              wallet_id:
+                type: string
+                description: 'UUID of the wallet to withdraw from.'
+                example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
+                nullable: false
+              amount:
+                type: number
+                description: 'Withdrawal amount between 50,000 and 50,000,000.'
+                example: 250000.0
+                nullable: false
+            required:
+              - account_id
+              - wallet_id
+              - amount
+

@@ -1,0 +1,7 @@
+securitySchemes:
+  default:
+    type: apiKey
+    name: X-API-KEY
+    in: header
+    description: "    Send both headers with each request:\n    <ul>\n        <li><code>X-API-KEY</code> &mdash; merchant public API key</li>\n        <li><code>X-MERCHANT-KEY</code> &mdash; merchant secret API key</li>\n    </ul>\n    Generate these credentials from the merchant dashboard under <strong>API Access</strong>."
+

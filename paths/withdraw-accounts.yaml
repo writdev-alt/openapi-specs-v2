@@ -1,0 +1,655 @@
+/api/v2/withdraw-accounts/methods:
+  get:
+    summary: 'List withdraw methods.'
+    operationId: listWithdrawMethods
+    description: 'Retrieve all active withdrawal methods supported by the system.'
+    parameters:
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+    responses:
+      200:
+        description: 'List of active withdrawal methods retrieved successfully. Returns an array of methods with ID, name, and supported currency.'
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                data:
+                  -
+                    id: 1
+                    name: 'Bank Transfer'
+                    currency: IDR
+              properties:
+                data:
+                  type: array
+                  example:
+                    -
+                      id: 1
+                      name: 'Bank Transfer'
+                      currency: IDR
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: 'Bank Transfer'
+                      currency:
+                        type: string
+                        example: IDR
+    tags:
+      - 'Withdraw Accounts'
+/api/v2/withdraw-accounts/lists:
+  get:
+    summary: 'Fetch payout bank and wallet catalog.'
+    operationId: fetchPayoutBankAndWalletCatalog
+    description: 'Retrieve the list of supported banks and wallets from the Easylink gateway.'
+    parameters:
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+    responses:
+      200:
+        description: 'Payout bank and wallet catalog retrieved successfully. Returns lists of supported banks and digital wallets with their IDs and names.'
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                data:
+                  banks:
+                    -
+                      bank_id: '014'
+                      bank_name: BCA
+                  wallets:
+                    -
+                      wallet_id: GOPAY
+                      wallet_name: GoPay
+              properties:
+                data:
+                  type: object
+                  properties:
+                    banks:
+                      type: array
+                      example:
+                        -
+                          bank_id: '014'
+                          bank_name: BCA
+                      items:
+                        type: object
+                        properties:
+                          bank_id:
+                            type: string
+                            example: '014'
+                          bank_name:
+                            type: string
+                            example: BCA
+                    wallets:
+                      type: array
+                      example:
+                        -
+                          wallet_id: GOPAY
+                          wallet_name: GoPay
+                      items:
+                        type: object
+                        properties:
+                          wallet_id:
+                            type: string
+                            example: GOPAY
+                          wallet_name:
+                            type: string
+                            example: GoPay
+      500:
+        $ref: '#/components/responses/ServerError'
+    tags:
+      - 'Withdraw Accounts'
+'/api/v2/withdraw-accounts/{id}/info':
+  get:
+    summary: 'Inspect withdraw account limits.'
+    operationId: inspectWithdrawAccountLimits
+    description: 'Retrieve withdraw method configuration such as min/max limits and charges.'
+    parameters:
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+    responses:
+      200:
+        description: 'Withdraw account limits and configuration retrieved successfully. Returns minimum/maximum limits, charges, currency, processing time, and conversion rate.'
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                message: 'Account information retrieved successfully'
+                data:
+                  min_limit: 50000
+                  max_limit: 50000000
+                  charge: 5000
+                  charge_type: fixed
+                  currency: IDR
+                  processing_time: H+1
+                  conversion_rate: 1
+              properties:
+                message:
+                  type: string
+                  example: 'Account information retrieved successfully'
+                data:
+                  type: object
+                  properties:
+                    min_limit:
+                      type: integer
+                      example: 50000
+                    max_limit:
+                      type: integer
+                      example: 50000000
+                    charge:
+                      type: integer
+                      example: 5000
+                    charge_type:
+                      type: string
+                      example: fixed
+                    currency:
+                      type: string
+                      example: IDR
+                    processing_time:
+                      type: string
+                      example: H+1
+                    conversion_rate:
+                      type: integer
+                      example: 1
+      500:
+        $ref: '#/components/responses/ServerError'
+    tags:
+      - 'Withdraw Accounts'
+  parameters:
+    -
+      in: path
+      name: id
+      description: 'Withdraw account ID.'
+      example: 15
+      required: true
+      schema:
+        type: integer
+/api/v2/withdraw-accounts:
+  get:
+    summary: 'List withdraw accounts.'
+    operationId: listWithdrawAccounts
+    description: "Retrieve all withdraw accounts created by the authenticated merchant user. Optionally filter\nby wallet currency."
+    parameters:
+      -
+        in: query
+        name: wallet_id
+        description: 'Filter accounts by wallet UUID so the currency matches.'
+        example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
+        required: false
+        schema:
+          type: string
+          description: 'Filter accounts by wallet UUID so the currency matches.'
+          example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
+          nullable: false
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+    responses:
+      200:
+        description: 'List of withdraw accounts retrieved successfully. Returns an array of account objects with ID, name, account number, and associated withdrawal method details.'
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                data:
+                  -
+                    id: 15
+                    name: 'Bank BCA'
+                    account_number: '1234567890'
+                    withdraw_method:
+                      id: 3
+                      name: 'Bank Transfer'
+                      currency: IDR
+              properties:
+                data:
+                  type: array
+                  example:
+                    -
+                      id: 15
+                      name: 'Bank BCA'
+                      account_number: '1234567890'
+                      withdraw_method:
+                        id: 3
+                        name: 'Bank Transfer'
+                        currency: IDR
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 15
+                      name:
+                        type: string
+                        example: 'Bank BCA'
+                      account_number:
+                        type: string
+                        example: '1234567890'
+                      withdraw_method:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 3
+                          name:
+                            type: string
+                            example: 'Bank Transfer'
+                          currency:
+                            type: string
+                            example: IDR
+      422:
+        $ref: '#/components/responses/ValidationError'
+    tags:
+      - 'Withdraw Accounts'
+  post:
+    summary: 'Create a withdraw account.'
+    operationId: createAWithdrawAccount
+    description: 'Store a new withdraw account for the authenticated merchant user.'
+    parameters:
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+    responses:
+      201:
+        description: 'Withdraw account created successfully. Returns the newly created account with ID, name, account number, and withdrawal method details.'
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                data:
+                  id: 15
+                  name: 'Bank BCA'
+                  account_number: '1234567890'
+                  withdraw_method:
+                    id: 3
+                    name: 'Bank Transfer'
+                    currency: IDR
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 15
+                    name:
+                      type: string
+                      example: 'Bank BCA'
+                    account_number:
+                      type: string
+                      example: '1234567890'
+                    withdraw_method:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 3
+                        name:
+                          type: string
+                          example: 'Bank Transfer'
+                        currency:
+                          type: string
+                          example: IDR
+      422:
+        $ref: '#/components/responses/ValidationError'
+      500:
+        $ref: '#/components/responses/ServerError'
+    tags:
+      - 'Withdraw Accounts'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              method_id:
+                type: integer
+                description: 'Identifier of the payout method returned by `lists`.'
+                example: 1
+                nullable: false
+              bank_code:
+                type: string
+                description: 'Bank or wallet code as supplied by the gateway.'
+                example: '014'
+                nullable: false
+              category:
+                type: string
+                description: 'Must be one of `Customer` or `Reconcile`.'
+                example: Customer
+                nullable: false
+              account_number:
+                type: string
+                description: 'Destination account or wallet number.'
+                example: '1234567890'
+                nullable: false
+              account_holder_name:
+                type: string
+                description: 'Account holder full name.'
+                example: 'Budi Santoso'
+                nullable: false
+              branch_name:
+                type: string
+                description: 'Branch name registered for the account.'
+                example: 'KC Jakarta'
+                nullable: true
+              country:
+                type: string
+                description: 'Country ISO name.'
+                example: Indonesia
+                nullable: true
+              account_type:
+                type: string
+                description: 'Account type or currency indicator provided by the gateway.'
+                example: Saving
+                nullable: true
+              additional_info:
+                type: string
+                description: 'Additional metadata to pass to the gateway.'
+                example: '{"bankCity":"Jakarta"}'
+                nullable: true
+            required:
+              - method_id
+              - bank_code
+              - category
+              - account_number
+              - account_holder_name
+'/api/v2/withdraw-accounts/{id}':
+  get:
+    summary: 'Show withdraw account details.'
+    operationId: showWithdrawAccountDetails
+    description: 'Retrieve a single withdraw account owned by the authenticated user.'
+    parameters:
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+    responses:
+      200:
+        description: 'Withdraw account details retrieved successfully. Returns account information including ID, name, account number, and associated withdrawal method.'
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                data:
+                  id: 15
+                  name: 'Bank BCA'
+                  account_number: '1234567890'
+                  withdraw_method:
+                    id: 3
+                    name: 'Bank Transfer'
+                    currency: IDR
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 15
+                    name:
+                      type: string
+                      example: 'Bank BCA'
+                    account_number:
+                      type: string
+                      example: '1234567890'
+                    withdraw_method:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 3
+                        name:
+                          type: string
+                          example: 'Bank Transfer'
+                        currency:
+                          type: string
+                          example: IDR
+      404:
+        $ref: '#/components/responses/NotFound'
+    tags:
+      - 'Withdraw Accounts'
+  put:
+    summary: 'Update a withdraw account.'
+    operationId: updateAWithdrawAccount
+    description: 'Modify a withdraw account owned by the authenticated user.'
+    parameters:
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+    responses:
+      200:
+        description: 'Withdraw account updated successfully. Returns the updated account information with ID, name, account number, and withdrawal method details.'
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                data:
+                  id: 15
+                  name: 'Bank BCA'
+                  account_number: '1234567890'
+                  withdraw_method:
+                    id: 3
+                    name: 'Bank Transfer'
+                    currency: IDR
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 15
+                    name:
+                      type: string
+                      example: 'Bank BCA'
+                    account_number:
+                      type: string
+                      example: '1234567890'
+                    withdraw_method:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 3
+                        name:
+                          type: string
+                          example: 'Bank Transfer'
+                        currency:
+                          type: string
+                          example: IDR
+      422:
+        $ref: '#/components/responses/ValidationError'
+      500:
+        $ref: '#/components/responses/ServerError'
+    tags:
+      - 'Withdraw Accounts'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              method_id:
+                type: integer
+                description: 'Identifier of the payout method returned by `lists`.'
+                example: 1
+                nullable: false
+              bank_code:
+                type: string
+                description: 'Bank or wallet code as supplied by the gateway.'
+                example: '014'
+                nullable: false
+              category:
+                type: string
+                description: 'Must be one of `Customer` or `Reconcile`.'
+                example: Customer
+                nullable: false
+              account_number:
+                type: string
+                description: 'Destination account or wallet number.'
+                example: '1234567890'
+                nullable: false
+              account_holder_name:
+                type: string
+                description: 'Account holder full name.'
+                example: 'Budi Santoso'
+                nullable: false
+              branch_name:
+                type: string
+                description: 'Branch name registered for the account.'
+                example: 'KC Jakarta'
+                nullable: true
+              country:
+                type: string
+                description: 'Country ISO name.'
+                example: Indonesia
+                nullable: true
+              account_type:
+                type: string
+                description: 'Account type or currency indicator provided by the gateway.'
+                example: Saving
+                nullable: true
+              additional_info:
+                type: string
+                description: 'Additional metadata to pass to the gateway.'
+                example: '{"bankCity":"Jakarta"}'
+                nullable: true
+            required:
+              - method_id
+              - bank_code
+              - category
+              - account_number
+              - account_holder_name
+  delete:
+    summary: 'Delete a withdraw account.'
+    operationId: deleteAWithdrawAccount
+    description: 'Remove a withdraw account owned by the authenticated user.'
+    parameters:
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+    responses:
+      200:
+        description: 'Withdraw account deleted successfully. Returns a success message confirming the deletion.'
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                message: 'Withdraw account deleted successfully'
+              properties:
+                message:
+                  type: string
+                  example: 'Withdraw account deleted successfully'
+      404:
+        $ref: '#/components/responses/NotFound'
+    tags:
+      - 'Withdraw Accounts'
+  parameters:
+    -
+      in: path
+      name: id
+      description: 'Withdraw account ID.'
+      example: 15
+      required: true
+      schema:
+        type: integer
+

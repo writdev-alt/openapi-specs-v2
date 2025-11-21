@@ -1,0 +1,50 @@
+responses:
+  ValidationError:
+    description: 'Validation error - The request data is invalid.'
+    content:
+      application/json:
+        schema:
+          $ref: './schemas.yaml#/schemas/ValidationError'
+  
+  NotFound:
+    description: 'Resource not found.'
+    content:
+      application/json:
+        schema:
+          $ref: './schemas.yaml#/schemas/NotFound'
+  
+  ServerError:
+    description: 'Internal server error.'
+    content:
+      application/json:
+        schema:
+          $ref: './schemas.yaml#/schemas/ServerError'
+  
+  Unauthorized:
+    description: 'Unauthorized - Authentication required.'
+    content:
+      application/json:
+        schema:
+          $ref: './schemas.yaml#/schemas/Unauthorized'
+  
+  Forbidden:
+    description: 'Forbidden - Access denied, insufficient permissions.'
+    content:
+      application/json:
+        schema:
+          $ref: './schemas.yaml#/schemas/Forbidden'
+  
+  SuccessMessage:
+    description: 'Success response with message.'
+    content:
+      application/json:
+        schema:
+          $ref: './schemas.yaml#/schemas/SuccessMessage'
+  
+  SuccessWithData:
+    description: 'Success response with data payload.'
+    content:
+      application/json:
+        schema:
+          $ref: './schemas.yaml#/schemas/SuccessWithData'
+
