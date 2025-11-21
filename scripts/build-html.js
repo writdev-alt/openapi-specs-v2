@@ -1,8 +1,6 @@
+const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-
-// Read the bundled OpenAPI spec
-const bundledSpec = fs.readFileSync('bundled.yaml', 'utf8');
 
 // Create dist directory if it doesn't exist
 const distDir = path.join(__dirname, '..', 'dist');
@@ -10,21 +8,65 @@ if (!fs.existsSync(distDir)) {
   fs.mkdirSync(distDir, { recursive: true });
 }
 
-// Copy bundled.yaml to dist
-fs.copyFileSync('bundled.yaml', path.join(distDir, 'bundled.yaml'));
+console.log('Building documentation with Redocly...');
 
-// Copy logo assets
-const assets = ['ilona-logo.png', 'ilona-light-logo.png', 'ilona-favicon.png'];
-assets.forEach(asset => {
-  const srcPath = path.join(__dirname, '..', asset);
-  const destPath = path.join(distDir, asset);
-  if (fs.existsSync(srcPath)) {
-    fs.copyFileSync(srcPath, destPath);
+try {
+  // Use Redocly build-docs command to build static documentation
+  // Output to a specific HTML file, then we'll move it
+  const tempHtml = path.join(distDir, 'temp.html');
+  
+  execSync(`npx redocly build-docs openapi.yaml -o ${tempHtml}`, {
+    stdio: 'inherit',
+    cwd: path.join(__dirname, '..')
+  });
+  
+  // Move temp.html to index.html
+  if (fs.existsSync(tempHtml)) {
+    fs.renameSync(tempHtml, path.join(distDir, 'index.html'));
   }
-});
 
-// Create HTML template
-const htmlTemplate = `<!DOCTYPE html>
+  // Copy logo assets to dist if they don't exist
+  const assets = ['ilona-logo.png', 'ilona-light-logo.png', 'ilona-favicon.png'];
+  assets.forEach(asset => {
+    const srcPath = path.join(__dirname, '..', asset);
+    const destPath = path.join(distDir, asset);
+    if (fs.existsSync(srcPath) && !fs.existsSync(destPath)) {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  });
+
+  // Copy bundled.yaml to dist for reference
+  if (fs.existsSync(path.join(__dirname, '..', 'bundled.yaml'))) {
+    fs.copyFileSync(
+      path.join(__dirname, '..', 'bundled.yaml'),
+      path.join(distDir, 'bundled.yaml')
+    );
+  }
+
+  console.log('\n✓ HTML documentation built successfully with Redocly in dist/');
+  console.log('✓ Documentation is ready for deployment');
+} catch (error) {
+  console.error('\n✗ Error building documentation with Redocly');
+  console.error('Falling back to manual Redoc build...\n');
+  
+  // Fallback to manual Redoc build
+  const bundledSpec = fs.readFileSync('bundled.yaml', 'utf8');
+  
+  // Copy bundled.yaml to dist
+  fs.copyFileSync('bundled.yaml', path.join(distDir, 'bundled.yaml'));
+
+  // Copy logo assets
+  const assets = ['ilona-logo.png', 'ilona-light-logo.png', 'ilona-favicon.png'];
+  assets.forEach(asset => {
+    const srcPath = path.join(__dirname, '..', asset);
+    const destPath = path.join(distDir, asset);
+    if (fs.existsSync(srcPath)) {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  });
+
+  // Create HTML template with Redoc
+  const htmlTemplate = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -86,16 +128,17 @@ const htmlTemplate = `<!DOCTYPE html>
 </body>
 </html>`;
 
-// Write HTML file
-fs.writeFileSync(path.join(distDir, 'index.html'), htmlTemplate);
+  // Write HTML file
+  fs.writeFileSync(path.join(distDir, 'index.html'), htmlTemplate);
 
-console.log('✓ HTML documentation built successfully in dist/');
-console.log('✓ Files created:');
-console.log('  - dist/index.html');
-console.log('  - dist/bundled.yaml');
-assets.forEach(asset => {
-  if (fs.existsSync(path.join(__dirname, '..', asset))) {
-    console.log(`  - dist/${asset}`);
-  }
-});
+  console.log('✓ HTML documentation built successfully in dist/');
+  console.log('✓ Files created:');
+  console.log('  - dist/index.html');
+  console.log('  - dist/bundled.yaml');
+  assets.forEach(asset => {
+    if (fs.existsSync(path.join(__dirname, '..', asset))) {
+      console.log(`  - dist/${asset}`);
+    }
+  });
+}
 

@@ -1,3 +1,6 @@
 apis:
   main:
     root: ./openapi.yaml
+resolve:
+  yaml:
+    maxAliasCount: 1000

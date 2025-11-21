@@ -66,6 +66,8 @@ Preview the API documentation locally:
 npm run preview
 ```
 
+**Note**: The `sidebars.yaml` file is used by Redocly Portal (hosted platform) for navigation. When using `redocly build-docs` for standalone HTML builds, only the OpenAPI spec is rendered. Markdown reference files (in `reference/`) are not included in standalone builds. To use sidebars and markdown files, you need to use Redocly Portal or embed the content into the OpenAPI spec.
+
 ### Build for Production
 
 Build static HTML documentation:
