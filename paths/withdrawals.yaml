@@ -26,6 +26,7 @@
             schema:
               type: object
               example:
+                code: '20105001'
                 message: 'Withdrawal has been created.'
                 data:
                   trx_id: TRX20241101001

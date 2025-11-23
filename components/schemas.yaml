@@ -2,6 +2,10 @@ schemas:
   ValidationError:
     type: object
     properties:
+      code:
+        type: string
+        description: 'Response code following the formula: HTTP status code + service code + case code. Example: 42201001 (422 = HTTP status, 01 = service code, 001 = case code)'
+        example: '42201001'
       message:
         type: string
         description: 'Error message indicating validation failure.'
@@ -27,14 +31,19 @@ schemas:
           trx_id:
             - 'Invalid transaction.'
     oneOf:
-      - required: [message, errors]
-      - required: [error]
+      - required: [code, message, errors]
+      - required: [code, error]
   
   NotFound:
     type: object
     required:
+      - code
       - message
     properties:
+      code:
+        type: string
+        description: 'Response code following the formula: HTTP status code + service code + case code. Example: 40401001 (404 = HTTP status, 01 = service code, 001 = case code)'
+        example: '40401001'
       message:
         type: string
         description: 'Error message indicating resource not found.'
@@ -48,12 +57,17 @@ schemas:
         description: 'Alternative error message format.'
         example: 'Withdraw account not found'
     example:
+      code: '40401001'
       message: 'Transaction not found.'
       success: false
   
   ServerError:
     type: object
     properties:
+      code:
+        type: string
+        description: 'Response code following the formula: HTTP status code + service code + case code. Example: 50001001 (500 = HTTP status, 01 = service code, 001 = case code)'
+        example: '50001001'
       message:
         type: string
         description: 'Error message describing the server error.'
@@ -67,9 +81,9 @@ schemas:
         description: 'Indicates the request was unsuccessful.'
         example: false
     oneOf:
-      - required: [message]
-      - required: [error]
-      - required: [success, message]
+      - required: [code, message]
+      - required: [code, error]
+      - required: [code, success, message]
     examples:
       paymentError:
         value:
@@ -88,20 +102,31 @@ schemas:
   Unauthorized:
     type: object
     required:
+      - code
       - message
     properties:
+      code:
+        type: string
+        description: 'Response code following the formula: HTTP status code + service code + case code. Example: 40101001 (401 = HTTP status, 01 = service code, 001 = case code)'
+        example: '40101001'
       message:
         type: string
         description: 'Unauthorized access message.'
         example: 'Unauthorized'
     example:
+      code: '40101001'
       message: 'Unauthorized'
   
   Forbidden:
     type: object
     required:
+      - code
       - message
     properties:
+      code:
+        type: string
+        description: 'Response code following the formula: HTTP status code + service code + case code. Example: 40301001 (403 = HTTP status, 01 = service code, 001 = case code)'
+        example: '40301001'
       message:
         type: string
         description: 'Forbidden access message indicating insufficient permissions.'
@@ -111,14 +136,20 @@ schemas:
         description: 'Indicates the request was unsuccessful.'
         example: false
     example:
+      code: '40301001'
       message: 'Access denied. You do not have permission to perform this action.'
       success: false
   
   SuccessMessage:
     type: object
     required:
+      - code
       - message
     properties:
+      code:
+        type: string
+        description: 'Response code following the formula: HTTP status code + service code + case code. Example: 20001001 (200 = HTTP status, 01 = service code, 001 = case code)'
+        example: '20001001'
       message:
         type: string
         description: 'Success message.'
@@ -128,14 +159,20 @@ schemas:
         description: 'Status indicator (optional).'
         example: 'COMPLETED'
     example:
+      code: '20001001'
       message: 'Withdrawal has been created.'
   
   SuccessWithData:
     type: object
     required:
+      - code
       - message
       - data
     properties:
+      code:
+        type: string
+        description: 'Response code following the formula: HTTP status code + service code + case code. Example: 20001001 (200 = HTTP status, 01 = service code, 001 = case code)'
+        example: '20001001'
       message:
         type: string
         description: 'Success message.'
@@ -149,6 +186,7 @@ schemas:
         description: 'Response data payload.'
         additionalProperties: true
     example:
+      code: '20001001'
       message: 'Account information retrieved successfully'
       data:
         min_limit: 50000

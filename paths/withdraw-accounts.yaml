@@ -25,13 +25,10 @@
           application/json:
             schema:
               type: object
-              example:
-                data:
-                  -
-                    id: 1
-                    name: 'Bank Transfer'
-                    currency: IDR
               properties:
+                code:
+                  type: string
+                  example: '20004001'
                 data:
                   type: array
                   example:
@@ -51,6 +48,13 @@
                       currency:
                         type: string
                         example: IDR
+              example:
+                code: '20004001'
+                data:
+                  -
+                    id: 1
+                    name: 'Bank Transfer'
+                    currency: IDR
     tags:
       - 'Withdraw Accounts'
 /api/v2/withdraw-accounts/lists:
@@ -80,17 +84,10 @@
           application/json:
             schema:
               type: object
-              example:
-                data:
-                  banks:
-                    -
-                      bank_id: '014'
-                      bank_name: BCA
-                  wallets:
-                    -
-                      wallet_id: GOPAY
-                      wallet_name: GoPay
               properties:
+                code:
+                  type: string
+                  example: '20004002'
                 data:
                   type: object
                   properties:
@@ -124,6 +121,17 @@
                           wallet_name:
                             type: string
                             example: GoPay
+              example:
+                code: '20004002'
+                data:
+                  banks:
+                    -
+                      bank_id: '014'
+                      bank_name: BCA
+                  wallets:
+                    -
+                      wallet_id: GOPAY
+                      wallet_name: GoPay
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -156,6 +164,7 @@
             schema:
               type: object
               example:
+                code: '20004003'
                 message: 'Account information retrieved successfully'
                 data:
                   min_limit: 50000
@@ -166,6 +175,9 @@
                   processing_time: H+1
                   conversion_rate: 1
               properties:
+                code:
+                  type: string
+                  example: '20004003'
                 message:
                   type: string
                   example: 'Account information retrieved successfully'
@@ -245,6 +257,7 @@
             schema:
               type: object
               example:
+                code: '20004004'
                 data:
                   -
                     id: 15
@@ -255,6 +268,9 @@
                       name: 'Bank Transfer'
                       currency: IDR
               properties:
+                code:
+                  type: string
+                  example: '20004004'
                 data:
                   type: array
                   example:
@@ -321,6 +337,7 @@
             schema:
               type: object
               example:
+                code: '20104001'
                 data:
                   id: 15
                   name: 'Bank BCA'
@@ -330,6 +347,9 @@
                     name: 'Bank Transfer'
                     currency: IDR
               properties:
+                code:
+                  type: string
+                  example: '20104001'
                 data:
                   type: object
                   properties:
@@ -446,6 +466,7 @@
             schema:
               type: object
               example:
+                code: '20004005'
                 data:
                   id: 15
                   name: 'Bank BCA'
@@ -455,6 +476,9 @@
                     name: 'Bank Transfer'
                     currency: IDR
               properties:
+                code:
+                  type: string
+                  example: '20004005'
                 data:
                   type: object
                   properties:
@@ -510,6 +534,7 @@
             schema:
               type: object
               example:
+                code: '20004006'
                 data:
                   id: 15
                   name: 'Bank BCA'
@@ -519,6 +544,9 @@
                     name: 'Bank Transfer'
                     currency: IDR
               properties:
+                code:
+                  type: string
+                  example: '20004006'
                 data:
                   type: object
                   properties:
@@ -634,8 +662,12 @@
             schema:
               type: object
               example:
+                code: '20004007'
                 message: 'Withdraw account deleted successfully'
               properties:
+                code:
+                  type: string
+                  example: '20004007'
                 message:
                   type: string
                   example: 'Withdraw account deleted successfully'

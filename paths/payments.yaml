@@ -26,10 +26,14 @@
             schema:
               type: object
               example:
+                code: '20001001'
                 trx_id: TRX20241101001
                 ref_trx: INV-2024-0001
                 qris_content: 00020101021226680012IDCO...
               properties:
+                code:
+                  type: string
+                  example: '20001001'
                 trx_id:
                   type: string
                   example: TRX20241101001

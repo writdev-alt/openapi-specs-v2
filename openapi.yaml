@@ -65,10 +65,14 @@ paths:
               schema:
                 type: object
                 example:
+                  code: '20001001'
                   trx_id: TRX20241101001
                   ref_trx: INV-2024-0001
                   qris_content: 00020101021226680012IDCO...
                 properties:
+                  code:
+                    type: string
+                    example: '20001001'
                   trx_id:
                     type: string
                     example: TRX20241101001
@@ -161,6 +165,7 @@ paths:
               schema:
                 type: object
                 example:
+                  code: '20002001'
                   status: completed
                   message: Payment, request status checked successfully.
                   data:
@@ -236,12 +241,16 @@ paths:
               schema:
                 type: object
                 example:
+                  code: '20002002'
                   message: Callback resend request has been queued successfully.
                   data:
                     trx_id: TRX20241101001
                     callback_status: queued
                     queued_at: '2024-11-01T10:30:00Z'
                 properties:
+                  code:
+                    type: string
+                    example: '20002002'
                   message:
                     type: string
                     example: Callback resend request has been queued successfully.
@@ -302,6 +311,7 @@ paths:
               schema:
                 type: object
                 example:
+                  code: '20002003'
                   status: completed
                   message: Invoice retrieved successfully.
                   data:
@@ -319,6 +329,9 @@ paths:
                     created_at: '2024-11-01T10:00:00Z'
                     paid_at: '2024-11-01T10:15:00Z'
                 properties:
+                  code:
+                    type: string
+                    example: '20002003'
                   status:
                     $ref: '#/components/schemas/TransactionStatus'
                   message:
@@ -415,31 +428,39 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    uuid:
-                      type: string
-                      example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                    currency_code:
-                      type: string
-                      example: IDR
-                    balance:
-                      type: integer
-                      example: 2500000
-                    hold_balance:
-                      type: integer
-                      example: 0
-                    available_balance:
-                      type: integer
-                      example: 2500000
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: '20003001'
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                          example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                        currency_code:
+                          type: string
+                          example: IDR
+                        balance:
+                          type: integer
+                          example: 2500000
+                        hold_balance:
+                          type: integer
+                          example: 0
+                        available_balance:
+                          type: integer
+                          example: 2500000
                 example:
-                  - uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                    currency_code: IDR
-                    balance: 2500000
-                    hold_balance: 0
-                    available_balance: 2500000
+                  code: '20003001'
+                  data:
+                    - uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                      currency_code: IDR
+                      balance: 2500000
+                      hold_balance: 0
+                      available_balance: 2500000
       tags:
         - Wallets
   /api/v2/wallets/{uuid}:
@@ -468,12 +489,16 @@ paths:
               schema:
                 type: object
                 example:
+                  code: '20003002'
                   uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
                   currency_code: IDR
                   balance: 2500000
                   hold_balance: 0
                   available_balance: 2500000
                 properties:
+                  code:
+                    type: string
+                    example: '20003002'
                   uuid:
                     type: string
                     example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
@@ -526,12 +551,10 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  data:
-                    - id: 1
-                      name: Bank Transfer
-                      currency: IDR
                 properties:
+                  code:
+                    type: string
+                    example: '20004001'
                   data:
                     type: array
                     example:
@@ -550,6 +573,12 @@ paths:
                         currency:
                           type: string
                           example: IDR
+                example:
+                  code: '20004001'
+                  data:
+                    - id: 1
+                      name: Bank Transfer
+                      currency: IDR
       tags:
         - Withdraw Accounts
   /api/v2/withdraw-accounts/lists:
@@ -577,15 +606,10 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  data:
-                    banks:
-                      - bank_id: '014'
-                        bank_name: BCA
-                    wallets:
-                      - wallet_id: GOPAY
-                        wallet_name: GoPay
                 properties:
+                  code:
+                    type: string
+                    example: '20004002'
                   data:
                     type: object
                     properties:
@@ -617,6 +641,15 @@ paths:
                             wallet_name:
                               type: string
                               example: GoPay
+                example:
+                  code: '20004002'
+                  data:
+                    banks:
+                      - bank_id: '014'
+                        bank_name: BCA
+                    wallets:
+                      - wallet_id: GOPAY
+                        wallet_name: GoPay
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -647,6 +680,7 @@ paths:
               schema:
                 type: object
                 example:
+                  code: '20004003'
                   message: Account information retrieved successfully
                   data:
                     min_limit: 50000
@@ -657,6 +691,9 @@ paths:
                     processing_time: H+1
                     conversion_rate: 1
                 properties:
+                  code:
+                    type: string
+                    example: '20004003'
                   message:
                     type: string
                     example: Account information retrieved successfully
@@ -734,6 +771,7 @@ paths:
               schema:
                 type: object
                 example:
+                  code: '20004004'
                   data:
                     - id: 15
                       name: Bank BCA
@@ -743,6 +781,9 @@ paths:
                         name: Bank Transfer
                         currency: IDR
                 properties:
+                  code:
+                    type: string
+                    example: '20004004'
                   data:
                     type: array
                     example:
@@ -806,6 +847,7 @@ paths:
               schema:
                 type: object
                 example:
+                  code: '20104001'
                   data:
                     id: 15
                     name: Bank BCA
@@ -815,6 +857,9 @@ paths:
                       name: Bank Transfer
                       currency: IDR
                 properties:
+                  code:
+                    type: string
+                    example: '20104001'
                   data:
                     type: object
                     properties:
@@ -929,6 +974,7 @@ paths:
               schema:
                 type: object
                 example:
+                  code: '20004005'
                   data:
                     id: 15
                     name: Bank BCA
@@ -938,6 +984,9 @@ paths:
                       name: Bank Transfer
                       currency: IDR
                 properties:
+                  code:
+                    type: string
+                    example: '20004005'
                   data:
                     type: object
                     properties:
@@ -991,6 +1040,7 @@ paths:
               schema:
                 type: object
                 example:
+                  code: '20004006'
                   data:
                     id: 15
                     name: Bank BCA
@@ -1000,6 +1050,9 @@ paths:
                       name: Bank Transfer
                       currency: IDR
                 properties:
+                  code:
+                    type: string
+                    example: '20004006'
                   data:
                     type: object
                     properties:
@@ -1113,8 +1166,12 @@ paths:
               schema:
                 type: object
                 example:
+                  code: '20004007'
                   message: Withdraw account deleted successfully
                 properties:
+                  code:
+                    type: string
+                    example: '20004007'
                   message:
                     type: string
                     example: Withdraw account deleted successfully
@@ -1156,6 +1213,7 @@ paths:
               schema:
                 type: object
                 example:
+                  code: '20105001'
                   message: Withdrawal has been created.
                   data:
                     trx_id: TRX20241101001

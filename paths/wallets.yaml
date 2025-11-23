@@ -24,32 +24,40 @@
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  uuid:
-                    type: string
-                    example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                  currency_code:
-                    type: string
-                    example: IDR
-                  balance:
-                    type: integer
-                    example: 2500000
-                  hold_balance:
-                    type: integer
-                    example: 0
-                  available_balance:
-                    type: integer
-                    example: 2500000
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: '20003001'
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      uuid:
+                        type: string
+                        example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                      currency_code:
+                        type: string
+                        example: IDR
+                      balance:
+                        type: integer
+                        example: 2500000
+                      hold_balance:
+                        type: integer
+                        example: 0
+                      available_balance:
+                        type: integer
+                        example: 2500000
               example:
-                -
-                  uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                  currency_code: IDR
-                  balance: 2500000
-                  hold_balance: 0
-                  available_balance: 2500000
+                code: '20003001'
+                data:
+                  -
+                    uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                    currency_code: IDR
+                    balance: 2500000
+                    hold_balance: 0
+                    available_balance: 2500000
     tags:
       - Wallets
 '/api/v2/wallets/{uuid}':
@@ -80,12 +88,16 @@
             schema:
               type: object
               example:
+                code: '20003002'
                 uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
                 currency_code: IDR
                 balance: 2500000
                 hold_balance: 0
                 available_balance: 2500000
               properties:
+                code:
+                  type: string
+                  example: '20003002'
                 uuid:
                   type: string
                   example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab

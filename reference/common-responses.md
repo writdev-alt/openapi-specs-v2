@@ -2,6 +2,26 @@
 
 The WRPay API uses standardized response formats for consistency across all endpoints. This document describes the common response structures you'll encounter.
 
+## Response Code Format
+
+All API responses include a `code` field that follows this formula:
+
+```
+response code = HTTP status code + service code + case code
+```
+
+**Format**: `{HTTP_STATUS}{SERVICE_CODE}{CASE_CODE}`
+
+- **HTTP Status Code** (3 digits): The HTTP status code (200, 201, 400, 401, 403, 404, 422, 500, etc.)
+- **Service Code** (2 digits): Identifies the service/module (01 = Payments, 02 = Transactions, etc.)
+- **Case Code** (3 digits): Identifies the specific case or error type (001, 002, 003, etc.)
+
+**Examples**:
+- `20001001` = HTTP 200 (Success) + Service 01 (Payments) + Case 001 (Payment created)
+- `42201001` = HTTP 422 (Validation Error) + Service 01 (Payments) + Case 001 (Invalid amount)
+- `40402001` = HTTP 404 (Not Found) + Service 02 (Transactions) + Case 001 (Transaction not found)
+- `50001001` = HTTP 500 (Server Error) + Service 01 (Payments) + Case 001 (Gateway error)
+
 ## Success Responses
 
 ### 200 OK
@@ -10,6 +30,7 @@ Standard success response for GET requests and most operations:
 
 ```json
 {
+  "code": "20001001",
   "status": "completed",
   "message": "Operation completed successfully.",
   "data": {
@@ -24,6 +45,7 @@ Response for resource creation operations:
 
 ```json
 {
+  "code": "20101001",
   "message": "Resource created successfully.",
   "data": {
     "id": 15,
@@ -40,6 +62,7 @@ Returned when authentication fails or API keys are invalid:
 
 ```json
 {
+  "code": "40101001",
   "message": "Unauthorized"
 }
 ```
@@ -56,6 +79,7 @@ Returned when a requested resource doesn't exist:
 
 ```json
 {
+  "code": "40402001",
   "message": "Transaction not found.",
   "success": false
 }
@@ -97,6 +121,7 @@ Returned when an internal server error occurs:
 
 ```json
 {
+  "code": "50001001",
   "message": "Payment processing failed. Please try again.",
   "error": "Gateway timeout"
 }
@@ -116,6 +141,7 @@ All responses follow a consistent structure:
 
 ```json
 {
+  "code": "string",        // Response code (HTTP status + service code + case code)
   "status": "string",      // Optional: Status indicator
   "message": "string",     // Success message
   "data": {                // Response payload
@@ -128,6 +154,7 @@ All responses follow a consistent structure:
 
 ```json
 {
+  "code": "string",       // Response code (HTTP status + service code + case code)
   "message": "string",     // Error message
   "errors": {              // Optional: Field-specific errors
     "field": ["error1", "error2"]

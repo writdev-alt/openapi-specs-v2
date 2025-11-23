@@ -26,6 +26,7 @@
             schema:
               type: object
               example:
+                code: '20002001'
                 status: completed
                 message: 'Payment, request status checked successfully.'
                 data:
@@ -104,12 +105,16 @@
             schema:
               type: object
               example:
+                code: '20002002'
                 message: 'Callback resend request has been queued successfully.'
                 data:
                   trx_id: TRX20241101001
                   callback_status: queued
                   queued_at: '2024-11-01T10:30:00Z'
               properties:
+                code:
+                  type: string
+                  example: '20002002'
                 message:
                   type: string
                   example: 'Callback resend request has been queued successfully.'
@@ -173,6 +178,7 @@
             schema:
               type: object
               example:
+                code: '20002003'
                 status: completed
                 message: 'Invoice retrieved successfully.'
                 data:
@@ -190,6 +196,9 @@
                   created_at: '2024-11-01T10:00:00Z'
                   paid_at: '2024-11-01T10:15:00Z'
               properties:
+                code:
+                  type: string
+                  example: '20002003'
                 status:
                   $ref: '#/components/schemas/TransactionStatus'
                 message:
