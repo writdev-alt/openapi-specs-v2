@@ -1,3 +1,299 @@
+/api/v2/withdrawals:
+  get:
+    summary: 'List withdrawal transactions.'
+    operationId: listWithdrawals
+    description: 'Retrieve a list of withdrawal transactions for the authenticated merchant. Returns withdrawal transactions with their status, amounts, and transaction details.'
+    parameters:
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+      -
+        in: query
+        name: status
+        description: 'Filter withdrawals by status (pending, completed, failed, canceled, processing).'
+        required: false
+        schema:
+          type: string
+          enum:
+            - pending
+            - completed
+            - failed
+            - canceled
+            - processing
+        example: completed
+      -
+        in: query
+        name: page
+        description: 'Page number for pagination. Default is 1.'
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+        example: 1
+      -
+        in: query
+        name: per_page
+        description: 'Number of withdrawals per page. Default is 20, maximum is 100.'
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+        example: 20
+    responses:
+      200:
+        description: 'List of withdrawal transactions retrieved successfully. Returns an array of withdrawal transactions with their details.'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: '20005002'
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      trx_id:
+                        type: string
+                        example: TRX-2025.01.15-ABC123XYZ
+                      trx_reference:
+                        type: string
+                        example: WD-2025-0001
+                        nullable: true
+                      amount:
+                        type: string
+                        example: '250000.00'
+                        description: 'Original withdrawal amount as a decimal string'
+                      net_amount:
+                        type: string
+                        example: '245000.00'
+                        description: 'Net amount after fees as a decimal string'
+                      payable_amount:
+                        type: string
+                        example: '245000.00'
+                        description: 'Final amount to be paid out as a decimal string'
+                      currency_code:
+                        type: string
+                        example: IDR
+                      status:
+                        $ref: '#/components/schemas/TransactionStatus'
+                      withdrawal_method:
+                        type: string
+                        example: Bank Transfer
+                        nullable: true
+                      account_name:
+                        type: string
+                        example: Bank BCA
+                        nullable: true
+                      account_holder_name:
+                        type: string
+                        example: Budi Santoso
+                        nullable: true
+                      account_bank_name:
+                        type: string
+                        example: Bank Central Asia
+                        nullable: true
+                      account_number:
+                        type: string
+                        example: '1234567890'
+                        nullable: true
+                      account_bank_code:
+                        type: string
+                        example: '014'
+                        nullable: true
+                      trx_fee:
+                        type: string
+                        example: '5000.00'
+                        description: 'Transaction fee charged as a decimal string'
+                      description:
+                        type: string
+                        example: Withdrawal to Bank BCA
+                        nullable: true
+                      remarks:
+                        type: string
+                        example: Withdrawal processed successfully
+                        nullable: true
+                      environment:
+                        type: string
+                        example: production
+                        description: 'Environment where the transaction occurred ("production" or "sandbox")'
+                      is_sandbox:
+                        type: boolean
+                        example: false
+                        description: 'Whether the transaction is in sandbox mode'
+                      created_at:
+                        type: string
+                        format: date-time
+                        example: '2025-01-15T10:00:00Z'
+                      completed_at:
+                        type: string
+                        format: date-time
+                        example: '2025-01-15T10:30:00Z'
+                        nullable: true
+                current_page:
+                  type: integer
+                  example: 1
+                first_page_url:
+                  type: string
+                  format: uri
+                  example: 'https://api.example.com/api/v2/withdrawals?page=1'
+                from:
+                  type: integer
+                  example: 1
+                last_page:
+                  type: integer
+                  example: 3
+                last_page_url:
+                  type: string
+                  format: uri
+                  example: 'https://api.example.com/api/v2/withdrawals?page=3'
+                links:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        format: uri
+                        nullable: true
+                      label:
+                        type: string
+                      active:
+                        type: boolean
+                  example:
+                    -
+                      url: null
+                      label: '&laquo; Previous'
+                      active: false
+                    -
+                      url: 'https://api.example.com/api/v2/withdrawals?page=1'
+                      label: '1'
+                      active: true
+                    -
+                      url: 'https://api.example.com/api/v2/withdrawals?page=2'
+                      label: '2'
+                      active: false
+                    -
+                      url: 'https://api.example.com/api/v2/withdrawals?page=2'
+                      label: 'Next &raquo;'
+                      active: false
+                next_page_url:
+                  type: string
+                  format: uri
+                  nullable: true
+                  example: 'https://api.example.com/api/v2/withdrawals?page=2'
+                path:
+                  type: string
+                  example: 'https://api.example.com/api/v2/withdrawals'
+                per_page:
+                  type: integer
+                  example: 20
+                prev_page_url:
+                  type: string
+                  format: uri
+                  nullable: true
+                  example: null
+                to:
+                  type: integer
+                  example: 20
+                total:
+                  type: integer
+                  example: 50
+              example:
+                code: '20005002'
+                data:
+                  -
+                    trx_id: TRX-2025.01.15-ABC123XYZ
+                    trx_reference: WD-2025-0001
+                    amount: '250000.00'
+                    net_amount: '245000.00'
+                    payable_amount: '245000.00'
+                    currency_code: IDR
+                    status: completed
+                    withdrawal_method: Bank Transfer
+                    account_name: Bank BCA
+                    account_holder_name: Budi Santoso
+                    account_bank_name: Bank Central Asia
+                    account_number: '1234567890'
+                    account_bank_code: '014'
+                    trx_fee: '5000.00'
+                    description: Withdrawal to Bank BCA
+                    remarks: Withdrawal processed successfully
+                    environment: production
+                    is_sandbox: false
+                    created_at: '2025-01-15T10:00:00Z'
+                    completed_at: '2025-01-15T10:30:00Z'
+                  -
+                    trx_id: TRX-2025.01.16-DEF456UVW
+                    trx_reference: WD-2025-0002
+                    amount: '100000.00'
+                    net_amount: '95000.00'
+                    payable_amount: '95000.00'
+                    currency_code: IDR
+                    status: pending
+                    withdrawal_method: Bank Transfer
+                    account_name: Bank Mandiri
+                    account_holder_name: null
+                    account_bank_name: null
+                    account_number: '9876543210'
+                    account_bank_code: '008'
+                    trx_fee: '5000.00'
+                    description: null
+                    remarks: null
+                    environment: production
+                    is_sandbox: false
+                    created_at: '2025-01-16T09:00:00Z'
+                    completed_at: null
+                current_page: 1
+                first_page_url: 'https://api.example.com/api/v2/withdrawals?page=1'
+                from: 1
+                last_page: 3
+                last_page_url: 'https://api.example.com/api/v2/withdrawals?page=3'
+                links:
+                  -
+                    url: null
+                    label: '&laquo; Previous'
+                    active: false
+                  -
+                    url: 'https://api.example.com/api/v2/withdrawals?page=1'
+                    label: '1'
+                    active: true
+                  -
+                    url: 'https://api.example.com/api/v2/withdrawals?page=2'
+                    label: '2'
+                    active: false
+                  -
+                    url: 'https://api.example.com/api/v2/withdrawals?page=2'
+                    label: 'Next &raquo;'
+                    active: false
+                next_page_url: 'https://api.example.com/api/v2/withdrawals?page=2'
+                path: 'https://api.example.com/api/v2/withdrawals'
+                per_page: 20
+                prev_page_url: null
+                to: 20
+                total: 50
+      422:
+        $ref: '#/components/responses/ValidationError'
+      500:
+        $ref: '#/components/responses/ServerError'
+    tags:
+      - Withdrawals
 /api/v2/withdraw:
   post:
     summary: 'Create a withdrawal.'
@@ -34,6 +330,9 @@
                   account_id: 15
                   wallet_id: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
               properties:
+                code:
+                  type: string
+                  example: '20105001'
                 message:
                   type: string
                   example: 'Withdrawal has been created.'

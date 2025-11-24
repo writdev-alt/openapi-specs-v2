@@ -2,6 +2,71 @@
 
 Webhooks allow you to receive real-time notifications about events in your WRPay account. When a payment is received, a transaction status changes, or other important events occur, WRPay will send an HTTP POST request to your configured webhook URL.
 
+## Webhook Flow Diagram
+
+```mermaid
+flowchart TD
+    A[Event Occurs in WRPay] --> B{Event Type}
+    B -->|Payment Status Change| C[receive_payment Event]
+    B -->|Withdrawal Status Change| D[withdrawal Event]
+    
+    C --> E{Status is pending or completed?}
+    E -->|Yes| F[Generate Webhook Payload]
+    E -->|No| G[Skip Webhook]
+    
+    D --> F
+    F --> H[Generate HMAC-SHA256 Signature]
+    H --> I[Add x-signature Header]
+    I --> J[Send POST Request to Webhook URL]
+    
+    J --> K{Webhook Endpoint Response}
+    K -->|HTTP 200 within 10s| L[Webhook Delivered Successfully]
+    K -->|Timeout or Error| M[Retry Mechanism]
+    
+    M --> N{Retry Attempt}
+    N -->|Attempt 1| O[Wait 1 minute]
+    N -->|Attempt 2| P[Wait 5 minutes]
+    N -->|Attempt 3| Q[Wait 15 minutes]
+    N -->|Attempt 4| R[Wait 1 hour]
+    N -->|Attempt 5| S[Wait 6 hours]
+    N -->|Attempt 6| T[Wait 24 hours]
+    
+    O --> J
+    P --> J
+    Q --> J
+    R --> J
+    S --> J
+    T --> J
+    
+    K -->|All Retries Failed| U[Mark as Failed]
+    
+    L --> V[Your Application Receives Webhook]
+    V --> W[Verify Signature]
+    W --> X{Signature Valid?}
+    X -->|Yes| Y[Process Event]
+    X -->|No| Z[Reject Request 401]
+    
+    Y --> AA{Event Type}
+    AA -->|receive_payment| AB[Handle Payment Event]
+    AA -->|withdrawal| AC[Handle Withdrawal Event]
+    
+    AB --> AD[Check Idempotency]
+    AC --> AD
+    AD --> AE{Already Processed?}
+    AE -->|Yes| AF[Return Success - Skip Processing]
+    AE -->|No| AG[Process Transaction]
+    
+    AG --> AH[Update Database]
+    AH --> AI[Send Notifications]
+    AI --> AJ[Return HTTP 200]
+    
+    style L fill:#90EE90
+    style U fill:#FFB6C1
+    style Z fill:#FFB6C1
+    style Y fill:#87CEEB
+    style W fill:#FFD700
+```
+
 ## Overview
 
 Webhooks are HTTP callbacks that notify your application when specific events occur. Instead of polling the API for updates, you can configure webhooks to receive instant notifications.
@@ -195,6 +260,31 @@ See [Transaction Statuses](./transaction-statuses.md) for complete list.
 
 ## Security
 
+### Signature Verification Flow
+
+```mermaid
+sequenceDiagram
+    participant WRPay as WRPay Server
+    participant YourApp as Your Webhook Endpoint
+    
+    WRPay->>WRPay: Event Occurs
+    WRPay->>WRPay: Create Payload JSON
+    WRPay->>WRPay: Generate HMAC-SHA256<br/>Signature with Secret
+    WRPay->>YourApp: POST Request<br/>(Payload + x-signature header)
+    
+    YourApp->>YourApp: Extract x-signature Header
+    YourApp->>YourApp: Get Raw Request Body
+    YourApp->>YourApp: Compute HMAC-SHA256<br/>with Your Secret
+    YourApp->>YourApp: Compare Signatures
+    
+    alt Signatures Match
+        YourApp->>YourApp: Process Webhook
+        YourApp->>WRPay: HTTP 200 OK
+    else Signatures Don't Match
+        YourApp->>WRPay: HTTP 401 Unauthorized
+    end
+```
+
 ### Signature Verification
 
 Each webhook request includes a signature header that you can use to verify the request authenticity. The signature is generated using HMAC-SHA256 with your webhook secret.
@@ -313,6 +403,24 @@ await processPayment(webhook.data);
 ## Retry Mechanism
 
 If your webhook endpoint doesn't respond with HTTP 200 within 10 seconds, or returns an error status code, WRPay will retry the delivery:
+
+```mermaid
+gantt
+    title Webhook Retry Timeline
+    dateFormat X
+    axisFormat %s
+    
+    section Initial Attempt
+    Send Webhook           :0, 10s
+    
+    section Retry Attempts
+    1st Retry (1 min)      :crit, 60s, 10s
+    2nd Retry (5 min)      :crit, 300s, 10s
+    3rd Retry (15 min)     :crit, 900s, 10s
+    4th Retry (1 hour)     :crit, 3600s, 10s
+    5th Retry (6 hours)    :crit, 21600s, 10s
+    6th Retry (24 hours)   :crit, 86400s, 10s
+```
 
 - **Retry Schedule**: Exponential backoff
   - 1st retry: 1 minute

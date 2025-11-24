@@ -10,6 +10,7 @@ const pathFiles = [
   'paths/payments.yaml',
   'paths/transactions.yaml',
   'paths/wallets.yaml',
+  'paths/payment-support.yaml',
   'paths/withdraw-accounts.yaml',
   'paths/withdrawals.yaml'
 ];

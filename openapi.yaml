@@ -36,6 +36,238 @@ components:
 security:
   - default: []
 paths:
+  /api/v2/payments:
+    get:
+      summary: List payment transactions.
+      operationId: listPayments
+      description: Retrieve a list of payment transactions for the authenticated merchant. Returns payment transactions with their status, amounts, and transaction details.
+      parameters:
+        - in: header
+          name: X-API-KEY
+          description: Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-API-KEY}'
+          schema:
+            type: string
+        - in: header
+          name: X-MERCHANT-KEY
+          description: Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-MERCHANT-KEY}'
+          schema:
+            type: string
+        - in: query
+          name: status
+          description: Filter payments by status (pending, completed, failed, canceled, expired).
+          required: false
+          schema:
+            type: string
+            enum:
+              - pending
+              - completed
+              - failed
+              - canceled
+              - expired
+          example: completed
+        - in: query
+          name: page
+          description: Page number for pagination. Default is 1.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          example: 1
+        - in: query
+          name: per_page
+          description: Number of payments per page. Default is 20, maximum is 100.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          example: 20
+      responses:
+        '200':
+          description: List of payment transactions retrieved successfully. Returns an array of payment transactions with their details.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: '20001002'
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        trx_id:
+                          type: string
+                          example: TRX20241101001
+                        trx_reference:
+                          type: string
+                          example: INV-2024-0001
+                          nullable: true
+                        rrn:
+                          type: string
+                          example: '123456789012'
+                          nullable: true
+                        amount:
+                          type: integer
+                          example: 150000
+                        currency_code:
+                          type: string
+                          example: IDR
+                        status:
+                          $ref: '#/components/schemas/TransactionStatus'
+                        payment_method:
+                          type: string
+                          example: QRIS
+                          nullable: true
+                        description:
+                          type: string
+                          example: QRIS payment for invoice INV-2024-0001
+                          nullable: true
+                        customer_name:
+                          type: string
+                          example: Budi Santoso
+                          nullable: true
+                        customer_phone:
+                          type: string
+                          example: '+628123456789'
+                          nullable: true
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: '2024-11-01T10:00:00Z'
+                        paid_at:
+                          type: string
+                          format: date-time
+                          example: '2024-11-01T10:15:00Z'
+                          nullable: true
+                  current_page:
+                    type: integer
+                    example: 1
+                  first_page_url:
+                    type: string
+                    format: uri
+                    example: https://api.example.com/api/v2/payments?page=1
+                  from:
+                    type: integer
+                    example: 1
+                  last_page:
+                    type: integer
+                    example: 5
+                  last_page_url:
+                    type: string
+                    format: uri
+                    example: https://api.example.com/api/v2/payments?page=5
+                  links:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          format: uri
+                          nullable: true
+                        label:
+                          type: string
+                        active:
+                          type: boolean
+                    example:
+                      - url: null
+                        label: '&laquo; Previous'
+                        active: false
+                      - url: https://api.example.com/api/v2/payments?page=1
+                        label: '1'
+                        active: true
+                      - url: https://api.example.com/api/v2/payments?page=2
+                        label: '2'
+                        active: false
+                      - url: https://api.example.com/api/v2/payments?page=2
+                        label: Next &raquo;
+                        active: false
+                  next_page_url:
+                    type: string
+                    format: uri
+                    nullable: true
+                    example: https://api.example.com/api/v2/payments?page=2
+                  path:
+                    type: string
+                    example: https://api.example.com/api/v2/payments
+                  per_page:
+                    type: integer
+                    example: 20
+                  prev_page_url:
+                    type: string
+                    format: uri
+                    nullable: true
+                    example: null
+                  to:
+                    type: integer
+                    example: 20
+                  total:
+                    type: integer
+                    example: 100
+                example:
+                  code: '20001002'
+                  data:
+                    - trx_id: TRX20241101001
+                      trx_reference: INV-2024-0001
+                      rrn: '123456789012'
+                      amount: 150000
+                      currency_code: IDR
+                      status: completed
+                      payment_method: QRIS
+                      description: QRIS payment for invoice INV-2024-0001
+                      customer_name: Budi Santoso
+                      customer_phone: '+628123456789'
+                      created_at: '2024-11-01T10:00:00Z'
+                      paid_at: '2024-11-01T10:15:00Z'
+                    - trx_id: TRX20241101002
+                      trx_reference: INV-2024-0002
+                      rrn: null
+                      amount: 200000
+                      currency_code: IDR
+                      status: pending
+                      payment_method: QRIS
+                      description: QRIS payment for invoice INV-2024-0002
+                      customer_name: null
+                      customer_phone: null
+                      created_at: '2024-11-01T11:00:00Z'
+                      paid_at: null
+                  current_page: 1
+                  first_page_url: https://api.example.com/api/v2/payments?page=1
+                  from: 1
+                  last_page: 5
+                  last_page_url: https://api.example.com/api/v2/payments?page=5
+                  links:
+                    - url: null
+                      label: '&laquo; Previous'
+                      active: false
+                    - url: https://api.example.com/api/v2/payments?page=1
+                      label: '1'
+                      active: true
+                    - url: https://api.example.com/api/v2/payments?page=2
+                      label: '2'
+                      active: false
+                    - url: https://api.example.com/api/v2/payments?page=2
+                      label: Next &raquo;
+                      active: false
+                  next_page_url: https://api.example.com/api/v2/payments?page=2
+                  path: https://api.example.com/api/v2/payments
+                  per_page: 20
+                  prev_page_url: null
+                  to: 20
+                  total: 100
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      tags:
+        - Payments
   /api/v2/initiate-payment-qris:
     post:
       summary: Process QRIS payment request.
@@ -139,11 +371,286 @@ paths:
                 - ref_trx
                 - currency_code
                 - amount
-  /api/v2/check-status/{trx_id}:
+  /api/v2/initiate-payment-virtual-account:
+    post:
+      summary: Process virtual account payment request.
+      operationId: processVirtualAccountPaymentRequest
+      description: Create a virtual account payment request for bank transfer. The response contains the virtual account number that customers can use to make payments via bank transfer or ATM.
+      parameters:
+        - in: header
+          name: X-API-KEY
+          description: Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-API-KEY}'
+          schema:
+            type: string
+        - in: header
+          name: X-MERCHANT-KEY
+          description: Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-MERCHANT-KEY}'
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Virtual account payment request created successfully. Returns transaction ID, reference, virtual account number, and bank details.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  code: '20101001'
+                  trx_id: TRX20241101002
+                  ref_trx: INV-2024-0002
+                  virtual_account_number: '0141234567890123456'
+                  bank_code: '014'
+                  bank_name: BCA
+                  expiration_time: 1440
+                  expiration_at: '2024-11-02T10:00:00Z'
+                properties:
+                  code:
+                    type: string
+                    example: '20101001'
+                  trx_id:
+                    type: string
+                    example: TRX20241101002
+                  ref_trx:
+                    type: string
+                    example: INV-2024-0002
+                  virtual_account_number:
+                    type: string
+                    example: '0141234567890123456'
+                    description: Virtual account number that customers can use to make payment
+                  bank_code:
+                    type: string
+                    example: '014'
+                    description: Bank code identifier
+                  bank_name:
+                    type: string
+                    example: BCA
+                    description: Full name of the bank
+                  expiration_time:
+                    type: integer
+                    example: 1440
+                    description: Expiry time for the virtual account in minutes
+                  expiration_at:
+                    type: string
+                    format: date-time
+                    example: '2024-11-02T10:00:00Z'
+                    description: Expiration date and time for the virtual account
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      tags:
+        - Payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ref_trx:
+                  type: string
+                  description: Unique merchant transaction reference.
+                  example: INV-2024-0002
+                  nullable: false
+                bank_code:
+                  type: string
+                  description: Bank code identifier. Use `/api/v2/banks` endpoint to get available bank codes.
+                  example: '014'
+                  nullable: false
+                currency_code:
+                  type: string
+                  description: Must be `IDR`.
+                  example: IDR
+                  nullable: false
+                amount:
+                  type: number
+                  description: Total amount to be charged to the customer.
+                  example: 250000.5
+                  nullable: false
+                expiration_time:
+                  type: integer
+                  description: Expiry time for the virtual account in minutes (30 - 1440). Default is 1440 (24 hours).
+                  example: 1440
+                  nullable: false
+                  minimum: 30
+                  maximum: 1440
+                  default: 1440
+                note:
+                  type: string
+                  description: A short internal note about the transaction.
+                  example: Virtual account payment for invoice
+                  nullable: true
+                description:
+                  type: string
+                  description: A customer-facing description that will appear on receipts.
+                  example: Virtual account payment for invoice INV-2024-0002
+                  nullable: true
+                customer_name:
+                  type: string
+                  description: Customer full name.
+                  example: Budi Santoso
+                  nullable: true
+                customer_phone:
+                  type: string
+                  description: Customer phone number in international format.
+                  example: '+628123456789'
+                  nullable: true
+                customer_email:
+                  type: string
+                  format: email
+                  description: Customer email address.
+                  example: budi.santoso@example.com
+                  nullable: true
+              required:
+                - ref_trx
+                - bank_code
+                - currency_code
+                - amount
+  /api/v2/initiate-payment-bank-transfer:
+    post:
+      summary: Process bank transfer payment request.
+      operationId: processBankTransferPaymentRequest
+      description: Create a bank transfer payment request. The response contains the merchant bank account details that customers can use to make direct bank transfers. Customers will transfer funds directly to the provided bank account.
+      parameters:
+        - in: header
+          name: X-API-KEY
+          description: Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-API-KEY}'
+          schema:
+            type: string
+        - in: header
+          name: X-MERCHANT-KEY
+          description: Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-MERCHANT-KEY}'
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Bank transfer payment request created successfully. Returns transaction ID, reference, and merchant bank account details for customer transfer.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  code: '20101002'
+                  trx_id: TRX20241101003
+                  ref_trx: INV-2024-0003
+                  bank_code: '014'
+                  bank_name: BCA
+                  account_number: '1234567890'
+                  account_holder_name: PT Merchant ABC
+                  amount: 300000
+                  currency_code: IDR
+                  transfer_instructions: Please transfer the exact amount to the account above. Include your reference number in the transfer notes.
+                properties:
+                  code:
+                    type: string
+                    example: '20101002'
+                  trx_id:
+                    type: string
+                    example: TRX20241101003
+                  ref_trx:
+                    type: string
+                    example: INV-2024-0003
+                  bank_code:
+                    type: string
+                    example: '014'
+                    description: Bank code identifier
+                  bank_name:
+                    type: string
+                    example: BCA
+                    description: Full name of the bank
+                  account_number:
+                    type: string
+                    example: '1234567890'
+                    description: Merchant bank account number for customer transfer
+                  account_holder_name:
+                    type: string
+                    example: PT Merchant ABC
+                    description: Account holder name
+                  amount:
+                    type: number
+                    example: 300000
+                    description: Amount to be transferred (must match exactly)
+                  currency_code:
+                    type: string
+                    example: IDR
+                    description: Currency code
+                  transfer_instructions:
+                    type: string
+                    example: Please transfer the exact amount to the account above. Include your reference number in the transfer notes.
+                    description: Instructions for the customer on how to complete the transfer
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      tags:
+        - Payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ref_trx:
+                  type: string
+                  description: Unique merchant transaction reference.
+                  example: INV-2024-0003
+                  nullable: false
+                bank_code:
+                  type: string
+                  description: Bank code identifier. Use `/api/v2/banks` endpoint to get available bank codes.
+                  example: '014'
+                  nullable: false
+                currency_code:
+                  type: string
+                  description: Must be `IDR`.
+                  example: IDR
+                  nullable: false
+                amount:
+                  type: number
+                  description: Total amount to be transferred by the customer.
+                  example: 300000.5
+                  nullable: false
+                note:
+                  type: string
+                  description: A short internal note about the transaction.
+                  example: Bank transfer payment for invoice
+                  nullable: true
+                description:
+                  type: string
+                  description: A customer-facing description that will appear on receipts.
+                  example: Bank transfer payment for invoice INV-2024-0003
+                  nullable: true
+                customer_name:
+                  type: string
+                  description: Customer full name.
+                  example: Budi Santoso
+                  nullable: true
+                customer_phone:
+                  type: string
+                  description: Customer phone number in international format.
+                  example: '+628123456789'
+                  nullable: true
+                customer_email:
+                  type: string
+                  format: email
+                  description: Customer email address.
+                  example: budi.santoso@example.com
+                  nullable: true
+              required:
+                - ref_trx
+                - bank_code
+                - currency_code
+                - amount
+  /api/v2/check-payment-status/{trx_id}:
     get:
-      summary: Check transaction status.
-      operationId: checkTransactionStatus
-      description: Retrieve the latest status for an existing transaction using its `trx_id`.
+      summary: Check payment transaction status.
+      operationId: checkPaymentStatus
+      description: Retrieve the latest status for an existing payment transaction using its `trx_id`.
       parameters:
         - in: header
           name: X-API-KEY
@@ -159,7 +666,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Transaction status retrieved successfully. Returns current status, transaction details, and payment information.
+          description: Payment transaction status retrieved successfully. Returns current status, transaction details, and payment information.
           content:
             application/json:
               schema:
@@ -167,32 +674,41 @@ paths:
                 example:
                   code: '20002001'
                   status: completed
-                  message: Payment, request status checked successfully.
+                  message: Payment status checked successfully.
                   data:
                     trx_id: TRX20241101001
-                    trx_ref: INV-2024-0001
+                    trx_reference: INV-2024-0001
                     rrn: '123456789012'
                     amount: 150000
                     currency_code: IDR
                     status: completed
+                    payment_method: QRIS
+                    description: QRIS payment for invoice INV-2024-0001
+                    customer_name: Budi Santoso
+                    customer_phone: '+628123456789'
                 properties:
+                  code:
+                    type: string
+                    example: '20002001'
                   status:
                     $ref: '#/components/schemas/TransactionStatus'
                   message:
                     type: string
-                    example: Payment, request status checked successfully.
+                    example: Payment status checked successfully.
                   data:
                     type: object
                     properties:
                       trx_id:
                         type: string
                         example: TRX20241101001
-                      trx_ref:
+                      trx_reference:
                         type: string
                         example: INV-2024-0001
+                        nullable: true
                       rrn:
                         type: string
                         example: '123456789012'
+                        nullable: true
                       amount:
                         type: integer
                         example: 150000
@@ -201,6 +717,22 @@ paths:
                         example: IDR
                       status:
                         $ref: '#/components/schemas/TransactionStatus'
+                      payment_method:
+                        type: string
+                        example: QRIS
+                        nullable: true
+                      description:
+                        type: string
+                        example: QRIS payment for invoice INV-2024-0001
+                        nullable: true
+                      customer_name:
+                        type: string
+                        example: Budi Santoso
+                        nullable: true
+                      customer_phone:
+                        type: string
+                        example: '+628123456789'
+                        nullable: true
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -210,8 +742,150 @@ paths:
     parameters:
       - in: path
         name: trx_id
-        description: The unique transaction identifier generated by the system.
+        description: The unique transaction identifier generated by the system for a payment transaction.
         example: TRX20241101001
+        required: true
+        schema:
+          type: string
+  /api/v2/check-withdrawal-status/{trx_id}:
+    get:
+      summary: Check withdrawal transaction status.
+      operationId: checkWithdrawalStatus
+      description: Retrieve the latest status for an existing withdrawal transaction using its `trx_id`.
+      parameters:
+        - in: header
+          name: X-API-KEY
+          description: Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-API-KEY}'
+          schema:
+            type: string
+        - in: header
+          name: X-MERCHANT-KEY
+          description: Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-MERCHANT-KEY}'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Withdrawal transaction status retrieved successfully. Returns current status, transaction details, and withdrawal information.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  code: '20002004'
+                  status: completed
+                  message: Withdrawal status checked successfully.
+                  data:
+                    trx_id: TRX-2025.01.15-ABC123XYZ
+                    trx_reference: WD-2025-0001
+                    amount: '250000.00'
+                    net_amount: '245000.00'
+                    payable_amount: '245000.00'
+                    currency_code: IDR
+                    status: completed
+                    withdrawal_method: Bank Transfer
+                    account_name: Bank BCA
+                    account_holder_name: Budi Santoso
+                    account_bank_name: Bank Central Asia
+                    account_number: '1234567890'
+                    account_bank_code: '014'
+                    trx_fee: '5000.00'
+                    description: Withdrawal to Bank BCA
+                    remarks: Withdrawal processed successfully
+                    environment: production
+                    is_sandbox: false
+                properties:
+                  code:
+                    type: string
+                    example: '20002004'
+                  status:
+                    $ref: '#/components/schemas/TransactionStatus'
+                  message:
+                    type: string
+                    example: Withdrawal status checked successfully.
+                  data:
+                    type: object
+                    properties:
+                      trx_id:
+                        type: string
+                        example: TRX-2025.01.15-ABC123XYZ
+                      trx_reference:
+                        type: string
+                        example: WD-2025-0001
+                        nullable: true
+                      amount:
+                        type: string
+                        example: '250000.00'
+                        description: Original withdrawal amount as a decimal string
+                      net_amount:
+                        type: string
+                        example: '245000.00'
+                        description: Net amount after fees as a decimal string
+                      payable_amount:
+                        type: string
+                        example: '245000.00'
+                        description: Final amount to be paid out as a decimal string
+                      currency_code:
+                        type: string
+                        example: IDR
+                      status:
+                        $ref: '#/components/schemas/TransactionStatus'
+                      withdrawal_method:
+                        type: string
+                        example: Bank Transfer
+                        nullable: true
+                      account_name:
+                        type: string
+                        example: Bank BCA
+                        nullable: true
+                      account_holder_name:
+                        type: string
+                        example: Budi Santoso
+                        nullable: true
+                      account_bank_name:
+                        type: string
+                        example: Bank Central Asia
+                        nullable: true
+                      account_number:
+                        type: string
+                        example: '1234567890'
+                        nullable: true
+                      account_bank_code:
+                        type: string
+                        example: '014'
+                        nullable: true
+                      trx_fee:
+                        type: string
+                        example: '5000.00'
+                        description: Transaction fee charged as a decimal string
+                      description:
+                        type: string
+                        example: Withdrawal to Bank BCA
+                        nullable: true
+                      remarks:
+                        type: string
+                        example: Withdrawal processed successfully
+                        nullable: true
+                      environment:
+                        type: string
+                        example: production
+                        description: Environment where the transaction occurred ("production" or "sandbox")
+                      is_sandbox:
+                        type: boolean
+                        example: false
+                        description: Whether the transaction is in sandbox mode
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      tags:
+        - Transactions
+    parameters:
+      - in: path
+        name: trx_id
+        description: The unique transaction identifier generated by the system for a withdrawal transaction.
+        example: TRX-2025.01.15-ABC123XYZ
         required: true
         schema:
           type: string
@@ -526,6 +1200,202 @@ paths:
         required: true
         schema:
           type: string
+  /api/v2/banks:
+    get:
+      summary: List supported banks.
+      operationId: listBanks
+      description: Retrieve the list of supported banks for payments and withdrawals. Returns banks with their IDs and names. Use bank codes for virtual account payments and withdrawal account setup.
+      parameters:
+        - in: header
+          name: X-API-KEY
+          description: Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-API-KEY}'
+          schema:
+            type: string
+        - in: header
+          name: X-MERCHANT-KEY
+          description: Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-MERCHANT-KEY}'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of supported banks retrieved successfully. Returns an array of banks with bank ID and bank name. These banks can be used for virtual account payments and withdrawal account setup.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: '20004008'
+                  data:
+                    type: array
+                    example:
+                      - bank_id: '014'
+                        bank_name: BCA
+                      - bank_id: '008'
+                        bank_name: Bank Mandiri
+                      - bank_id: '009'
+                        bank_name: Bank BNI
+                    items:
+                      type: object
+                      properties:
+                        bank_id:
+                          type: string
+                          example: '014'
+                          description: Bank code identifier. Use this code when creating virtual account payments via `/api/v2/initiate-payment-virtual-account` or withdrawal accounts.
+                        bank_name:
+                          type: string
+                          example: BCA
+                          description: Full name of the bank
+                example:
+                  code: '20004008'
+                  data:
+                    - bank_id: '014'
+                      bank_name: BCA
+                    - bank_id: '008'
+                      bank_name: Bank Mandiri
+                    - bank_id: '009'
+                      bank_name: Bank BNI
+        '500':
+          $ref: '#/components/responses/ServerError'
+      tags:
+        - Banks
+  /api/v2/digital-wallets:
+    get:
+      summary: List supported digital wallets.
+      operationId: listDigitalWallets
+      description: Retrieve the list of supported digital wallets for payments and withdrawals. Returns wallets with their IDs and names. Use wallet IDs for payment processing and withdrawal account setup.
+      parameters:
+        - in: header
+          name: X-API-KEY
+          description: Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-API-KEY}'
+          schema:
+            type: string
+        - in: header
+          name: X-MERCHANT-KEY
+          description: Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-MERCHANT-KEY}'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of supported digital wallets retrieved successfully. Returns an array of wallets with wallet ID and wallet name. These wallets can be used for payment processing and withdrawal account setup.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: '20004009'
+                  data:
+                    type: array
+                    example:
+                      - wallet_id: GOPAY
+                        wallet_name: GoPay
+                      - wallet_id: OVO
+                        wallet_name: OVO
+                      - wallet_id: DANA
+                        wallet_name: DANA
+                    items:
+                      type: object
+                      properties:
+                        wallet_id:
+                          type: string
+                          example: GOPAY
+                          description: Digital wallet code identifier. Use this ID for payment processing or withdrawal account setup.
+                        wallet_name:
+                          type: string
+                          example: GoPay
+                          description: Full name of the digital wallet
+                example:
+                  code: '20004009'
+                  data:
+                    - wallet_id: GOPAY
+                      wallet_name: GoPay
+                    - wallet_id: OVO
+                      wallet_name: OVO
+                    - wallet_id: DANA
+                      wallet_name: DANA
+        '500':
+          $ref: '#/components/responses/ServerError'
+      tags:
+        - Digital Wallets
+  /api/v2/virtual-account-banks:
+    get:
+      summary: List banks supporting virtual accounts.
+      operationId: listVirtualAccountBanks
+      description: Retrieve the list of banks that support virtual account payments. Returns banks with their IDs and names that can be used for creating virtual account payment requests.
+      parameters:
+        - in: header
+          name: X-API-KEY
+          description: Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-API-KEY}'
+          schema:
+            type: string
+        - in: header
+          name: X-MERCHANT-KEY
+          description: Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-MERCHANT-KEY}'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of banks supporting virtual accounts retrieved successfully. Returns an array of banks with bank ID and bank name that support virtual account payments.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: '20004010'
+                  data:
+                    type: array
+                    example:
+                      - bank_id: '014'
+                        bank_name: BCA
+                        supports_virtual_account: true
+                      - bank_id: '008'
+                        bank_name: Bank Mandiri
+                        supports_virtual_account: true
+                      - bank_id: '009'
+                        bank_name: Bank BNI
+                        supports_virtual_account: true
+                    items:
+                      type: object
+                      properties:
+                        bank_id:
+                          type: string
+                          example: '014'
+                          description: Bank code identifier. Use this code in the `bank_code` field when creating virtual account payments via `/api/v2/initiate-payment-virtual-account`.
+                        bank_name:
+                          type: string
+                          example: BCA
+                          description: Full name of the bank
+                        supports_virtual_account:
+                          type: boolean
+                          example: true
+                          description: Indicates whether this bank supports virtual account payments
+                example:
+                  code: '20004010'
+                  data:
+                    - bank_id: '014'
+                      bank_name: BCA
+                      supports_virtual_account: true
+                    - bank_id: '008'
+                      bank_name: Bank Mandiri
+                      supports_virtual_account: true
+                    - bank_id: '009'
+                      bank_name: Bank BNI
+                      supports_virtual_account: true
+        '500':
+          $ref: '#/components/responses/ServerError'
+      tags:
+        - Banks
   /api/v2/withdraw-accounts/methods:
     get:
       summary: List withdraw methods.
@@ -1187,6 +2057,287 @@ paths:
         required: true
         schema:
           type: integer
+  /api/v2/withdrawals:
+    get:
+      summary: List withdrawal transactions.
+      operationId: listWithdrawals
+      description: Retrieve a list of withdrawal transactions for the authenticated merchant. Returns withdrawal transactions with their status, amounts, and transaction details.
+      parameters:
+        - in: header
+          name: X-API-KEY
+          description: Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-API-KEY}'
+          schema:
+            type: string
+        - in: header
+          name: X-MERCHANT-KEY
+          description: Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.
+          example: '{X-MERCHANT-KEY}'
+          schema:
+            type: string
+        - in: query
+          name: status
+          description: Filter withdrawals by status (pending, completed, failed, canceled, processing).
+          required: false
+          schema:
+            type: string
+            enum:
+              - pending
+              - completed
+              - failed
+              - canceled
+              - processing
+          example: completed
+        - in: query
+          name: page
+          description: Page number for pagination. Default is 1.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          example: 1
+        - in: query
+          name: per_page
+          description: Number of withdrawals per page. Default is 20, maximum is 100.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          example: 20
+      responses:
+        '200':
+          description: List of withdrawal transactions retrieved successfully. Returns an array of withdrawal transactions with their details.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: '20005002'
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        trx_id:
+                          type: string
+                          example: TRX-2025.01.15-ABC123XYZ
+                        trx_reference:
+                          type: string
+                          example: WD-2025-0001
+                          nullable: true
+                        amount:
+                          type: string
+                          example: '250000.00'
+                          description: Original withdrawal amount as a decimal string
+                        net_amount:
+                          type: string
+                          example: '245000.00'
+                          description: Net amount after fees as a decimal string
+                        payable_amount:
+                          type: string
+                          example: '245000.00'
+                          description: Final amount to be paid out as a decimal string
+                        currency_code:
+                          type: string
+                          example: IDR
+                        status:
+                          $ref: '#/components/schemas/TransactionStatus'
+                        withdrawal_method:
+                          type: string
+                          example: Bank Transfer
+                          nullable: true
+                        account_name:
+                          type: string
+                          example: Bank BCA
+                          nullable: true
+                        account_holder_name:
+                          type: string
+                          example: Budi Santoso
+                          nullable: true
+                        account_bank_name:
+                          type: string
+                          example: Bank Central Asia
+                          nullable: true
+                        account_number:
+                          type: string
+                          example: '1234567890'
+                          nullable: true
+                        account_bank_code:
+                          type: string
+                          example: '014'
+                          nullable: true
+                        trx_fee:
+                          type: string
+                          example: '5000.00'
+                          description: Transaction fee charged as a decimal string
+                        description:
+                          type: string
+                          example: Withdrawal to Bank BCA
+                          nullable: true
+                        remarks:
+                          type: string
+                          example: Withdrawal processed successfully
+                          nullable: true
+                        environment:
+                          type: string
+                          example: production
+                          description: Environment where the transaction occurred ("production" or "sandbox")
+                        is_sandbox:
+                          type: boolean
+                          example: false
+                          description: Whether the transaction is in sandbox mode
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: '2025-01-15T10:00:00Z'
+                        completed_at:
+                          type: string
+                          format: date-time
+                          example: '2025-01-15T10:30:00Z'
+                          nullable: true
+                  current_page:
+                    type: integer
+                    example: 1
+                  first_page_url:
+                    type: string
+                    format: uri
+                    example: https://api.example.com/api/v2/withdrawals?page=1
+                  from:
+                    type: integer
+                    example: 1
+                  last_page:
+                    type: integer
+                    example: 3
+                  last_page_url:
+                    type: string
+                    format: uri
+                    example: https://api.example.com/api/v2/withdrawals?page=3
+                  links:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          format: uri
+                          nullable: true
+                        label:
+                          type: string
+                        active:
+                          type: boolean
+                    example:
+                      - url: null
+                        label: '&laquo; Previous'
+                        active: false
+                      - url: https://api.example.com/api/v2/withdrawals?page=1
+                        label: '1'
+                        active: true
+                      - url: https://api.example.com/api/v2/withdrawals?page=2
+                        label: '2'
+                        active: false
+                      - url: https://api.example.com/api/v2/withdrawals?page=2
+                        label: Next &raquo;
+                        active: false
+                  next_page_url:
+                    type: string
+                    format: uri
+                    nullable: true
+                    example: https://api.example.com/api/v2/withdrawals?page=2
+                  path:
+                    type: string
+                    example: https://api.example.com/api/v2/withdrawals
+                  per_page:
+                    type: integer
+                    example: 20
+                  prev_page_url:
+                    type: string
+                    format: uri
+                    nullable: true
+                    example: null
+                  to:
+                    type: integer
+                    example: 20
+                  total:
+                    type: integer
+                    example: 50
+                example:
+                  code: '20005002'
+                  data:
+                    - trx_id: TRX-2025.01.15-ABC123XYZ
+                      trx_reference: WD-2025-0001
+                      amount: '250000.00'
+                      net_amount: '245000.00'
+                      payable_amount: '245000.00'
+                      currency_code: IDR
+                      status: completed
+                      withdrawal_method: Bank Transfer
+                      account_name: Bank BCA
+                      account_holder_name: Budi Santoso
+                      account_bank_name: Bank Central Asia
+                      account_number: '1234567890'
+                      account_bank_code: '014'
+                      trx_fee: '5000.00'
+                      description: Withdrawal to Bank BCA
+                      remarks: Withdrawal processed successfully
+                      environment: production
+                      is_sandbox: false
+                      created_at: '2025-01-15T10:00:00Z'
+                      completed_at: '2025-01-15T10:30:00Z'
+                    - trx_id: TRX-2025.01.16-DEF456UVW
+                      trx_reference: WD-2025-0002
+                      amount: '100000.00'
+                      net_amount: '95000.00'
+                      payable_amount: '95000.00'
+                      currency_code: IDR
+                      status: pending
+                      withdrawal_method: Bank Transfer
+                      account_name: Bank Mandiri
+                      account_holder_name: null
+                      account_bank_name: null
+                      account_number: '9876543210'
+                      account_bank_code: '008'
+                      trx_fee: '5000.00'
+                      description: null
+                      remarks: null
+                      environment: production
+                      is_sandbox: false
+                      created_at: '2025-01-16T09:00:00Z'
+                      completed_at: null
+                  current_page: 1
+                  first_page_url: https://api.example.com/api/v2/withdrawals?page=1
+                  from: 1
+                  last_page: 3
+                  last_page_url: https://api.example.com/api/v2/withdrawals?page=3
+                  links:
+                    - url: null
+                      label: '&laquo; Previous'
+                      active: false
+                    - url: https://api.example.com/api/v2/withdrawals?page=1
+                      label: '1'
+                      active: true
+                    - url: https://api.example.com/api/v2/withdrawals?page=2
+                      label: '2'
+                      active: false
+                    - url: https://api.example.com/api/v2/withdrawals?page=2
+                      label: Next &raquo;
+                      active: false
+                  next_page_url: https://api.example.com/api/v2/withdrawals?page=2
+                  path: https://api.example.com/api/v2/withdrawals
+                  per_page: 20
+                  prev_page_url: null
+                  to: 20
+                  total: 50
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      tags:
+        - Withdrawals
   /api/v2/withdraw:
     post:
       summary: Create a withdrawal.
@@ -1221,6 +2372,9 @@ paths:
                     account_id: 15
                     wallet_id: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
                 properties:
+                  code:
+                    type: string
+                    example: '20105001'
                   message:
                     type: string
                     example: Withdrawal has been created.

@@ -2,6 +2,38 @@
 
 All API requests require authentication using API keys. This guide explains how to authenticate your requests to the WRPay API.
 
+## Authentication Flow
+
+```mermaid
+flowchart TD
+    A[Start: Need to Make API Request] --> B[Get API Keys from Merchant Dashboard]
+    B --> C[Log in to Merchant Dashboard]
+    C --> D[Navigate to API Access Section]
+    D --> E[Generate/Copy Public API Key]
+    E --> F[Generate/Copy Secret API Key]
+    F --> G[Store Keys Securely]
+    G --> H[Include Headers in Request]
+    H --> I["X-API-KEY: public-key"]
+    I --> J["X-MERCHANT-KEY: secret-key"]
+    J --> K[Send Request to WRPay API]
+    K --> L{API Validates Keys}
+    L -->|Valid| M[200 OK: Request Processed]
+    L -->|Invalid/Missing| N[401 Unauthorized]
+    N --> O[Check API Keys]
+    O --> P{Keys Correct?}
+    P -->|Yes| Q[Check if Keys are Activated]
+    P -->|No| B
+    Q -->|Not Activated| R[Activate Keys in Dashboard]
+    Q -->|Activated| S[Contact Support]
+    R --> K
+    M --> T[Receive Response Data]
+    
+    style M fill:#90EE90
+    style N fill:#FFB6C1
+    style B fill:#87CEEB
+    style G fill:#FFD700
+```
+
 ## API Keys
 
 To authenticate API requests, you need two API keys:
