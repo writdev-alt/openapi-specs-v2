@@ -362,7 +362,7 @@
                   description: QRIS payment for invoice INV-2024-0001
                   note: QRIS top-up
                   qris_content: 00020101021226680012IDCO...
-                  qr_image_url: 'https://api.example.com/qr/TRX20241101001.png'
+                  qr_image_url: '/qr/TRX20241101001.png'
                   created_at: '2024-11-01T10:00:00Z'
                   paid_at: '2024-11-01T10:15:00Z'
               properties:
@@ -415,7 +415,7 @@
                     qr_image_url:
                       type: string
                       format: uri
-                      example: 'https://api.example.com/qr/TRX20241101001.png'
+                      example: '/qr/TRX20241101001.png'
                       description: 'URL to the QR code image for the transaction.'
                       nullable: true
                     created_at:
