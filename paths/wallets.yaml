@@ -37,16 +37,16 @@
                       uuid:
                         type: string
                         example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                      currency_code:
+                      currencyCode:
                         type: string
                         example: IDR
                       balance:
                         type: integer
                         example: 2500000
-                      hold_balance:
+                      holdBalance:
                         type: integer
                         example: 0
-                      available_balance:
+                      availableBalance:
                         type: integer
                         example: 2500000
               example:
@@ -54,10 +54,10 @@
                 data:
                   -
                     uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                    currency_code: IDR
+                    currencyCode: IDR
                     balance: 2500000
-                    hold_balance: 0
-                    available_balance: 2500000
+                    holdBalance: 0
+                    availableBalance: 2500000
     tags:
       - Wallets
 '/api/v2/wallets/{uuid}':
@@ -90,10 +90,10 @@
               example:
                 code: '20003002'
                 uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                currency_code: IDR
+                currencyCode: IDR
                 balance: 2500000
-                hold_balance: 0
-                available_balance: 2500000
+                holdBalance: 0
+                availableBalance: 2500000
               properties:
                 code:
                   type: string
@@ -101,16 +101,16 @@
                 uuid:
                   type: string
                   example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                currency_code:
+                currencyCode:
                   type: string
                   example: IDR
                 balance:
                   type: integer
                   example: 2500000
-                hold_balance:
+                holdBalance:
                   type: integer
                   example: 0
-                available_balance:
+                availableBalance:
                   type: integer
                   example: 2500000
       422:

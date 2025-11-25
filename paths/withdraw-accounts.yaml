@@ -95,30 +95,30 @@
                       type: array
                       example:
                         -
-                          bank_id: '014'
-                          bank_name: BCA
+                          bankId: '014'
+                          bankName: BCA
                       items:
                         type: object
                         properties:
-                          bank_id:
+                          bankId:
                             type: string
                             example: '014'
-                          bank_name:
+                          bankName:
                             type: string
                             example: BCA
                     wallets:
                       type: array
                       example:
                         -
-                          wallet_id: GOPAY
-                          wallet_name: GoPay
+                          walletId: GOPAY
+                          walletName: GoPay
                       items:
                         type: object
                         properties:
-                          wallet_id:
+                          walletId:
                             type: string
                             example: GOPAY
-                          wallet_name:
+                          walletName:
                             type: string
                             example: GoPay
               example:
@@ -126,12 +126,12 @@
                 data:
                   banks:
                     -
-                      bank_id: '014'
-                      bank_name: BCA
+                      bankId: '014'
+                      bankName: BCA
                   wallets:
                     -
-                      wallet_id: GOPAY
-                      wallet_name: GoPay
+                      walletId: GOPAY
+                      walletName: GoPay
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -167,13 +167,13 @@
                 code: '20004003'
                 message: 'Account information retrieved successfully'
                 data:
-                  min_limit: 50000
-                  max_limit: 50000000
+                  minLimit: 50000
+                  maxLimit: 50000000
                   charge: 5000
-                  charge_type: fixed
+                  chargeType: fixed
                   currency: IDR
-                  processing_time: H+1
-                  conversion_rate: 1
+                  processingTime: H+1
+                  conversionRate: 1
               properties:
                 code:
                   type: string
@@ -184,25 +184,25 @@
                 data:
                   type: object
                   properties:
-                    min_limit:
+                    minLimit:
                       type: integer
                       example: 50000
-                    max_limit:
+                    maxLimit:
                       type: integer
                       example: 50000000
                     charge:
                       type: integer
                       example: 5000
-                    charge_type:
+                    chargeType:
                       type: string
                       example: fixed
                     currency:
                       type: string
                       example: IDR
-                    processing_time:
+                    processingTime:
                       type: string
                       example: H+1
-                    conversion_rate:
+                    conversionRate:
                       type: integer
                       example: 1
       500:
@@ -226,7 +226,7 @@
     parameters:
       -
         in: query
-        name: wallet_id
+        name: walletId
         description: 'Filter accounts by wallet UUID so the currency matches.'
         example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
         required: false
@@ -262,8 +262,8 @@
                   -
                     id: 15
                     name: 'Bank BCA'
-                    account_number: '1234567890'
-                    withdraw_method:
+                    accountNumber: '1234567890'
+                    withdrawMethod:
                       id: 3
                       name: 'Bank Transfer'
                       currency: IDR
@@ -277,8 +277,8 @@
                     -
                       id: 15
                       name: 'Bank BCA'
-                      account_number: '1234567890'
-                      withdraw_method:
+                      accountNumber: '1234567890'
+                      withdrawMethod:
                         id: 3
                         name: 'Bank Transfer'
                         currency: IDR
@@ -291,10 +291,10 @@
                       name:
                         type: string
                         example: 'Bank BCA'
-                      account_number:
+                      accountNumber:
                         type: string
                         example: '1234567890'
-                      withdraw_method:
+                      withdrawMethod:
                         type: object
                         properties:
                           id:
@@ -341,8 +341,8 @@
                 data:
                   id: 15
                   name: 'Bank BCA'
-                  account_number: '1234567890'
-                  withdraw_method:
+                  accountNumber: '1234567890'
+                  withdrawMethod:
                     id: 3
                     name: 'Bank Transfer'
                     currency: IDR
@@ -359,10 +359,10 @@
                     name:
                       type: string
                       example: 'Bank BCA'
-                    account_number:
+                    accountNumber:
                       type: string
                       example: '1234567890'
-                    withdraw_method:
+                    withdrawMethod:
                       type: object
                       properties:
                         id:
@@ -387,12 +387,12 @@
           schema:
             type: object
             properties:
-              method_id:
+              methodId:
                 type: integer
                 description: 'Identifier of the payout method returned by `lists`.'
                 example: 1
                 nullable: false
-              bank_code:
+              bankCode:
                 type: string
                 description: 'Bank or wallet code as supplied by the gateway.'
                 example: '014'
@@ -402,17 +402,17 @@
                 description: 'Must be one of `Customer` or `Reconcile`.'
                 example: Customer
                 nullable: false
-              account_number:
+              accountNumber:
                 type: string
                 description: 'Destination account or wallet number.'
                 example: '1234567890'
                 nullable: false
-              account_holder_name:
+              accountHolderName:
                 type: string
                 description: 'Account holder full name.'
                 example: 'Budi Santoso'
                 nullable: false
-              branch_name:
+              branchName:
                 type: string
                 description: 'Branch name registered for the account.'
                 example: 'KC Jakarta'
@@ -422,22 +422,22 @@
                 description: 'Country ISO name.'
                 example: Indonesia
                 nullable: true
-              account_type:
+              accountType:
                 type: string
                 description: 'Account type or currency indicator provided by the gateway.'
                 example: Saving
                 nullable: true
-              additional_info:
+              additionalInfo:
                 type: string
                 description: 'Additional metadata to pass to the gateway.'
                 example: '{"bankCity":"Jakarta"}'
                 nullable: true
             required:
-              - method_id
-              - bank_code
+              - methodId
+              - bankCode
               - category
-              - account_number
-              - account_holder_name
+              - accountNumber
+              - accountHolderName
 '/api/v2/withdraw-accounts/{id}':
   get:
     summary: 'Show withdraw account details.'
@@ -470,8 +470,8 @@
                 data:
                   id: 15
                   name: 'Bank BCA'
-                  account_number: '1234567890'
-                  withdraw_method:
+                  accountNumber: '1234567890'
+                  withdrawMethod:
                     id: 3
                     name: 'Bank Transfer'
                     currency: IDR
@@ -488,10 +488,10 @@
                     name:
                       type: string
                       example: 'Bank BCA'
-                    account_number:
+                    accountNumber:
                       type: string
                       example: '1234567890'
-                    withdraw_method:
+                    withdrawMethod:
                       type: object
                       properties:
                         id:
@@ -538,8 +538,8 @@
                 data:
                   id: 15
                   name: 'Bank BCA'
-                  account_number: '1234567890'
-                  withdraw_method:
+                  accountNumber: '1234567890'
+                  withdrawMethod:
                     id: 3
                     name: 'Bank Transfer'
                     currency: IDR
@@ -556,10 +556,10 @@
                     name:
                       type: string
                       example: 'Bank BCA'
-                    account_number:
+                    accountNumber:
                       type: string
                       example: '1234567890'
-                    withdraw_method:
+                    withdrawMethod:
                       type: object
                       properties:
                         id:
@@ -584,12 +584,12 @@
           schema:
             type: object
             properties:
-              method_id:
+              methodId:
                 type: integer
                 description: 'Identifier of the payout method returned by `lists`.'
                 example: 1
                 nullable: false
-              bank_code:
+              bankCode:
                 type: string
                 description: 'Bank or wallet code as supplied by the gateway.'
                 example: '014'
@@ -599,17 +599,17 @@
                 description: 'Must be one of `Customer` or `Reconcile`.'
                 example: Customer
                 nullable: false
-              account_number:
+              accountNumber:
                 type: string
                 description: 'Destination account or wallet number.'
                 example: '1234567890'
                 nullable: false
-              account_holder_name:
+              accountHolderName:
                 type: string
                 description: 'Account holder full name.'
                 example: 'Budi Santoso'
                 nullable: false
-              branch_name:
+              branchName:
                 type: string
                 description: 'Branch name registered for the account.'
                 example: 'KC Jakarta'
@@ -619,22 +619,22 @@
                 description: 'Country ISO name.'
                 example: Indonesia
                 nullable: true
-              account_type:
+              accountType:
                 type: string
                 description: 'Account type or currency indicator provided by the gateway.'
                 example: Saving
                 nullable: true
-              additional_info:
+              additionalInfo:
                 type: string
                 description: 'Additional metadata to pass to the gateway.'
                 example: '{"bankCity":"Jakarta"}'
                 nullable: true
             required:
-              - method_id
-              - bank_code
+              - methodId
+              - bankCode
               - category
-              - account_number
-              - account_holder_name
+              - accountNumber
+              - accountHolderName
   delete:
     summary: 'Delete a withdraw account.'
     operationId: deleteAWithdrawAccount

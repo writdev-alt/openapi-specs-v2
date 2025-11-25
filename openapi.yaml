@@ -102,10 +102,10 @@ paths:
                     items:
                       type: object
                       properties:
-                        trx_id:
+                        trxId:
                           type: string
                           example: TRX20241101001
-                        trx_reference:
+                        trxReference:
                           type: string
                           example: INV-2024-0001
                           nullable: true
@@ -116,12 +116,12 @@ paths:
                         amount:
                           type: integer
                           example: 150000
-                        currency_code:
+                        currencyCode:
                           type: string
                           example: IDR
                         status:
                           $ref: '#/components/schemas/TransactionStatus'
-                        payment_method:
+                        paymentMethod:
                           type: string
                           example: QRIS
                           nullable: true
@@ -129,37 +129,37 @@ paths:
                           type: string
                           example: QRIS payment for invoice INV-2024-0001
                           nullable: true
-                        customer_name:
+                        customerName:
                           type: string
                           example: Budi Santoso
                           nullable: true
-                        customer_phone:
+                        customerPhone:
                           type: string
                           example: '+628123456789'
                           nullable: true
-                        created_at:
+                        createdAt:
                           type: string
                           format: date-time
                           example: '2024-11-01T10:00:00Z'
-                        paid_at:
+                        paidAt:
                           type: string
                           format: date-time
                           example: '2024-11-01T10:15:00Z'
                           nullable: true
-                  current_page:
+                  currentPage:
                     type: integer
                     example: 1
-                  first_page_url:
+                  firstPageUrl:
                     type: string
                     format: uri
                     example: /api/v2/payments?page=1
                   from:
                     type: integer
                     example: 1
-                  last_page:
+                  lastPage:
                     type: integer
                     example: 5
-                  last_page_url:
+                  lastPageUrl:
                     type: string
                     format: uri
                     example: /api/v2/payments?page=5
@@ -189,7 +189,7 @@ paths:
                       - url: /api/v2/payments?page=2
                         label: Next &raquo;
                         active: false
-                  next_page_url:
+                  nextPageUrl:
                     type: string
                     format: uri
                     nullable: true
@@ -197,10 +197,10 @@ paths:
                   path:
                     type: string
                     example: /api/v2/payments
-                  per_page:
+                  perPage:
                     type: integer
                     example: 20
-                  prev_page_url:
+                  prevPageUrl:
                     type: string
                     format: uri
                     nullable: true
@@ -214,35 +214,35 @@ paths:
                 example:
                   code: '20001002'
                   data:
-                    - trx_id: TRX20241101001
-                      trx_reference: INV-2024-0001
+                    - trxId: TRX20241101001
+                      trxReference: INV-2024-0001
                       rrn: '123456789012'
                       amount: 150000
-                      currency_code: IDR
+                      currencyCode: IDR
                       status: completed
-                      payment_method: QRIS
+                      paymentMethod: QRIS
                       description: QRIS payment for invoice INV-2024-0001
-                      customer_name: Budi Santoso
-                      customer_phone: '+628123456789'
-                      created_at: '2024-11-01T10:00:00Z'
-                      paid_at: '2024-11-01T10:15:00Z'
-                    - trx_id: TRX20241101002
-                      trx_reference: INV-2024-0002
+                      customerName: Budi Santoso
+                      customerPhone: '+628123456789'
+                      createdAt: '2024-11-01T10:00:00Z'
+                      paidAt: '2024-11-01T10:15:00Z'
+                    - trxId: TRX20241101002
+                      trxReference: INV-2024-0002
                       rrn: null
                       amount: 200000
-                      currency_code: IDR
+                      currencyCode: IDR
                       status: pending
-                      payment_method: QRIS
+                      paymentMethod: QRIS
                       description: QRIS payment for invoice INV-2024-0002
-                      customer_name: null
-                      customer_phone: null
-                      created_at: '2024-11-01T11:00:00Z'
-                      paid_at: null
-                  current_page: 1
-                  first_page_url: /api/v2/payments?page=1
+                      customerName: null
+                      customerPhone: null
+                      createdAt: '2024-11-01T11:00:00Z'
+                      paidAt: null
+                  currentPage: 1
+                  firstPageUrl: /api/v2/payments?page=1
                   from: 1
-                  last_page: 5
-                  last_page_url: /api/v2/payments?page=5
+                  lastPage: 5
+                  lastPageUrl: /api/v2/payments?page=5
                   links:
                     - url: null
                       label: '&laquo; Previous'
@@ -256,10 +256,10 @@ paths:
                     - url: /api/v2/payments?page=2
                       label: Next &raquo;
                       active: false
-                  next_page_url: /api/v2/payments?page=2
+                  nextPageUrl: /api/v2/payments?page=2
                   path: /api/v2/payments
-                  per_page: 20
-                  prev_page_url: null
+                  perPage: 20
+                  prevPageUrl: null
                   to: 20
                   total: 100
         '422':
@@ -298,20 +298,20 @@ paths:
                 type: object
                 example:
                   code: '20001001'
-                  trx_id: TRX20241101001
-                  ref_trx: INV-2024-0001
-                  qris_content: 00020101021226680012IDCO...
+                  trxId: TRX20241101001
+                  refTrx: INV-2024-0001
+                  qrisContent: 00020101021226680012IDCO...
                 properties:
                   code:
                     type: string
                     example: '20001001'
-                  trx_id:
+                  trxId:
                     type: string
                     example: TRX20241101001
-                  ref_trx:
+                  refTrx:
                     type: string
                     example: INV-2024-0001
-                  qris_content:
+                  qrisContent:
                     type: string
                     example: 00020101021226680012IDCO...
         '422':
@@ -327,12 +327,12 @@ paths:
             schema:
               type: object
               properties:
-                ref_trx:
+                refTrx:
                   type: string
                   description: Unique merchant transaction reference.
                   example: INV-2024-0001
                   nullable: false
-                currency_code:
+                currencyCode:
                   type: string
                   description: Must be `IDR`.
                   example: IDR
@@ -342,7 +342,7 @@ paths:
                   description: Total amount to be charged to the customer.
                   example: 150000.5
                   nullable: false
-                expiration_time:
+                expirationTime:
                   type: integer
                   description: Expiry time for the QR code in minutes (30 - 1440).
                   example: 60
@@ -357,19 +357,19 @@ paths:
                   description: A customer-facing description that will appear on receipts.
                   example: QRIS payment for invoice INV-2024-0001
                   nullable: true
-                customer_name:
+                customerName:
                   type: string
                   description: Customer full name.
                   example: Budi Santoso
                   nullable: true
-                customer_phone:
+                customerPhone:
                   type: string
                   description: Customer phone number in international format.
                   example: '+628123456789'
                   nullable: true
               required:
-                - ref_trx
-                - currency_code
+                - refTrx
+                - currencyCode
                 - amount
   /api/v2/initiate-payment-virtual-account:
     post:
@@ -398,40 +398,40 @@ paths:
                 type: object
                 example:
                   code: '20101001'
-                  trx_id: TRX20241101002
-                  ref_trx: INV-2024-0002
-                  virtual_account_number: '0141234567890123456'
-                  bank_code: '014'
-                  bank_name: BCA
-                  expiration_time: 1440
-                  expiration_at: '2024-11-02T10:00:00Z'
+                  trxId: TRX20241101002
+                  refTrx: INV-2024-0002
+                  virtualAccountNumber: '0141234567890123456'
+                  bankCode: '014'
+                  bankName: BCA
+                  expirationTime: 1440
+                  expirationAt: '2024-11-02T10:00:00Z'
                 properties:
                   code:
                     type: string
                     example: '20101001'
-                  trx_id:
+                  trxId:
                     type: string
                     example: TRX20241101002
-                  ref_trx:
+                  refTrx:
                     type: string
                     example: INV-2024-0002
-                  virtual_account_number:
+                  virtualAccountNumber:
                     type: string
                     example: '0141234567890123456'
                     description: Virtual account number that customers can use to make payment
-                  bank_code:
+                  bankCode:
                     type: string
                     example: '014'
                     description: Bank code identifier
-                  bank_name:
+                  bankName:
                     type: string
                     example: BCA
                     description: Full name of the bank
-                  expiration_time:
+                  expirationTime:
                     type: integer
                     example: 1440
                     description: Expiry time for the virtual account in minutes
-                  expiration_at:
+                  expirationAt:
                     type: string
                     format: date-time
                     example: '2024-11-02T10:00:00Z'
@@ -449,17 +449,17 @@ paths:
             schema:
               type: object
               properties:
-                ref_trx:
+                refTrx:
                   type: string
                   description: Unique merchant transaction reference.
                   example: INV-2024-0002
                   nullable: false
-                bank_code:
+                bankCode:
                   type: string
                   description: Bank code identifier. Use `/api/v2/banks` endpoint to get available bank codes.
                   example: '014'
                   nullable: false
-                currency_code:
+                currencyCode:
                   type: string
                   description: Must be `IDR`.
                   example: IDR
@@ -469,7 +469,7 @@ paths:
                   description: Total amount to be charged to the customer.
                   example: 250000.5
                   nullable: false
-                expiration_time:
+                expirationTime:
                   type: integer
                   description: Expiry time for the virtual account in minutes (30 - 1440). Default is 1440 (24 hours).
                   example: 1440
@@ -487,26 +487,26 @@ paths:
                   description: A customer-facing description that will appear on receipts.
                   example: Virtual account payment for invoice INV-2024-0002
                   nullable: true
-                customer_name:
+                customerName:
                   type: string
                   description: Customer full name.
                   example: Budi Santoso
                   nullable: true
-                customer_phone:
+                customerPhone:
                   type: string
                   description: Customer phone number in international format.
                   example: '+628123456789'
                   nullable: true
-                customer_email:
+                customerEmail:
                   type: string
                   format: email
                   description: Customer email address.
                   example: budi.santoso@example.com
                   nullable: true
               required:
-                - ref_trx
-                - bank_code
-                - currency_code
+                - refTrx
+                - bankCode
+                - currencyCode
                 - amount
   /api/v2/initiate-payment-bank-transfer:
     post:
@@ -535,38 +535,38 @@ paths:
                 type: object
                 example:
                   code: '20101002'
-                  trx_id: TRX20241101003
-                  ref_trx: INV-2024-0003
-                  bank_code: '014'
-                  bank_name: BCA
-                  account_number: '1234567890'
-                  account_holder_name: PT Merchant ABC
+                  trxId: TRX20241101003
+                  refTrx: INV-2024-0003
+                  bankCode: '014'
+                  bankName: BCA
+                  accountNumber: '1234567890'
+                  accountHolderName: PT Merchant ABC
                   amount: 300000
-                  currency_code: IDR
-                  transfer_instructions: Please transfer the exact amount to the account above. Include your reference number in the transfer notes.
+                  currencyCode: IDR
+                  transferInstructions: Please transfer the exact amount to the account above. Include your reference number in the transfer notes.
                 properties:
                   code:
                     type: string
                     example: '20101002'
-                  trx_id:
+                  trxId:
                     type: string
                     example: TRX20241101003
-                  ref_trx:
+                  refTrx:
                     type: string
                     example: INV-2024-0003
-                  bank_code:
+                  bankCode:
                     type: string
                     example: '014'
                     description: Bank code identifier
-                  bank_name:
+                  bankName:
                     type: string
                     example: BCA
                     description: Full name of the bank
-                  account_number:
+                  accountNumber:
                     type: string
                     example: '1234567890'
                     description: Merchant bank account number for customer transfer
-                  account_holder_name:
+                  accountHolderName:
                     type: string
                     example: PT Merchant ABC
                     description: Account holder name
@@ -574,11 +574,11 @@ paths:
                     type: number
                     example: 300000
                     description: Amount to be transferred (must match exactly)
-                  currency_code:
+                  currencyCode:
                     type: string
                     example: IDR
                     description: Currency code
-                  transfer_instructions:
+                  transferInstructions:
                     type: string
                     example: Please transfer the exact amount to the account above. Include your reference number in the transfer notes.
                     description: Instructions for the customer on how to complete the transfer
@@ -595,17 +595,17 @@ paths:
             schema:
               type: object
               properties:
-                ref_trx:
+                refTrx:
                   type: string
                   description: Unique merchant transaction reference.
                   example: INV-2024-0003
                   nullable: false
-                bank_code:
+                bankCode:
                   type: string
                   description: Bank code identifier. Use `/api/v2/banks` endpoint to get available bank codes.
                   example: '014'
                   nullable: false
-                currency_code:
+                currencyCode:
                   type: string
                   description: Must be `IDR`.
                   example: IDR
@@ -625,26 +625,26 @@ paths:
                   description: A customer-facing description that will appear on receipts.
                   example: Bank transfer payment for invoice INV-2024-0003
                   nullable: true
-                customer_name:
+                customerName:
                   type: string
                   description: Customer full name.
                   example: Budi Santoso
                   nullable: true
-                customer_phone:
+                customerPhone:
                   type: string
                   description: Customer phone number in international format.
                   example: '+628123456789'
                   nullable: true
-                customer_email:
+                customerEmail:
                   type: string
                   format: email
                   description: Customer email address.
                   example: budi.santoso@example.com
                   nullable: true
               required:
-                - ref_trx
-                - bank_code
-                - currency_code
+                - refTrx
+                - bankCode
+                - currencyCode
                 - amount
   /api/v2/check-payment-status/{trx_id}:
     get:
@@ -676,16 +676,16 @@ paths:
                   status: completed
                   message: Payment status checked successfully.
                   data:
-                    trx_id: TRX20241101001
-                    trx_reference: INV-2024-0001
+                    trxId: TRX20241101001
+                    trxReference: INV-2024-0001
                     rrn: '123456789012'
                     amount: 150000
-                    currency_code: IDR
+                    currencyCode: IDR
                     status: completed
-                    payment_method: QRIS
+                    paymentMethod: QRIS
                     description: QRIS payment for invoice INV-2024-0001
-                    customer_name: Budi Santoso
-                    customer_phone: '+628123456789'
+                    customerName: Budi Santoso
+                    customerPhone: '+628123456789'
                 properties:
                   code:
                     type: string
@@ -698,10 +698,10 @@ paths:
                   data:
                     type: object
                     properties:
-                      trx_id:
+                      trxId:
                         type: string
                         example: TRX20241101001
-                      trx_reference:
+                      trxReference:
                         type: string
                         example: INV-2024-0001
                         nullable: true
@@ -712,12 +712,12 @@ paths:
                       amount:
                         type: integer
                         example: 150000
-                      currency_code:
+                      currencyCode:
                         type: string
                         example: IDR
                       status:
                         $ref: '#/components/schemas/TransactionStatus'
-                      payment_method:
+                      paymentMethod:
                         type: string
                         example: QRIS
                         nullable: true
@@ -725,11 +725,11 @@ paths:
                         type: string
                         example: QRIS payment for invoice INV-2024-0001
                         nullable: true
-                      customer_name:
+                      customerName:
                         type: string
                         example: Budi Santoso
                         nullable: true
-                      customer_phone:
+                      customerPhone:
                         type: string
                         example: '+628123456789'
                         nullable: true
@@ -777,24 +777,24 @@ paths:
                   status: completed
                   message: Withdrawal status checked successfully.
                   data:
-                    trx_id: TRX-2025.01.15-ABC123XYZ
-                    trx_reference: WD-2025-0001
+                    trxId: TRX-2025.01.15-ABC123XYZ
+                    trxReference: WD-2025-0001
                     amount: '250000.00'
-                    net_amount: '245000.00'
-                    payable_amount: '245000.00'
-                    currency_code: IDR
+                    netAmount: '245000.00'
+                    payableAmount: '245000.00'
+                    currencyCode: IDR
                     status: completed
-                    withdrawal_method: Bank Transfer
-                    account_name: Bank BCA
-                    account_holder_name: Budi Santoso
-                    account_bank_name: Bank Central Asia
-                    account_number: '1234567890'
-                    account_bank_code: '014'
-                    trx_fee: '5000.00'
+                    withdrawalMethod: Bank Transfer
+                    accountName: Bank BCA
+                    accountHolderName: Budi Santoso
+                    accountBankName: Bank Central Asia
+                    accountNumber: '1234567890'
+                    accountBankCode: '014'
+                    trxFee: '5000.00'
                     description: Withdrawal to Bank BCA
                     remarks: Withdrawal processed successfully
                     environment: production
-                    is_sandbox: false
+                    isSandbox: false
                 properties:
                   code:
                     type: string
@@ -807,10 +807,10 @@ paths:
                   data:
                     type: object
                     properties:
-                      trx_id:
+                      trxId:
                         type: string
                         example: TRX-2025.01.15-ABC123XYZ
-                      trx_reference:
+                      trxReference:
                         type: string
                         example: WD-2025-0001
                         nullable: true
@@ -818,44 +818,44 @@ paths:
                         type: string
                         example: '250000.00'
                         description: Original withdrawal amount as a decimal string
-                      net_amount:
+                      netAmount:
                         type: string
                         example: '245000.00'
                         description: Net amount after fees as a decimal string
-                      payable_amount:
+                      payableAmount:
                         type: string
                         example: '245000.00'
                         description: Final amount to be paid out as a decimal string
-                      currency_code:
+                      currencyCode:
                         type: string
                         example: IDR
                       status:
                         $ref: '#/components/schemas/TransactionStatus'
-                      withdrawal_method:
+                      withdrawalMethod:
                         type: string
                         example: Bank Transfer
                         nullable: true
-                      account_name:
+                      accountName:
                         type: string
                         example: Bank BCA
                         nullable: true
-                      account_holder_name:
+                      accountHolderName:
                         type: string
                         example: Budi Santoso
                         nullable: true
-                      account_bank_name:
+                      accountBankName:
                         type: string
                         example: Bank Central Asia
                         nullable: true
-                      account_number:
+                      accountNumber:
                         type: string
                         example: '1234567890'
                         nullable: true
-                      account_bank_code:
+                      accountBankCode:
                         type: string
                         example: '014'
                         nullable: true
-                      trx_fee:
+                      trxFee:
                         type: string
                         example: '5000.00'
                         description: Transaction fee charged as a decimal string
@@ -871,7 +871,7 @@ paths:
                         type: string
                         example: production
                         description: Environment where the transaction occurred ("production" or "sandbox")
-                      is_sandbox:
+                      isSandbox:
                         type: boolean
                         example: false
                         description: Whether the transaction is in sandbox mode
@@ -918,9 +918,9 @@ paths:
                   code: '20002002'
                   message: Callback resend request has been queued successfully.
                   data:
-                    trx_id: TRX20241101001
-                    callback_status: queued
-                    queued_at: '2024-11-01T10:30:00Z'
+                    trxId: TRX20241101001
+                    callbackStatus: queued
+                    queuedAt: '2024-11-01T10:30:00Z'
                 properties:
                   code:
                     type: string
@@ -931,14 +931,14 @@ paths:
                   data:
                     type: object
                     properties:
-                      trx_id:
+                      trxId:
                         type: string
                         example: TRX20241101001
-                      callback_status:
+                      callbackStatus:
                         type: string
                         example: queued
                         description: Status of the callback resend request (queued, sent, failed)
-                      queued_at:
+                      queuedAt:
                         type: string
                         format: date-time
                         example: '2024-11-01T10:30:00Z'
@@ -989,19 +989,19 @@ paths:
                   status: completed
                   message: Invoice retrieved successfully.
                   data:
-                    trx_id: TRX20241101001
-                    trx_ref: INV-2024-0001
+                    trxId: TRX20241101001
+                    trxRef: INV-2024-0001
                     amount: 150000
-                    currency_code: IDR
+                    currencyCode: IDR
                     status: completed
-                    customer_name: Budi Santoso
-                    customer_phone: '+628123456789'
+                    customerName: Budi Santoso
+                    customerPhone: '+628123456789'
                     description: QRIS payment for invoice INV-2024-0001
                     note: QRIS top-up
-                    qris_content: 00020101021226680012IDCO...
-                    qr_image_url: /qr/TRX20241101001.png
-                    created_at: '2024-11-01T10:00:00Z'
-                    paid_at: '2024-11-01T10:15:00Z'
+                    qrisContent: 00020101021226680012IDCO...
+                    qrImageUrl: /qr/TRX20241101001.png
+                    createdAt: '2024-11-01T10:00:00Z'
+                    paidAt: '2024-11-01T10:15:00Z'
                 properties:
                   code:
                     type: string
@@ -1014,25 +1014,25 @@ paths:
                   data:
                     type: object
                     properties:
-                      trx_id:
+                      trxId:
                         type: string
                         example: TRX20241101001
-                      trx_ref:
+                      trxRef:
                         type: string
                         example: INV-2024-0001
                       amount:
                         type: integer
                         example: 150000
-                      currency_code:
+                      currencyCode:
                         type: string
                         example: IDR
                       status:
                         $ref: '#/components/schemas/TransactionStatus'
-                      customer_name:
+                      customerName:
                         type: string
                         example: Budi Santoso
                         nullable: true
-                      customer_phone:
+                      customerPhone:
                         type: string
                         example: '+628123456789'
                         nullable: true
@@ -1044,22 +1044,22 @@ paths:
                         type: string
                         example: QRIS top-up
                         nullable: true
-                      qris_content:
+                      qrisContent:
                         type: string
                         example: 00020101021226680012IDCO...
                         description: QRIS payment content string for generating QR code.
                         nullable: true
-                      qr_image_url:
+                      qrImageUrl:
                         type: string
                         format: uri
                         example: /qr/TRX20241101001.png
                         description: URL to the QR code image for the transaction.
                         nullable: true
-                      created_at:
+                      createdAt:
                         type: string
                         format: date-time
                         example: '2024-11-01T10:00:00Z'
-                      paid_at:
+                      paidAt:
                         type: string
                         format: date-time
                         example: '2024-11-01T10:15:00Z'
@@ -1115,26 +1115,26 @@ paths:
                         uuid:
                           type: string
                           example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                        currency_code:
+                        currencyCode:
                           type: string
                           example: IDR
                         balance:
                           type: integer
                           example: 2500000
-                        hold_balance:
+                        holdBalance:
                           type: integer
                           example: 0
-                        available_balance:
+                        availableBalance:
                           type: integer
                           example: 2500000
                 example:
                   code: '20003001'
                   data:
                     - uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                      currency_code: IDR
+                      currencyCode: IDR
                       balance: 2500000
-                      hold_balance: 0
-                      available_balance: 2500000
+                      holdBalance: 0
+                      availableBalance: 2500000
       tags:
         - Wallets
   /api/v2/wallets/{uuid}:
@@ -1165,10 +1165,10 @@ paths:
                 example:
                   code: '20003002'
                   uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                  currency_code: IDR
+                  currencyCode: IDR
                   balance: 2500000
-                  hold_balance: 0
-                  available_balance: 2500000
+                  holdBalance: 0
+                  availableBalance: 2500000
                 properties:
                   code:
                     type: string
@@ -1176,16 +1176,16 @@ paths:
                   uuid:
                     type: string
                     example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                  currency_code:
+                  currencyCode:
                     type: string
                     example: IDR
                   balance:
                     type: integer
                     example: 2500000
-                  hold_balance:
+                  holdBalance:
                     type: integer
                     example: 0
-                  available_balance:
+                  availableBalance:
                     type: integer
                     example: 2500000
         '422':
@@ -1232,8 +1232,8 @@ paths:
                   data:
                     type: array
                     example:
-                      - bank_id: '014'
-                        bank_name: BCA
+                      - bankId: '014'
+                        bankName: BCA
                       - bank_id: '008'
                         bank_name: Bank Mandiri
                       - bank_id: '009'
@@ -1241,11 +1241,11 @@ paths:
                     items:
                       type: object
                       properties:
-                        bank_id:
+                        bankId:
                           type: string
                           example: '014'
                           description: Bank code identifier. Use this code when creating virtual account payments via `/api/v2/initiate-payment-virtual-account` or withdrawal accounts.
-                        bank_name:
+                        bankName:
                           type: string
                           example: BCA
                           description: Full name of the bank
@@ -1254,10 +1254,10 @@ paths:
                   data:
                     - bank_id: '014'
                       bank_name: BCA
-                    - bank_id: '008'
-                      bank_name: Bank Mandiri
-                    - bank_id: '009'
-                      bank_name: Bank BNI
+                    - bankId: '008'
+                      bankName: Bank Mandiri
+                    - bankId: '009'
+                      bankName: Bank BNI
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -1294,8 +1294,8 @@ paths:
                   data:
                     type: array
                     example:
-                      - wallet_id: GOPAY
-                        wallet_name: GoPay
+                      - walletId: GOPAY
+                        walletName: GoPay
                       - wallet_id: OVO
                         wallet_name: OVO
                       - wallet_id: DANA
@@ -1303,11 +1303,11 @@ paths:
                     items:
                       type: object
                       properties:
-                        wallet_id:
+                        walletId:
                           type: string
                           example: GOPAY
                           description: Digital wallet code identifier. Use this ID for payment processing or withdrawal account setup.
-                        wallet_name:
+                        walletName:
                           type: string
                           example: GoPay
                           description: Full name of the digital wallet
@@ -1356,15 +1356,15 @@ paths:
                   data:
                     type: array
                     example:
-                      - bank_id: '014'
-                        bank_name: BCA
-                        supports_virtual_account: true
+                      - bankId: '014'
+                        bankName: BCA
+                        supportsVirtualAccount: true
                       - bank_id: '008'
                         bank_name: Bank Mandiri
-                        supports_virtual_account: true
+                        supportsVirtualAccount: true
                       - bank_id: '009'
                         bank_name: Bank BNI
-                        supports_virtual_account: true
+                        supportsVirtualAccount: true
                     items:
                       type: object
                       properties:
@@ -1376,7 +1376,7 @@ paths:
                           type: string
                           example: BCA
                           description: Full name of the bank
-                        supports_virtual_account:
+                        supportsVirtualAccount:
                           type: boolean
                           example: true
                           description: Indicates whether this bank supports virtual account payments
@@ -1386,11 +1386,11 @@ paths:
                     - bank_id: '014'
                       bank_name: BCA
                       supports_virtual_account: true
-                    - bank_id: '008'
-                      bank_name: Bank Mandiri
+                    - bankId: '008'
+                      bankName: Bank Mandiri
                       supports_virtual_account: true
-                    - bank_id: '009'
-                      bank_name: Bank BNI
+                    - bankId: '009'
+                      bankName: Bank BNI
                       supports_virtual_account: true
         '500':
           $ref: '#/components/responses/ServerError'
@@ -1486,40 +1486,40 @@ paths:
                       banks:
                         type: array
                         example:
-                          - bank_id: '014'
-                            bank_name: BCA
+                          - bankId: '014'
+                            bankName: BCA
                         items:
                           type: object
                           properties:
-                            bank_id:
+                            bankId:
                               type: string
                               example: '014'
-                            bank_name:
+                            bankName:
                               type: string
                               example: BCA
                       wallets:
                         type: array
                         example:
-                          - wallet_id: GOPAY
-                            wallet_name: GoPay
+                          - walletId: GOPAY
+                            walletName: GoPay
                         items:
                           type: object
                           properties:
-                            wallet_id:
+                            walletId:
                               type: string
                               example: GOPAY
-                            wallet_name:
+                            walletName:
                               type: string
                               example: GoPay
                 example:
                   code: '20004002'
                   data:
                     banks:
-                      - bank_id: '014'
-                        bank_name: BCA
+                      - bankId: '014'
+                        bankName: BCA
                     wallets:
-                      - wallet_id: GOPAY
-                        wallet_name: GoPay
+                      - walletId: GOPAY
+                        walletName: GoPay
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -1553,13 +1553,13 @@ paths:
                   code: '20004003'
                   message: Account information retrieved successfully
                   data:
-                    min_limit: 50000
-                    max_limit: 50000000
+                    minLimit: 50000
+                    maxLimit: 50000000
                     charge: 5000
-                    charge_type: fixed
+                    chargeType: fixed
                     currency: IDR
-                    processing_time: H+1
-                    conversion_rate: 1
+                    processingTime: H+1
+                    conversionRate: 1
                 properties:
                   code:
                     type: string
@@ -1570,25 +1570,25 @@ paths:
                   data:
                     type: object
                     properties:
-                      min_limit:
+                      minLimit:
                         type: integer
                         example: 50000
-                      max_limit:
+                      maxLimit:
                         type: integer
                         example: 50000000
                       charge:
                         type: integer
                         example: 5000
-                      charge_type:
+                      chargeType:
                         type: string
                         example: fixed
                       currency:
                         type: string
                         example: IDR
-                      processing_time:
+                      processingTime:
                         type: string
                         example: H+1
-                      conversion_rate:
+                      conversionRate:
                         type: integer
                         example: 1
         '500':
@@ -1612,7 +1612,7 @@ paths:
         by wallet currency.
       parameters:
         - in: query
-          name: wallet_id
+          name: walletId
           description: Filter accounts by wallet UUID so the currency matches.
           example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
           required: false
@@ -1645,8 +1645,8 @@ paths:
                   data:
                     - id: 15
                       name: Bank BCA
-                      account_number: '1234567890'
-                      withdraw_method:
+                      accountNumber: '1234567890'
+                      withdrawMethod:
                         id: 3
                         name: Bank Transfer
                         currency: IDR
@@ -1659,8 +1659,8 @@ paths:
                     example:
                       - id: 15
                         name: Bank BCA
-                        account_number: '1234567890'
-                        withdraw_method:
+                        accountNumber: '1234567890'
+                        withdrawMethod:
                           id: 3
                           name: Bank Transfer
                           currency: IDR
@@ -1673,10 +1673,10 @@ paths:
                         name:
                           type: string
                           example: Bank BCA
-                        account_number:
+                        accountNumber:
                           type: string
                           example: '1234567890'
-                        withdraw_method:
+                        withdrawMethod:
                           type: object
                           properties:
                             id:
@@ -1721,8 +1721,8 @@ paths:
                   data:
                     id: 15
                     name: Bank BCA
-                    account_number: '1234567890'
-                    withdraw_method:
+                    accountNumber: '1234567890'
+                    withdrawMethod:
                       id: 3
                       name: Bank Transfer
                       currency: IDR
@@ -1739,10 +1739,10 @@ paths:
                       name:
                         type: string
                         example: Bank BCA
-                      account_number:
+                      accountNumber:
                         type: string
                         example: '1234567890'
-                      withdraw_method:
+                      withdrawMethod:
                         type: object
                         properties:
                           id:
@@ -1767,12 +1767,12 @@ paths:
             schema:
               type: object
               properties:
-                method_id:
+                methodId:
                   type: integer
                   description: Identifier of the payout method returned by `lists`.
                   example: 1
                   nullable: false
-                bank_code:
+                bankCode:
                   type: string
                   description: Bank or wallet code as supplied by the gateway.
                   example: '014'
@@ -1782,17 +1782,17 @@ paths:
                   description: Must be one of `Customer` or `Reconcile`.
                   example: Customer
                   nullable: false
-                account_number:
+                accountNumber:
                   type: string
                   description: Destination account or wallet number.
                   example: '1234567890'
                   nullable: false
-                account_holder_name:
+                accountHolderName:
                   type: string
                   description: Account holder full name.
                   example: Budi Santoso
                   nullable: false
-                branch_name:
+                branchName:
                   type: string
                   description: Branch name registered for the account.
                   example: KC Jakarta
@@ -1802,22 +1802,22 @@ paths:
                   description: Country ISO name.
                   example: Indonesia
                   nullable: true
-                account_type:
+                accountType:
                   type: string
                   description: Account type or currency indicator provided by the gateway.
                   example: Saving
                   nullable: true
-                additional_info:
+                additionalInfo:
                   type: string
                   description: Additional metadata to pass to the gateway.
                   example: '{"bankCity":"Jakarta"}'
                   nullable: true
               required:
-                - method_id
-                - bank_code
+                - methodId
+                - bankCode
                 - category
-                - account_number
-                - account_holder_name
+                - accountNumber
+                - accountHolderName
   /api/v2/withdraw-accounts/{id}:
     get:
       summary: Show withdraw account details.
@@ -1848,8 +1848,8 @@ paths:
                   data:
                     id: 15
                     name: Bank BCA
-                    account_number: '1234567890'
-                    withdraw_method:
+                    accountNumber: '1234567890'
+                    withdrawMethod:
                       id: 3
                       name: Bank Transfer
                       currency: IDR
@@ -1866,10 +1866,10 @@ paths:
                       name:
                         type: string
                         example: Bank BCA
-                      account_number:
+                      accountNumber:
                         type: string
                         example: '1234567890'
-                      withdraw_method:
+                      withdrawMethod:
                         type: object
                         properties:
                           id:
@@ -1914,8 +1914,8 @@ paths:
                   data:
                     id: 15
                     name: Bank BCA
-                    account_number: '1234567890'
-                    withdraw_method:
+                    accountNumber: '1234567890'
+                    withdrawMethod:
                       id: 3
                       name: Bank Transfer
                       currency: IDR
@@ -1932,10 +1932,10 @@ paths:
                       name:
                         type: string
                         example: Bank BCA
-                      account_number:
+                      accountNumber:
                         type: string
                         example: '1234567890'
-                      withdraw_method:
+                      withdrawMethod:
                         type: object
                         properties:
                           id:
@@ -1960,12 +1960,12 @@ paths:
             schema:
               type: object
               properties:
-                method_id:
+                methodId:
                   type: integer
                   description: Identifier of the payout method returned by `lists`.
                   example: 1
                   nullable: false
-                bank_code:
+                bankCode:
                   type: string
                   description: Bank or wallet code as supplied by the gateway.
                   example: '014'
@@ -1975,17 +1975,17 @@ paths:
                   description: Must be one of `Customer` or `Reconcile`.
                   example: Customer
                   nullable: false
-                account_number:
+                accountNumber:
                   type: string
                   description: Destination account or wallet number.
                   example: '1234567890'
                   nullable: false
-                account_holder_name:
+                accountHolderName:
                   type: string
                   description: Account holder full name.
                   example: Budi Santoso
                   nullable: false
-                branch_name:
+                branchName:
                   type: string
                   description: Branch name registered for the account.
                   example: KC Jakarta
@@ -1995,22 +1995,22 @@ paths:
                   description: Country ISO name.
                   example: Indonesia
                   nullable: true
-                account_type:
+                accountType:
                   type: string
                   description: Account type or currency indicator provided by the gateway.
                   example: Saving
                   nullable: true
-                additional_info:
+                additionalInfo:
                   type: string
                   description: Additional metadata to pass to the gateway.
                   example: '{"bankCity":"Jakarta"}'
                   nullable: true
               required:
-                - method_id
-                - bank_code
+                - methodId
+                - bankCode
                 - category
-                - account_number
-                - account_holder_name
+                - accountNumber
+                - accountHolderName
     delete:
       summary: Delete a withdraw account.
       operationId: deleteAWithdrawAccount
@@ -2123,10 +2123,10 @@ paths:
                     items:
                       type: object
                       properties:
-                        trx_id:
+                        trxId:
                           type: string
                           example: TRX-2025.01.15-ABC123XYZ
-                        trx_reference:
+                        trxReference:
                           type: string
                           example: WD-2025-0001
                           nullable: true
@@ -2134,44 +2134,44 @@ paths:
                           type: string
                           example: '250000.00'
                           description: Original withdrawal amount as a decimal string
-                        net_amount:
+                        netAmount:
                           type: string
                           example: '245000.00'
                           description: Net amount after fees as a decimal string
-                        payable_amount:
+                        payableAmount:
                           type: string
                           example: '245000.00'
                           description: Final amount to be paid out as a decimal string
-                        currency_code:
+                        currencyCode:
                           type: string
                           example: IDR
                         status:
                           $ref: '#/components/schemas/TransactionStatus'
-                        withdrawal_method:
+                        withdrawalMethod:
                           type: string
                           example: Bank Transfer
                           nullable: true
-                        account_name:
+                        accountName:
                           type: string
                           example: Bank BCA
                           nullable: true
-                        account_holder_name:
+                        accountHolderName:
                           type: string
                           example: Budi Santoso
                           nullable: true
-                        account_bank_name:
+                        accountBankName:
                           type: string
                           example: Bank Central Asia
                           nullable: true
-                        account_number:
+                        accountNumber:
                           type: string
                           example: '1234567890'
                           nullable: true
-                        account_bank_code:
+                        accountBankCode:
                           type: string
                           example: '014'
                           nullable: true
-                        trx_fee:
+                        trxFee:
                           type: string
                           example: '5000.00'
                           description: Transaction fee charged as a decimal string
@@ -2187,33 +2187,33 @@ paths:
                           type: string
                           example: production
                           description: Environment where the transaction occurred ("production" or "sandbox")
-                        is_sandbox:
+                        isSandbox:
                           type: boolean
                           example: false
                           description: Whether the transaction is in sandbox mode
-                        created_at:
+                        createdAt:
                           type: string
                           format: date-time
                           example: '2025-01-15T10:00:00Z'
-                        completed_at:
+                        completedAt:
                           type: string
                           format: date-time
                           example: '2025-01-15T10:30:00Z'
                           nullable: true
-                  current_page:
+                  currentPage:
                     type: integer
                     example: 1
-                  first_page_url:
+                  firstPageUrl:
                     type: string
                     format: uri
                     example: /api/v2/withdrawals?page=1
                   from:
                     type: integer
                     example: 1
-                  last_page:
+                  lastPage:
                     type: integer
                     example: 3
-                  last_page_url:
+                  lastPageUrl:
                     type: string
                     format: uri
                     example: /api/v2/withdrawals?page=3
@@ -2243,7 +2243,7 @@ paths:
                       - url: /api/v2/withdrawals?page=2
                         label: Next &raquo;
                         active: false
-                  next_page_url:
+                  nextPageUrl:
                     type: string
                     format: uri
                     nullable: true
@@ -2251,10 +2251,10 @@ paths:
                   path:
                     type: string
                     example: /api/v2/withdrawals
-                  per_page:
+                  perPage:
                     type: integer
                     example: 20
-                  prev_page_url:
+                  prevPageUrl:
                     type: string
                     format: uri
                     nullable: true
@@ -2268,51 +2268,51 @@ paths:
                 example:
                   code: '20005002'
                   data:
-                    - trx_id: TRX-2025.01.15-ABC123XYZ
-                      trx_reference: WD-2025-0001
+                    - trxId: TRX-2025.01.15-ABC123XYZ
+                      trxReference: WD-2025-0001
                       amount: '250000.00'
-                      net_amount: '245000.00'
-                      payable_amount: '245000.00'
-                      currency_code: IDR
+                      netAmount: '245000.00'
+                      payableAmount: '245000.00'
+                      currencyCode: IDR
                       status: completed
-                      withdrawal_method: Bank Transfer
-                      account_name: Bank BCA
-                      account_holder_name: Budi Santoso
-                      account_bank_name: Bank Central Asia
-                      account_number: '1234567890'
-                      account_bank_code: '014'
-                      trx_fee: '5000.00'
+                      withdrawalMethod: Bank Transfer
+                      accountName: Bank BCA
+                      accountHolderName: Budi Santoso
+                      accountBankName: Bank Central Asia
+                      accountNumber: '1234567890'
+                      accountBankCode: '014'
+                      trxFee: '5000.00'
                       description: Withdrawal to Bank BCA
                       remarks: Withdrawal processed successfully
                       environment: production
-                      is_sandbox: false
-                      created_at: '2025-01-15T10:00:00Z'
-                      completed_at: '2025-01-15T10:30:00Z'
-                    - trx_id: TRX-2025.01.16-DEF456UVW
-                      trx_reference: WD-2025-0002
+                      isSandbox: false
+                      createdAt: '2025-01-15T10:00:00Z'
+                      completedAt: '2025-01-15T10:30:00Z'
+                    - trxId: TRX-2025.01.16-DEF456UVW
+                      trxReference: WD-2025-0002
                       amount: '100000.00'
-                      net_amount: '95000.00'
-                      payable_amount: '95000.00'
-                      currency_code: IDR
+                      netAmount: '95000.00'
+                      payableAmount: '95000.00'
+                      currencyCode: IDR
                       status: pending
-                      withdrawal_method: Bank Transfer
-                      account_name: Bank Mandiri
-                      account_holder_name: null
-                      account_bank_name: null
-                      account_number: '9876543210'
-                      account_bank_code: '008'
-                      trx_fee: '5000.00'
+                      withdrawalMethod: Bank Transfer
+                      accountName: Bank Mandiri
+                      accountHolderName: null
+                      accountBankName: null
+                      accountNumber: '9876543210'
+                      accountBankCode: '008'
+                      trxFee: '5000.00'
                       description: null
                       remarks: null
                       environment: production
-                      is_sandbox: false
-                      created_at: '2025-01-16T09:00:00Z'
-                      completed_at: null
-                  current_page: 1
-                  first_page_url: /api/v2/withdrawals?page=1
+                      isSandbox: false
+                      createdAt: '2025-01-16T09:00:00Z'
+                      completedAt: null
+                  currentPage: 1
+                  firstPageUrl: /api/v2/withdrawals?page=1
                   from: 1
-                  last_page: 3
-                  last_page_url: /api/v2/withdrawals?page=3
+                  lastPage: 3
+                  lastPageUrl: /api/v2/withdrawals?page=3
                   links:
                     - url: null
                       label: '&laquo; Previous'
@@ -2326,10 +2326,10 @@ paths:
                     - url: /api/v2/withdrawals?page=2
                       label: Next &raquo;
                       active: false
-                  next_page_url: /api/v2/withdrawals?page=2
+                  nextPageUrl: /api/v2/withdrawals?page=2
                   path: /api/v2/withdrawals
-                  per_page: 20
-                  prev_page_url: null
+                  perPage: 20
+                  prevPageUrl: null
                   to: 20
                   total: 50
         '422':
@@ -2367,10 +2367,10 @@ paths:
                   code: '20105001'
                   message: Withdrawal has been created.
                   data:
-                    trx_id: TRX20241101001
+                    trxId: TRX20241101001
                     amount: 250000
-                    account_id: 15
-                    wallet_id: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
+                    accountId: 15
+                    walletId: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
                 properties:
                   code:
                     type: string
@@ -2381,16 +2381,16 @@ paths:
                   data:
                     type: object
                     properties:
-                      trx_id:
+                      trxId:
                         type: string
                         example: TRX20241101001
                       amount:
                         type: integer
                         example: 250000
-                      account_id:
+                      accountId:
                         type: integer
                         example: 15
-                      wallet_id:
+                      walletId:
                         type: string
                         example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
         '422':
@@ -2404,17 +2404,17 @@ paths:
             schema:
               type: object
               properties:
-                trx_ref:
+                trxRef:
                   type: string
                   description: Unique merchant reference for the withdrawal.
                   example: WD-2024-0001
                   nullable: true
-                account_id:
+                accountId:
                   type: integer
                   description: Identifier of the saved withdraw account.
                   example: 15
                   nullable: false
-                wallet_id:
+                walletId:
                   type: string
                   description: UUID of the wallet to withdraw from.
                   example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
@@ -2425,6 +2425,6 @@ paths:
                   example: 250000
                   nullable: false
               required:
-                - account_id
-                - wallet_id
+                - accountId
+                - walletId
                 - amount

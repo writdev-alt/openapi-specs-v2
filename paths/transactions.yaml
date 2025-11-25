@@ -30,16 +30,16 @@
                 status: completed
                 message: 'Payment status checked successfully.'
                 data:
-                  trx_id: TRX20241101001
-                  trx_reference: INV-2024-0001
+                  trxId: TRX20241101001
+                  trxReference: INV-2024-0001
                   rrn: '123456789012'
                   amount: 150000
-                  currency_code: IDR
+                  currencyCode: IDR
                   status: completed
-                  payment_method: QRIS
+                  paymentMethod: QRIS
                   description: QRIS payment for invoice INV-2024-0001
-                  customer_name: Budi Santoso
-                  customer_phone: '+628123456789'
+                  customerName: Budi Santoso
+                  customerPhone: '+628123456789'
               properties:
                 code:
                   type: string
@@ -52,10 +52,10 @@
                 data:
                   type: object
                   properties:
-                    trx_id:
+                    trxId:
                       type: string
                       example: TRX20241101001
-                    trx_reference:
+                    trxReference:
                       type: string
                       example: INV-2024-0001
                       nullable: true
@@ -66,12 +66,12 @@
                     amount:
                       type: integer
                       example: 150000
-                    currency_code:
+                    currencyCode:
                       type: string
                       example: IDR
                     status:
                       $ref: '#/components/schemas/TransactionStatus'
-                    payment_method:
+                    paymentMethod:
                       type: string
                       example: QRIS
                       nullable: true
@@ -79,11 +79,11 @@
                       type: string
                       example: QRIS payment for invoice INV-2024-0001
                       nullable: true
-                    customer_name:
+                    customerName:
                       type: string
                       example: Budi Santoso
                       nullable: true
-                    customer_phone:
+                    customerPhone:
                       type: string
                       example: '+628123456789'
                       nullable: true
@@ -134,24 +134,24 @@
                 status: completed
                 message: 'Withdrawal status checked successfully.'
                 data:
-                  trx_id: TRX-2025.01.15-ABC123XYZ
-                  trx_reference: WD-2025-0001
+                  trxId: TRX-2025.01.15-ABC123XYZ
+                  trxReference: WD-2025-0001
                   amount: '250000.00'
-                  net_amount: '245000.00'
-                  payable_amount: '245000.00'
-                  currency_code: IDR
+                  netAmount: '245000.00'
+                  payableAmount: '245000.00'
+                  currencyCode: IDR
                   status: completed
-                  withdrawal_method: Bank Transfer
-                  account_name: Bank BCA
-                  account_holder_name: Budi Santoso
-                  account_bank_name: Bank Central Asia
-                  account_number: '1234567890'
-                  account_bank_code: '014'
-                  trx_fee: '5000.00'
+                  withdrawalMethod: Bank Transfer
+                  accountName: Bank BCA
+                  accountHolderName: Budi Santoso
+                  accountBankName: Bank Central Asia
+                  accountNumber: '1234567890'
+                  accountBankCode: '014'
+                  trxFee: '5000.00'
                   description: Withdrawal to Bank BCA
                   remarks: Withdrawal processed successfully
                   environment: production
-                  is_sandbox: false
+                  isSandbox: false
               properties:
                 code:
                   type: string
@@ -164,10 +164,10 @@
                 data:
                   type: object
                   properties:
-                    trx_id:
+                    trxId:
                       type: string
                       example: TRX-2025.01.15-ABC123XYZ
-                    trx_reference:
+                    trxReference:
                       type: string
                       example: WD-2025-0001
                       nullable: true
@@ -175,44 +175,44 @@
                       type: string
                       example: '250000.00'
                       description: 'Original withdrawal amount as a decimal string'
-                    net_amount:
+                    netAmount:
                       type: string
                       example: '245000.00'
                       description: 'Net amount after fees as a decimal string'
-                    payable_amount:
+                    payableAmount:
                       type: string
                       example: '245000.00'
                       description: 'Final amount to be paid out as a decimal string'
-                    currency_code:
+                    currencyCode:
                       type: string
                       example: IDR
                     status:
                       $ref: '#/components/schemas/TransactionStatus'
-                    withdrawal_method:
+                    withdrawalMethod:
                       type: string
                       example: Bank Transfer
                       nullable: true
-                    account_name:
+                    accountName:
                       type: string
                       example: Bank BCA
                       nullable: true
-                    account_holder_name:
+                    accountHolderName:
                       type: string
                       example: Budi Santoso
                       nullable: true
-                    account_bank_name:
+                    accountBankName:
                       type: string
                       example: Bank Central Asia
                       nullable: true
-                    account_number:
+                    accountNumber:
                       type: string
                       example: '1234567890'
                       nullable: true
-                    account_bank_code:
+                    accountBankCode:
                       type: string
                       example: '014'
                       nullable: true
-                    trx_fee:
+                    trxFee:
                       type: string
                       example: '5000.00'
                       description: 'Transaction fee charged as a decimal string'
@@ -228,7 +228,7 @@
                       type: string
                       example: production
                       description: 'Environment where the transaction occurred ("production" or "sandbox")'
-                    is_sandbox:
+                    isSandbox:
                       type: boolean
                       example: false
                       description: 'Whether the transaction is in sandbox mode'
@@ -278,9 +278,9 @@
                 code: '20002002'
                 message: 'Callback resend request has been queued successfully.'
                 data:
-                  trx_id: TRX20241101001
-                  callback_status: queued
-                  queued_at: '2024-11-01T10:30:00Z'
+                  trxId: TRX20241101001
+                  callbackStatus: queued
+                  queuedAt: '2024-11-01T10:30:00Z'
               properties:
                 code:
                   type: string
@@ -291,14 +291,14 @@
                 data:
                   type: object
                   properties:
-                    trx_id:
+                    trxId:
                       type: string
                       example: TRX20241101001
-                    callback_status:
+                    callbackStatus:
                       type: string
                       example: queued
                       description: 'Status of the callback resend request (queued, sent, failed)'
-                    queued_at:
+                    queuedAt:
                       type: string
                       format: date-time
                       example: '2024-11-01T10:30:00Z'
@@ -352,19 +352,19 @@
                 status: completed
                 message: 'Invoice retrieved successfully.'
                 data:
-                  trx_id: TRX20241101001
-                  trx_ref: INV-2024-0001
+                  trxId: TRX20241101001
+                  trxRef: INV-2024-0001
                   amount: 150000
-                  currency_code: IDR
+                  currencyCode: IDR
                   status: completed
-                  customer_name: Budi Santoso
-                  customer_phone: '+628123456789'
+                  customerName: Budi Santoso
+                  customerPhone: '+628123456789'
                   description: QRIS payment for invoice INV-2024-0001
                   note: QRIS top-up
-                  qris_content: 00020101021226680012IDCO...
-                  qr_image_url: '/qr/TRX20241101001.png'
-                  created_at: '2024-11-01T10:00:00Z'
-                  paid_at: '2024-11-01T10:15:00Z'
+                  qrisContent: 00020101021226680012IDCO...
+                  qrImageUrl: '/qr/TRX20241101001.png'
+                  createdAt: '2024-11-01T10:00:00Z'
+                  paidAt: '2024-11-01T10:15:00Z'
               properties:
                 code:
                   type: string
@@ -377,25 +377,25 @@
                 data:
                   type: object
                   properties:
-                    trx_id:
+                    trxId:
                       type: string
                       example: TRX20241101001
-                    trx_ref:
+                    trxRef:
                       type: string
                       example: INV-2024-0001
                     amount:
                       type: integer
                       example: 150000
-                    currency_code:
+                    currencyCode:
                       type: string
                       example: IDR
                     status:
                       $ref: '#/components/schemas/TransactionStatus'
-                    customer_name:
+                    customerName:
                       type: string
                       example: Budi Santoso
                       nullable: true
-                    customer_phone:
+                    customerPhone:
                       type: string
                       example: '+628123456789'
                       nullable: true
@@ -407,22 +407,22 @@
                       type: string
                       example: QRIS top-up
                       nullable: true
-                    qris_content:
+                    qrisContent:
                       type: string
                       example: 00020101021226680012IDCO...
                       description: 'QRIS payment content string for generating QR code.'
                       nullable: true
-                    qr_image_url:
+                    qrImageUrl:
                       type: string
                       format: uri
                       example: '/qr/TRX20241101001.png'
                       description: 'URL to the QR code image for the transaction.'
                       nullable: true
-                    created_at:
+                    createdAt:
                       type: string
                       format: date-time
                       example: '2024-11-01T10:00:00Z'
-                    paid_at:
+                    paidAt:
                       type: string
                       format: date-time
                       example: '2024-11-01T10:15:00Z'

@@ -69,10 +69,10 @@
                   items:
                     type: object
                     properties:
-                      trx_id:
+                      trxId:
                         type: string
                         example: TRX-2025.01.15-ABC123XYZ
-                      trx_reference:
+                      trxReference:
                         type: string
                         example: WD-2025-0001
                         nullable: true
@@ -80,44 +80,44 @@
                         type: string
                         example: '250000.00'
                         description: 'Original withdrawal amount as a decimal string'
-                      net_amount:
+                      netAmount:
                         type: string
                         example: '245000.00'
                         description: 'Net amount after fees as a decimal string'
-                      payable_amount:
+                      payableAmount:
                         type: string
                         example: '245000.00'
                         description: 'Final amount to be paid out as a decimal string'
-                      currency_code:
+                      currencyCode:
                         type: string
                         example: IDR
                       status:
                         $ref: '#/components/schemas/TransactionStatus'
-                      withdrawal_method:
+                      withdrawalMethod:
                         type: string
                         example: Bank Transfer
                         nullable: true
-                      account_name:
+                      accountName:
                         type: string
                         example: Bank BCA
                         nullable: true
-                      account_holder_name:
+                      accountHolderName:
                         type: string
                         example: Budi Santoso
                         nullable: true
-                      account_bank_name:
+                      accountBankName:
                         type: string
                         example: Bank Central Asia
                         nullable: true
-                      account_number:
+                      accountNumber:
                         type: string
                         example: '1234567890'
                         nullable: true
-                      account_bank_code:
+                      accountBankCode:
                         type: string
                         example: '014'
                         nullable: true
-                      trx_fee:
+                      trxFee:
                         type: string
                         example: '5000.00'
                         description: 'Transaction fee charged as a decimal string'
@@ -133,33 +133,33 @@
                         type: string
                         example: production
                         description: 'Environment where the transaction occurred ("production" or "sandbox")'
-                      is_sandbox:
+                      isSandbox:
                         type: boolean
                         example: false
                         description: 'Whether the transaction is in sandbox mode'
-                      created_at:
+                      createdAt:
                         type: string
                         format: date-time
                         example: '2025-01-15T10:00:00Z'
-                      completed_at:
+                      completedAt:
                         type: string
                         format: date-time
                         example: '2025-01-15T10:30:00Z'
                         nullable: true
-                current_page:
+                currentPage:
                   type: integer
                   example: 1
-                first_page_url:
+                firstPageUrl:
                   type: string
                   format: uri
                   example: '/api/v2/withdrawals?page=1'
                 from:
                   type: integer
                   example: 1
-                last_page:
+                lastPage:
                   type: integer
                   example: 3
-                last_page_url:
+                lastPageUrl:
                   type: string
                   format: uri
                   example: '/api/v2/withdrawals?page=3'
@@ -193,7 +193,7 @@
                       url: '/api/v2/withdrawals?page=2'
                       label: 'Next &raquo;'
                       active: false
-                next_page_url:
+                nextPageUrl:
                   type: string
                   format: uri
                   nullable: true
@@ -201,10 +201,10 @@
                 path:
                   type: string
                   example: '/api/v2/withdrawals'
-                per_page:
+                perPage:
                   type: integer
                   example: 20
-                prev_page_url:
+                prevPageUrl:
                   type: string
                   format: uri
                   nullable: true
@@ -219,52 +219,52 @@
                 code: '20005002'
                 data:
                   -
-                    trx_id: TRX-2025.01.15-ABC123XYZ
-                    trx_reference: WD-2025-0001
+                    trxId: TRX-2025.01.15-ABC123XYZ
+                    trxReference: WD-2025-0001
                     amount: '250000.00'
-                    net_amount: '245000.00'
-                    payable_amount: '245000.00'
-                    currency_code: IDR
+                    netAmount: '245000.00'
+                    payableAmount: '245000.00'
+                    currencyCode: IDR
                     status: completed
-                    withdrawal_method: Bank Transfer
-                    account_name: Bank BCA
-                    account_holder_name: Budi Santoso
-                    account_bank_name: Bank Central Asia
-                    account_number: '1234567890'
-                    account_bank_code: '014'
-                    trx_fee: '5000.00'
+                    withdrawalMethod: Bank Transfer
+                    accountName: Bank BCA
+                    accountHolderName: Budi Santoso
+                    accountBankName: Bank Central Asia
+                    accountNumber: '1234567890'
+                    accountBankCode: '014'
+                    trxFee: '5000.00'
                     description: Withdrawal to Bank BCA
                     remarks: Withdrawal processed successfully
                     environment: production
-                    is_sandbox: false
-                    created_at: '2025-01-15T10:00:00Z'
-                    completed_at: '2025-01-15T10:30:00Z'
+                    isSandbox: false
+                    createdAt: '2025-01-15T10:00:00Z'
+                    completedAt: '2025-01-15T10:30:00Z'
                   -
-                    trx_id: TRX-2025.01.16-DEF456UVW
-                    trx_reference: WD-2025-0002
+                    trxId: TRX-2025.01.16-DEF456UVW
+                    trxReference: WD-2025-0002
                     amount: '100000.00'
-                    net_amount: '95000.00'
-                    payable_amount: '95000.00'
-                    currency_code: IDR
+                    netAmount: '95000.00'
+                    payableAmount: '95000.00'
+                    currencyCode: IDR
                     status: pending
-                    withdrawal_method: Bank Transfer
-                    account_name: Bank Mandiri
-                    account_holder_name: null
-                    account_bank_name: null
-                    account_number: '9876543210'
-                    account_bank_code: '008'
-                    trx_fee: '5000.00'
+                    withdrawalMethod: Bank Transfer
+                    accountName: Bank Mandiri
+                    accountHolderName: null
+                    accountBankName: null
+                    accountNumber: '9876543210'
+                    accountBankCode: '008'
+                    trxFee: '5000.00'
                     description: null
                     remarks: null
                     environment: production
-                    is_sandbox: false
-                    created_at: '2025-01-16T09:00:00Z'
-                    completed_at: null
-                current_page: 1
-                first_page_url: '/api/v2/withdrawals?page=1'
+                    isSandbox: false
+                    createdAt: '2025-01-16T09:00:00Z'
+                    completedAt: null
+                currentPage: 1
+                firstPageUrl: '/api/v2/withdrawals?page=1'
                 from: 1
-                last_page: 3
-                last_page_url: '/api/v2/withdrawals?page=3'
+                lastPage: 3
+                lastPageUrl: '/api/v2/withdrawals?page=3'
                 links:
                   -
                     url: null
@@ -282,10 +282,10 @@
                     url: '/api/v2/withdrawals?page=2'
                     label: 'Next &raquo;'
                     active: false
-                next_page_url: '/api/v2/withdrawals?page=2'
+                nextPageUrl: '/api/v2/withdrawals?page=2'
                 path: '/api/v2/withdrawals'
-                per_page: 20
-                prev_page_url: null
+                perPage: 20
+                prevPageUrl: null
                 to: 20
                 total: 50
       422:
@@ -325,10 +325,10 @@
                 code: '20105001'
                 message: 'Withdrawal has been created.'
                 data:
-                  trx_id: TRX20241101001
+                  trxId: TRX20241101001
                   amount: 250000
-                  account_id: 15
-                  wallet_id: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
+                  accountId: 15
+                  walletId: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
               properties:
                 code:
                   type: string
@@ -339,16 +339,16 @@
                 data:
                   type: object
                   properties:
-                    trx_id:
+                    trxId:
                       type: string
                       example: TRX20241101001
                     amount:
                       type: integer
                       example: 250000
-                    account_id:
+                    accountId:
                       type: integer
                       example: 15
-                    wallet_id:
+                    walletId:
                       type: string
                       example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
       422:
@@ -362,17 +362,17 @@
           schema:
             type: object
             properties:
-              trx_ref:
+              trxRef:
                 type: string
                 description: 'Unique merchant reference for the withdrawal.'
                 example: WD-2024-0001
                 nullable: true
-              account_id:
+              accountId:
                 type: integer
                 description: 'Identifier of the saved withdraw account.'
                 example: 15
                 nullable: false
-              wallet_id:
+              walletId:
                 type: string
                 description: 'UUID of the wallet to withdraw from.'
                 example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
@@ -383,7 +383,7 @@
                 example: 250000.0
                 nullable: false
             required:
-              - account_id
-              - wallet_id
+              - accountId
+              - walletId
               - amount
 

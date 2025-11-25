@@ -33,8 +33,8 @@
                   type: array
                   example:
                     -
-                      bank_id: '014'
-                      bank_name: BCA
+                      bankId: '014'
+                      bankName: BCA
                     -
                       bank_id: '008'
                       bank_name: Bank Mandiri
@@ -44,11 +44,11 @@
                   items:
                     type: object
                     properties:
-                      bank_id:
+                      bankId:
                         type: string
                         example: '014'
                         description: 'Bank code identifier. Use this code when creating virtual account payments via `/api/v2/initiate-payment-virtual-account` or withdrawal accounts.'
-                      bank_name:
+                      bankName:
                         type: string
                         example: BCA
                         description: 'Full name of the bank'
@@ -59,11 +59,11 @@
                     bank_id: '014'
                     bank_name: BCA
                   -
-                    bank_id: '008'
-                    bank_name: Bank Mandiri
+                    bankId: '008'
+                    bankName: Bank Mandiri
                   -
-                    bank_id: '009'
-                    bank_name: Bank BNI
+                    bankId: '009'
+                    bankName: Bank BNI
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -104,8 +104,8 @@
                   type: array
                   example:
                     -
-                      wallet_id: GOPAY
-                      wallet_name: GoPay
+                      walletId: GOPAY
+                      walletName: GoPay
                     -
                       wallet_id: OVO
                       wallet_name: OVO
@@ -115,11 +115,11 @@
                   items:
                     type: object
                     properties:
-                      wallet_id:
+                      walletId:
                         type: string
                         example: GOPAY
                         description: 'Digital wallet code identifier. Use this ID for payment processing or withdrawal account setup.'
-                      wallet_name:
+                      walletName:
                         type: string
                         example: GoPay
                         description: 'Full name of the digital wallet'
@@ -175,17 +175,17 @@
                   type: array
                   example:
                     -
-                      bank_id: '014'
-                      bank_name: BCA
-                      supports_virtual_account: true
+                      bankId: '014'
+                      bankName: BCA
+                      supportsVirtualAccount: true
                     -
                       bank_id: '008'
                       bank_name: Bank Mandiri
-                      supports_virtual_account: true
+                      supportsVirtualAccount: true
                     -
                       bank_id: '009'
                       bank_name: Bank BNI
-                      supports_virtual_account: true
+                      supportsVirtualAccount: true
                   items:
                     type: object
                     properties:
@@ -197,7 +197,7 @@
                         type: string
                         example: BCA
                         description: 'Full name of the bank'
-                      supports_virtual_account:
+                      supportsVirtualAccount:
                         type: boolean
                         example: true
                         description: 'Indicates whether this bank supports virtual account payments'
@@ -209,12 +209,12 @@
                     bank_name: BCA
                     supports_virtual_account: true
                   -
-                    bank_id: '008'
-                    bank_name: Bank Mandiri
+                    bankId: '008'
+                    bankName: Bank Mandiri
                     supports_virtual_account: true
                   -
-                    bank_id: '009'
-                    bank_name: Bank BNI
+                    bankId: '009'
+                    bankName: Bank BNI
                     supports_virtual_account: true
       500:
         $ref: '#/components/responses/ServerError'
