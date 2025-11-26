@@ -64,6 +64,7 @@ apis:
             labelsTextSize: '0.9em'
             nestingSpacing: '1em'
             nestedBackground: '#f9fafb'
+
 resolve:
   yaml:
     maxAliasCount: 1000

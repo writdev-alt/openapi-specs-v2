@@ -3,6 +3,9 @@ info:
   title: WRPay - Secure Payments & Advanced Merchant Gateway API Documentation
   description: Merchant-facing API for initiating payments, managing wallets, and automating withdrawals for IlonaPay.
   version: 1.0.0
+  license:
+    name: Proprietary
+    url: https://ilonapay.com/terms
   x-logo:
     url: ./ilona-logo.png
     altText: IlonaPay Logo
@@ -152,7 +155,7 @@ paths:
                   firstPageUrl:
                     type: string
                     format: uri
-                    example: /api/v2/payments?page=1
+                    example: https://api.example.com/api/v2/payments?page=1
                   from:
                     type: integer
                     example: 1
@@ -162,7 +165,7 @@ paths:
                   lastPageUrl:
                     type: string
                     format: uri
-                    example: /api/v2/payments?page=5
+                    example: https://api.example.com/api/v2/payments?page=5
                   links:
                     type: array
                     items:
@@ -180,20 +183,20 @@ paths:
                       - url: null
                         label: '&laquo; Previous'
                         active: false
-                      - url: /api/v2/payments?page=1
+                      - url: https://api.example.com/api/v2/payments?page=1
                         label: '1'
                         active: true
-                      - url: /api/v2/payments?page=2
+                      - url: https://api.example.com/api/v2/payments?page=2
                         label: '2'
                         active: false
-                      - url: /api/v2/payments?page=2
+                      - url: https://api.example.com/api/v2/payments?page=2
                         label: Next &raquo;
                         active: false
                   nextPageUrl:
                     type: string
                     format: uri
                     nullable: true
-                    example: /api/v2/payments?page=2
+                    example: https://api.example.com/api/v2/payments?page=2
                   path:
                     type: string
                     example: /api/v2/payments
@@ -239,10 +242,10 @@ paths:
                       createdAt: '2024-11-01T11:00:00Z'
                       paidAt: null
                   currentPage: 1
-                  firstPageUrl: /api/v2/payments?page=1
+                  firstPageUrl: https://api.example.com/api/v2/payments?page=1
                   from: 1
                   lastPage: 5
-                  lastPageUrl: /api/v2/payments?page=5
+                  lastPageUrl: https://api.example.com/api/v2/payments?page=5
                   links:
                     - url: null
                       label: '&laquo; Previous'
@@ -256,7 +259,7 @@ paths:
                     - url: /api/v2/payments?page=2
                       label: Next &raquo;
                       active: false
-                  nextPageUrl: /api/v2/payments?page=2
+                  nextPageUrl: https://api.example.com/api/v2/payments?page=2
                   path: /api/v2/payments
                   perPage: 20
                   prevPageUrl: null
@@ -2206,7 +2209,7 @@ paths:
                   firstPageUrl:
                     type: string
                     format: uri
-                    example: /api/v2/withdrawals?page=1
+                    example: https://api.example.com/api/v2/withdrawals?page=1
                   from:
                     type: integer
                     example: 1
@@ -2216,7 +2219,7 @@ paths:
                   lastPageUrl:
                     type: string
                     format: uri
-                    example: /api/v2/withdrawals?page=3
+                    example: https://api.example.com/api/v2/withdrawals?page=3
                   links:
                     type: array
                     items:
@@ -2234,20 +2237,20 @@ paths:
                       - url: null
                         label: '&laquo; Previous'
                         active: false
-                      - url: /api/v2/withdrawals?page=1
+                      - url: https://api.example.com/api/v2/withdrawals?page=1
                         label: '1'
                         active: true
-                      - url: /api/v2/withdrawals?page=2
+                      - url: https://api.example.com/api/v2/withdrawals?page=2
                         label: '2'
                         active: false
-                      - url: /api/v2/withdrawals?page=2
+                      - url: https://api.example.com/api/v2/withdrawals?page=2
                         label: Next &raquo;
                         active: false
                   nextPageUrl:
                     type: string
                     format: uri
                     nullable: true
-                    example: /api/v2/withdrawals?page=2
+                    example: https://api.example.com/api/v2/withdrawals?page=2
                   path:
                     type: string
                     example: /api/v2/withdrawals
@@ -2309,24 +2312,24 @@ paths:
                       createdAt: '2025-01-16T09:00:00Z'
                       completedAt: null
                   currentPage: 1
-                  firstPageUrl: /api/v2/withdrawals?page=1
+                  firstPageUrl: https://api.example.com/api/v2/withdrawals?page=1
                   from: 1
                   lastPage: 3
-                  lastPageUrl: /api/v2/withdrawals?page=3
+                  lastPageUrl: https://api.example.com/api/v2/withdrawals?page=3
                   links:
                     - url: null
                       label: '&laquo; Previous'
                       active: false
-                    - url: /api/v2/withdrawals?page=1
+                    - url: https://api.example.com/api/v2/withdrawals?page=1
                       label: '1'
                       active: true
-                    - url: /api/v2/withdrawals?page=2
+                    - url: https://api.example.com/api/v2/withdrawals?page=2
                       label: '2'
                       active: false
-                    - url: /api/v2/withdrawals?page=2
+                    - url: https://api.example.com/api/v2/withdrawals?page=2
                       label: Next &raquo;
                       active: false
-                  nextPageUrl: /api/v2/withdrawals?page=2
+                  nextPageUrl: https://api.example.com/api/v2/withdrawals?page=2
                   path: /api/v2/withdrawals
                   perPage: 20
                   prevPageUrl: null
