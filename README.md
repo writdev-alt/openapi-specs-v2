@@ -85,6 +85,29 @@ This creates a `dist/` directory with:
 
 ### Deploy to Vercel
 
+#### Option 1: GitHub Actions CI/CD (Recommended)
+
+This repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that automatically builds and deploys to Vercel on every push to `main` or `master` branch.
+
+**Setup:**
+
+1. **Get Vercel token:**
+   - Go to [Vercel Dashboard](https://vercel.com/dashboard) → Settings → Tokens
+   - Create a new token or use an existing one
+
+2. **Add GitHub Secret:**
+   - Go to your GitHub repository → Settings → Secrets and variables → Actions
+   - Add the following secret:
+     - `VERCEL_TOKEN`: Your Vercel API token
+
+3. **Push to main:**
+   - The workflow will automatically:
+     - Build and lint the OpenAPI specification
+     - Deploy to Vercel production on push to `main` branch
+     - Build only (no deploy) on pull requests
+
+#### Option 2: Manual Deployment with Vercel CLI
+
 1. **Install Vercel CLI** (if not already installed):
    ```bash
    npm i -g vercel
@@ -100,13 +123,14 @@ This creates a `dist/` directory with:
    vercel --prod
    ```
 
-3. **Automatic Deployments**: 
-   - Connect your GitHub repository to Vercel
-   - Vercel will automatically deploy on every push to your main branch
-   - The `vercel.json` configuration handles the build and routing
+#### Option 3: Vercel Dashboard Integration
+
+1. Connect your GitHub repository to Vercel
+2. Vercel will automatically deploy on every push to your main branch
+3. The `vercel.json` configuration handles the build and routing
 
 **What happens during deployment:**
-- Vercel runs `npm run build` which:
+- Runs `npm run build` which:
   1. Merges all path files into `openapi.yaml`
   2. Bundles the OpenAPI spec into `bundled.yaml`
   3. Generates static HTML documentation in `dist/`
