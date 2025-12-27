@@ -83,65 +83,34 @@ This creates a `dist/` directory with:
 
 ## Deployment
 
-### Deploy to Vercel
+### Deploy to GitHub Pages
 
-#### Option 1: GitHub Actions CI/CD (Recommended)
-
-This repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that automatically builds and deploys to Vercel on every push to `main` or `master` branch.
+This repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that automatically builds and deploys to GitHub Pages on every push to the `main` branch.
 
 **Setup:**
 
-1. **Get Vercel token:**
-   - Go to [Vercel Dashboard](https://vercel.com/dashboard) → Settings → Tokens
-   - Create a new token or use an existing one
+1. **Enable GitHub Pages in repository settings:**
+   - Go to your GitHub repository → Settings → Pages
+   - Under "Source", select "GitHub Actions"
 
-2. **Add GitHub Secret:**
-   - Go to your GitHub repository → Settings → Secrets and variables → Actions
-   - Add the following secret:
-     - `VERCEL_TOKEN`: Your Vercel API token
-
-3. **Push to main:**
+2. **Push to main:**
    - The workflow will automatically:
      - Build and lint the OpenAPI specification
-     - Deploy to Vercel production on push to `main` branch
-     - Build only (no deploy) on pull requests
-
-#### Option 2: Manual Deployment with Vercel CLI
-
-1. **Install Vercel CLI** (if not already installed):
-   ```bash
-   npm i -g vercel
-   ```
-
-2. **Deploy**:
-   ```bash
-   vercel
-   ```
-   
-   Or deploy to production:
-   ```bash
-   vercel --prod
-   ```
-
-#### Option 3: Vercel Dashboard Integration
-
-1. Connect your GitHub repository to Vercel
-2. Vercel will automatically deploy on every push to your main branch
-3. The `vercel.json` configuration handles the build and routing
+     - Deploy to GitHub Pages on push to `main` branch
+     - The site will be available at `https://github.com/writdev-alt/openapi-specs-v2` or your custom domain
 
 **What happens during deployment:**
 - Runs `npm run build` which:
   1. Merges all path files into `openapi.yaml`
   2. Bundles the OpenAPI spec into `bundled.yaml`
   3. Generates static HTML documentation in `dist/`
-- Serves the `dist/` directory as a static site
-- All routes redirect to `index.html` for client-side routing
+  4. Creates `.nojekyll` file to prevent Jekyll processing
+- Deploys the `dist/` directory to GitHub Pages
 
 ### Manual Deployment
 
 You can also manually deploy the `dist/` folder to any static hosting service:
 - Netlify
-- GitHub Pages
 - AWS S3 + CloudFront
 - Any static file hosting
 

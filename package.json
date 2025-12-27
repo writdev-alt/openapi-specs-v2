@@ -6,7 +6,7 @@
     "merge": "node scripts/merge-paths.js",
     "bundle": "npm run merge && redocly bundle openapi.yaml -o bundled.yaml",
     "lint": "redocly lint openapi.yaml --extends recommended",
-    "preview": "npm run merge && redocly preview",
+    "preview": "npm run merge && redocly preview --port 9000",
     "build": "npm run bundle && node scripts/build-html.js",
     "build:html": "node scripts/build-html.js"
   },

@@ -43,6 +43,9 @@ try {
     );
   }
 
+  // Create .nojekyll file for GitHub Pages
+  fs.writeFileSync(path.join(distDir, '.nojekyll'), '');
+
   console.log('\n✓ HTML documentation built successfully with Redocly in dist/');
   console.log('✓ Documentation is ready for deployment');
 } catch (error) {
@@ -130,6 +133,9 @@ try {
 
   // Write HTML file
   fs.writeFileSync(path.join(distDir, 'index.html'), htmlTemplate);
+
+  // Create .nojekyll file for GitHub Pages
+  fs.writeFileSync(path.join(distDir, '.nojekyll'), '');
 
   console.log('✓ HTML documentation built successfully in dist/');
   console.log('✓ Files created:');
