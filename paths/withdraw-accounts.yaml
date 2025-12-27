@@ -29,6 +29,9 @@
                 code:
                   type: string
                   example: '20004001'
+                message:
+                  type: string
+                  example: 'List of active withdrawal methods retrieved successfully.'
                 data:
                   type: array
                   example:
@@ -50,6 +53,7 @@
                         example: IDR
               example:
                 code: '20004001'
+                message: 'List of active withdrawal methods retrieved successfully.'
                 data:
                   -
                     id: 1
@@ -88,6 +92,9 @@
                 code:
                   type: string
                   example: '20004002'
+                message:
+                  type: string
+                  example: 'Payout bank and wallet catalog retrieved successfully.'
                 data:
                   type: object
                   properties:
@@ -123,6 +130,7 @@
                             example: GoPay
               example:
                 code: '20004002'
+                message: 'Payout bank and wallet catalog retrieved successfully.'
                 data:
                   banks:
                     -
@@ -258,6 +266,7 @@
               type: object
               example:
                 code: '20004004'
+                message: 'List of withdraw accounts retrieved successfully.'
                 data:
                   -
                     id: 15
@@ -271,6 +280,9 @@
                 code:
                   type: string
                   example: '20004004'
+                message:
+                  type: string
+                  example: 'List of withdraw accounts retrieved successfully.'
                 data:
                   type: array
                   example:
@@ -338,6 +350,7 @@
               type: object
               example:
                 code: '20104001'
+                message: 'Withdraw account created successfully.'
                 data:
                   id: 15
                   name: 'Bank BCA'
@@ -350,6 +363,9 @@
                 code:
                   type: string
                   example: '20104001'
+                message:
+                  type: string
+                  example: 'Withdraw account created successfully.'
                 data:
                   type: object
                   properties:
@@ -467,6 +483,7 @@
               type: object
               example:
                 code: '20004005'
+                message: 'Withdraw account details retrieved successfully.'
                 data:
                   id: 15
                   name: 'Bank BCA'
@@ -479,6 +496,9 @@
                 code:
                   type: string
                   example: '20004005'
+                message:
+                  type: string
+                  example: 'Withdraw account details retrieved successfully.'
                 data:
                   type: object
                   properties:
@@ -535,6 +555,7 @@
               type: object
               example:
                 code: '20004006'
+                message: 'Withdraw account updated successfully.'
                 data:
                   id: 15
                   name: 'Bank BCA'
@@ -547,6 +568,9 @@
                 code:
                   type: string
                   example: '20004006'
+                message:
+                  type: string
+                  example: 'Withdraw account updated successfully.'
                 data:
                   type: object
                   properties:

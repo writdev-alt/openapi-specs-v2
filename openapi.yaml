@@ -7,11 +7,11 @@ info:
     name: Proprietary
     url: https://ilonapay.com/terms
   x-logo:
-    url: ./ilona-logo.png
+    url: ./assets/logo.png
     altText: IlonaPay Logo
     backgroundColor: '#FFFFFF'
   x-dark-logo:
-    url: ./ilona-light-logo.png
+    url: ./assets/logo-light.png
     altText: IlonaPay Logo
 servers:
   - url: https://sandbox.ilonapay.com
@@ -126,7 +126,7 @@ paths:
                           type: string
                           example: IDR
                         status:
-                          $ref: '#/components/schemas/TransactionStatus'
+                          $ref: '#/components/schemas/PaymentTransactionStatus'
                         paymentMethod:
                           type: string
                           example: QRIS
@@ -674,7 +674,6 @@ paths:
                 type: object
                 example:
                   code: '20002001'
-                  status: completed
                   message: Payment status checked successfully.
                   data:
                     trxId: TRX20241101001
@@ -691,8 +690,6 @@ paths:
                   code:
                     type: string
                     example: '20002001'
-                  status:
-                    $ref: '#/components/schemas/TransactionStatus'
                   message:
                     type: string
                     example: Payment status checked successfully.
@@ -717,7 +714,7 @@ paths:
                         type: string
                         example: IDR
                       status:
-                        $ref: '#/components/schemas/TransactionStatus'
+                        $ref: '#/components/schemas/PaymentTransactionStatus'
                       paymentMethod:
                         type: string
                         example: QRIS
@@ -799,7 +796,6 @@ paths:
                 type: object
                 example:
                   code: '20002004'
-                  status: completed
                   message: Withdrawal status checked successfully.
                   data:
                     trxId: TRX-2025.01.15-ABC123XYZ
@@ -824,8 +820,6 @@ paths:
                   code:
                     type: string
                     example: '20002004'
-                  status:
-                    $ref: '#/components/schemas/TransactionStatus'
                   message:
                     type: string
                     example: Withdrawal status checked successfully.
@@ -855,7 +849,7 @@ paths:
                         type: string
                         example: IDR
                       status:
-                        $ref: '#/components/schemas/TransactionStatus'
+                        $ref: '#/components/schemas/WithdrawalTransactionStatus'
                       withdrawalMethod:
                         type: string
                         example: Bank Transfer
@@ -1043,7 +1037,6 @@ paths:
                 type: object
                 example:
                   code: '20002003'
-                  status: completed
                   message: Invoice retrieved successfully.
                   data:
                     trxId: TRX20241101001
@@ -1063,8 +1056,6 @@ paths:
                   code:
                     type: string
                     example: '20002003'
-                  status:
-                    $ref: '#/components/schemas/TransactionStatus'
                   message:
                     type: string
                     example: Invoice retrieved successfully.
@@ -1084,7 +1075,7 @@ paths:
                         type: string
                         example: IDR
                       status:
-                        $ref: '#/components/schemas/TransactionStatus'
+                        $ref: '#/components/schemas/PaymentTransactionStatus'
                       customerName:
                         type: string
                         example: Budi Santoso
@@ -1174,9 +1165,9 @@ paths:
                     items:
                       type: object
                       properties:
-                        uuid:
+                        walletId:
                           type: string
-                          example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                          example: '1234567890'
                         currencyCode:
                           type: string
                           example: IDR
@@ -1193,7 +1184,7 @@ paths:
                   code: '20003001'
                   message: List of wallets retrieved successfully.
                   data:
-                    - uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                    - walletId: '1234567890'
                       currencyCode: IDR
                       balance: 2500000
                       holdBalance: 0
@@ -1235,9 +1226,9 @@ paths:
                   data:
                     type: object
                     properties:
-                      uuid:
+                      walletId:
                         type: string
-                        example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                        example: '1234567890'
                       currencyCode:
                         type: string
                         example: IDR
@@ -1254,7 +1245,7 @@ paths:
                   code: '20003002'
                   message: Wallet details retrieved successfully.
                   data:
-                    uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                    walletId: '1234567890'
                     currencyCode: IDR
                     balance: 2500000
                     holdBalance: 0
@@ -1300,6 +1291,9 @@ paths:
                   code:
                     type: string
                     example: '20004008'
+                  message:
+                    type: string
+                    example: List of supported banks retrieved successfully.
                   data:
                     type: array
                     example:
@@ -1322,6 +1316,7 @@ paths:
                           description: Full name of the bank
                 example:
                   code: '20004008'
+                  message: List of supported banks retrieved successfully.
                   data:
                     - bank_id: '014'
                       bank_name: BCA
@@ -1362,6 +1357,9 @@ paths:
                   code:
                     type: string
                     example: '20004009'
+                  message:
+                    type: string
+                    example: List of supported digital wallets retrieved successfully.
                   data:
                     type: array
                     example:
@@ -1384,6 +1382,7 @@ paths:
                           description: Full name of the digital wallet
                 example:
                   code: '20004009'
+                  message: List of supported digital wallets retrieved successfully.
                   data:
                     - wallet_id: GOPAY
                       wallet_name: GoPay
@@ -1424,6 +1423,9 @@ paths:
                   code:
                     type: string
                     example: '20004010'
+                  message:
+                    type: string
+                    example: List of banks supporting virtual accounts retrieved successfully.
                   data:
                     type: array
                     example:
@@ -1453,6 +1455,7 @@ paths:
                           description: Indicates whether this bank supports virtual account payments
                 example:
                   code: '20004010'
+                  message: List of banks supporting virtual accounts retrieved successfully.
                   data:
                     - bank_id: '014'
                       bank_name: BCA
@@ -1496,6 +1499,9 @@ paths:
                   code:
                     type: string
                     example: '20004001'
+                  message:
+                    type: string
+                    example: List of active withdrawal methods retrieved successfully.
                   data:
                     type: array
                     example:
@@ -1516,6 +1522,7 @@ paths:
                           example: IDR
                 example:
                   code: '20004001'
+                  message: List of active withdrawal methods retrieved successfully.
                   data:
                     - id: 1
                       name: Bank Transfer
@@ -1551,6 +1558,9 @@ paths:
                   code:
                     type: string
                     example: '20004002'
+                  message:
+                    type: string
+                    example: Payout bank and wallet catalog retrieved successfully.
                   data:
                     type: object
                     properties:
@@ -1584,6 +1594,7 @@ paths:
                               example: GoPay
                 example:
                   code: '20004002'
+                  message: Payout bank and wallet catalog retrieved successfully.
                   data:
                     banks:
                       - bankId: '014'
@@ -1713,6 +1724,7 @@ paths:
                 type: object
                 example:
                   code: '20004004'
+                  message: List of withdraw accounts retrieved successfully.
                   data:
                     - id: 15
                       name: Bank BCA
@@ -1725,6 +1737,9 @@ paths:
                   code:
                     type: string
                     example: '20004004'
+                  message:
+                    type: string
+                    example: List of withdraw accounts retrieved successfully.
                   data:
                     type: array
                     example:
@@ -1789,6 +1804,7 @@ paths:
                 type: object
                 example:
                   code: '20104001'
+                  message: Withdraw account created successfully.
                   data:
                     id: 15
                     name: Bank BCA
@@ -1801,6 +1817,9 @@ paths:
                   code:
                     type: string
                     example: '20104001'
+                  message:
+                    type: string
+                    example: Withdraw account created successfully.
                   data:
                     type: object
                     properties:
@@ -1916,6 +1935,7 @@ paths:
                 type: object
                 example:
                   code: '20004005'
+                  message: Withdraw account details retrieved successfully.
                   data:
                     id: 15
                     name: Bank BCA
@@ -1928,6 +1948,9 @@ paths:
                   code:
                     type: string
                     example: '20004005'
+                  message:
+                    type: string
+                    example: Withdraw account details retrieved successfully.
                   data:
                     type: object
                     properties:
@@ -1982,6 +2005,7 @@ paths:
                 type: object
                 example:
                   code: '20004006'
+                  message: Withdraw account updated successfully.
                   data:
                     id: 15
                     name: Bank BCA
@@ -1994,6 +2018,9 @@ paths:
                   code:
                     type: string
                     example: '20004006'
+                  message:
+                    type: string
+                    example: Withdraw account updated successfully.
                   data:
                     type: object
                     properties:
@@ -2200,10 +2227,17 @@ paths:
                         trxId:
                           type: string
                           example: TRX-2025.01.15-ABC123XYZ
+                          description: Unique transaction identifier generated by the system
                         trxRef:
                           type: string
                           example: WD-2025-0001
                           nullable: true
+                          description: Merchant's unique transaction reference (if provided)
+                        walletId:
+                          type: string
+                          example: '1234567890'
+                          nullable: true
+                          description: UUID of the wallet from which the withdrawal was made
                         amount:
                           type: string
                           example: '250000.00'
@@ -2219,32 +2253,39 @@ paths:
                         currencyCode:
                           type: string
                           example: IDR
+                          description: Currency code (e.g., "IDR")
                         status:
-                          $ref: '#/components/schemas/TransactionStatus'
+                          $ref: '#/components/schemas/WithdrawalTransactionStatus'
                         withdrawalMethod:
                           type: string
                           example: Bank Transfer
                           nullable: true
+                          description: Withdrawal method used (e.g., "Bank Transfer")
                         accountName:
                           type: string
                           example: Bank BCA
                           nullable: true
+                          description: Name of the withdrawal account
                         accountHolderName:
                           type: string
                           example: Budi Santoso
                           nullable: true
+                          description: Account holder's full name
                         accountBankName:
                           type: string
                           example: Bank Central Asia
                           nullable: true
+                          description: Bank name for the withdrawal account
                         accountNumber:
                           type: string
-                          example: '1234567890'
+                          example: '"1234567890"'
                           nullable: true
+                          description: Account number for withdrawal
                         accountBankCode:
                           type: string
                           example: '014'
                           nullable: true
+                          description: Bank code identifier for the withdrawal account
                         trxFee:
                           type: string
                           example: '5000.00'
@@ -2253,10 +2294,12 @@ paths:
                           type: string
                           example: Withdrawal to Bank BCA
                           nullable: true
+                          description: Description of the withdrawal
                         remarks:
                           type: string
                           example: Withdrawal processed successfully
                           nullable: true
+                          description: Additional remarks or notes about the withdrawal transaction
                         environment:
                           type: string
                           example: production
@@ -2269,11 +2312,31 @@ paths:
                           type: string
                           format: date-time
                           example: '2025-01-15T10:00:00Z'
+                          description: Timestamp when the withdrawal was created
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: '2025-01-15T10:25:00Z'
+                          nullable: true
+                          description: Timestamp when the withdrawal was last updated
                         completedAt:
                           type: string
                           format: date-time
                           example: '2025-01-15T10:30:00Z'
                           nullable: true
+                          description: Timestamp when the withdrawal was completed (null if not completed)
+                        failedAt:
+                          type: string
+                          format: date-time
+                          example: null
+                          nullable: true
+                          description: Timestamp when the withdrawal failed (null if not failed)
+                        canceledAt:
+                          type: string
+                          format: date-time
+                          example: null
+                          nullable: true
+                          description: Timestamp when the withdrawal was canceled (null if not canceled)
                   pageNumber:
                     type: integer
                     example: 1
@@ -2289,9 +2352,57 @@ paths:
                 example:
                   code: '20005002'
                   message: List of withdrawal transactions retrieved successfully.
-                  data: []
+                  data:
+                    - trxId: TRX-2025.01.15-ABC123XYZ
+                      trxRef: WD-2025-0001
+                      walletId: '1234567890'
+                      amount: '250000.00'
+                      netAmount: '245000.00'
+                      payableAmount: '245000.00'
+                      currencyCode: IDR
+                      status: completed
+                      withdrawalMethod: Bank Transfer
+                      accountName: Bank BCA
+                      accountHolderName: Budi Santoso
+                      accountBankName: Bank Central Asia
+                      accountNumber: '"1234567890"'
+                      accountBankCode: '014'
+                      trxFee: '5000.00'
+                      description: Withdrawal to Bank BCA
+                      remarks: Withdrawal processed successfully
+                      environment: production
+                      isSandbox: false
+                      createdAt: '2025-01-15T10:00:00Z'
+                      updatedAt: '2025-01-15T10:30:00Z'
+                      completedAt: '2025-01-15T10:30:00Z'
+                      failedAt: null
+                      canceledAt: null
+                    - trxId: TRX-2025.01.15-DEF456UVW
+                      trxRef: WD-2025-0002
+                      walletId: '1234567890'
+                      amount: '500000.00'
+                      netAmount: '495000.00'
+                      payableAmount: '495000.00'
+                      currencyCode: IDR
+                      status: pending
+                      withdrawalMethod: Bank Transfer
+                      accountName: Bank Mandiri
+                      accountHolderName: Siti Nurhaliza
+                      accountBankName: Bank Mandiri
+                      accountNumber: '9876543210'
+                      accountBankCode: '008'
+                      trxFee: '5000.00'
+                      description: Withdrawal to Bank Mandiri
+                      remarks: null
+                      environment: production
+                      isSandbox: false
+                      createdAt: '2025-01-15T11:00:00Z'
+                      updatedAt: '2025-01-15T11:05:00Z'
+                      completedAt: null
+                      failedAt: null
+                      canceledAt: null
                   pageNumber: 1
-                  pageSize: 2
+                  pageSize: 20
                   hasNext: true
                   hasPrev: false
         '422':
@@ -2329,10 +2440,29 @@ paths:
                   code: '20105001'
                   message: Withdrawal has been created.
                   data:
-                    trxId: TRX20241101001
-                    amount: 250000
-                    accountId: 15
-                    walletId: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
+                    trxId: TRX-2025.01.15-ABC123XYZ
+                    trxRef: WD-2025-0001
+                    walletId: '1234567890'
+                    amount: '4000000.00'
+                    netAmount: '3995000.00'
+                    payableAmount: '3995000.00'
+                    currencyCode: IDR
+                    status: pending
+                    withdrawalMethod: Bank Transfer
+                    accountName: Bank BCA
+                    accountHolderName: RAIDY WIJAYA
+                    accountBankName: Bank Central Asia
+                    accountNumber: '1040000008446'
+                    accountBankCode: '014'
+                    trxFee: '5000.00'
+                    description: domestic transfer bni 0315747263 009 v2
+                    environment: production
+                    isSandbox: false
+                    createdAt: '2025-01-15T10:00:00Z'
+                    updatedAt: '2025-01-15T10:00:00Z'
+                    completedAt: null
+                    failedAt: null
+                    canceledAt: null
                 properties:
                   code:
                     type: string
@@ -2345,16 +2475,112 @@ paths:
                     properties:
                       trxId:
                         type: string
-                        example: TRX20241101001
-                      amount:
-                        type: integer
-                        example: 250000
-                      accountId:
-                        type: integer
-                        example: 15
+                        example: TRX-2025.01.15-ABC123XYZ
+                        description: Unique transaction identifier generated by the system
+                      trxRef:
+                        type: string
+                        example: WD-2025-0001
+                        nullable: true
+                        description: Merchant's unique transaction reference (if provided)
                       walletId:
                         type: string
-                        example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
+                        example: '1234567890'
+                        description: UUID of the wallet from which the withdrawal was made
+                      amount:
+                        type: string
+                        example: '4000000.00'
+                        description: Original withdrawal amount as a decimal string
+                      netAmount:
+                        type: string
+                        example: '3995000.00'
+                        description: Net amount after fees as a decimal string
+                      payableAmount:
+                        type: string
+                        example: '3995000.00'
+                        description: Final amount to be paid out as a decimal string
+                      currencyCode:
+                        type: string
+                        example: IDR
+                        description: Currency code (e.g., "IDR")
+                      status:
+                        $ref: '#/components/schemas/WithdrawalTransactionStatus'
+                        description: Current status of the withdrawal transaction (typically "pending" for newly created withdrawals)
+                      withdrawalMethod:
+                        type: string
+                        example: Bank Transfer
+                        nullable: true
+                        description: Withdrawal method used (e.g., "Bank Transfer")
+                      accountName:
+                        type: string
+                        example: Bank BCA
+                        nullable: true
+                        description: Name of the withdrawal account
+                      accountHolderName:
+                        type: string
+                        example: RAIDY WIJAYA
+                        nullable: true
+                        description: Account holder's full name
+                      accountBankName:
+                        type: string
+                        example: Bank Central Asia
+                        nullable: true
+                        description: Bank name for the withdrawal account
+                      accountNumber:
+                        type: string
+                        example: '1040000008446'
+                        nullable: true
+                        description: Account number for withdrawal
+                      accountBankCode:
+                        type: string
+                        example: '014'
+                        nullable: true
+                        description: Bank code identifier for the withdrawal account
+                      trxFee:
+                        type: string
+                        example: '5000.00'
+                        description: Transaction fee charged as a decimal string
+                      description:
+                        type: string
+                        example: domestic transfer bni 0315747263 009 v2
+                        nullable: true
+                        description: Description of the withdrawal
+                      environment:
+                        type: string
+                        example: production
+                        description: Environment where the transaction occurred ("production" or "sandbox")
+                      isSandbox:
+                        type: boolean
+                        example: false
+                        description: Whether the transaction is in sandbox mode
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: '2025-01-15T10:00:00Z'
+                        description: Timestamp when the withdrawal was created
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: '2025-01-15T10:00:00Z'
+                        nullable: true
+                        description: Timestamp when the withdrawal was last updated
+                      completedAt:
+                        type: string
+                        format: date-time
+                        example: null
+                        nullable: true
+                        description: Timestamp when the withdrawal was completed (null if not completed)
+                      failedAt:
+                        type: string
+                        format: date-time
+                        example: null
+                        nullable: true
+                        description: Timestamp when the withdrawal failed (null if not failed)
+                      canceledAt:
+                        type: string
+                        format: date-time
+                        example: null
+                        nullable: true
+                        description: Timestamp when the withdrawal was canceled (null if not canceled)
         '422':
           $ref: '#/components/responses/ValidationError'
       tags:
@@ -2366,10 +2592,15 @@ paths:
             schema:
               type: object
               properties:
+                walletId:
+                  type: string
+                  description: UUID of the wallet from which to withdraw funds. Retrieve wallet UUIDs from the `/api/v2/wallets` endpoint.
+                  example: '1234567890'
+                  nullable: false
                 trxRef:
                   type: string
                   description: Unique merchant reference for the withdrawal.
-                  example: easylink_17116045771112001
+                  example: WD-2025-0001
                   nullable: true
                 bankId:
                   type: string
@@ -2391,7 +2622,7 @@ paths:
                   description: Withdrawal amount as a string.
                   example: '4000000'
                   nullable: false
-                payment_method:
+                paymentMethod:
                   type: string
                   description: Payment method identifier.
                   example: '1'
@@ -2402,8 +2633,9 @@ paths:
                   example: domestic transfer bni 0315747263 009 v2
                   nullable: true
               required:
+                - walletId
                 - bankId
                 - accountHolderName
                 - accountNumber
                 - amount
-                - payment_method
+                - paymentMethod

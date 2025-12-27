@@ -29,6 +29,9 @@
                 code:
                   type: string
                   example: '20004008'
+                message:
+                  type: string
+                  example: 'List of supported banks retrieved successfully.'
                 data:
                   type: array
                   example:
@@ -54,6 +57,7 @@
                         description: 'Full name of the bank'
               example:
                 code: '20004008'
+                message: 'List of supported banks retrieved successfully.'
                 data:
                   -
                     bank_id: '014'
@@ -100,6 +104,9 @@
                 code:
                   type: string
                   example: '20004009'
+                message:
+                  type: string
+                  example: 'List of supported digital wallets retrieved successfully.'
                 data:
                   type: array
                   example:
@@ -125,6 +132,7 @@
                         description: 'Full name of the digital wallet'
               example:
                 code: '20004009'
+                message: 'List of supported digital wallets retrieved successfully.'
                 data:
                   -
                     wallet_id: GOPAY
@@ -171,6 +179,9 @@
                 code:
                   type: string
                   example: '20004010'
+                message:
+                  type: string
+                  example: 'List of banks supporting virtual accounts retrieved successfully.'
                 data:
                   type: array
                   example:
@@ -203,6 +214,7 @@
                         description: 'Indicates whether this bank supports virtual account payments'
               example:
                 code: '20004010'
+                message: 'List of banks supporting virtual accounts retrieved successfully.'
                 data:
                   -
                     bank_id: '014'

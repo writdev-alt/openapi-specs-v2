@@ -20,20 +20,50 @@ try {
     cwd: path.join(__dirname, '..')
   });
   
-  // Move temp.html to index.html
+  // Move temp.html to index.html and inject favicon links
   if (fs.existsSync(tempHtml)) {
-    fs.renameSync(tempHtml, path.join(distDir, 'index.html'));
+    let htmlContent = fs.readFileSync(tempHtml, 'utf8');
+    
+    // Inject favicon links into the <head> section
+    const faviconLinks = `
+  <!-- Favicons for multiple sizes -->
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="./assets/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="./assets/android-chrome-512x512.png">
+  <link rel="manifest" href="./assets/site.webmanifest">`;
+    
+    // Insert favicon links after the <head> tag or after the first meta/viewport tag
+    htmlContent = htmlContent.replace(
+      /(<head[^>]*>)/i,
+      `$1${faviconLinks}`
+    );
+    
+    fs.writeFileSync(path.join(distDir, 'index.html'), htmlContent);
+    fs.unlinkSync(tempHtml);
   }
 
-  // Copy logo assets to dist if they don't exist
-  const assets = ['ilona-logo.png', 'ilona-light-logo.png', 'ilona-favicon.png'];
-  assets.forEach(asset => {
-    const srcPath = path.join(__dirname, '..', asset);
-    const destPath = path.join(distDir, asset);
-    if (fs.existsSync(srcPath) && !fs.existsSync(destPath)) {
+  // Copy logo assets to dist/assets directory
+  const assetsDir = path.join(__dirname, '..', 'assets');
+  const distAssetsDir = path.join(distDir, 'assets');
+  if (!fs.existsSync(distAssetsDir)) {
+    fs.mkdirSync(distAssetsDir, { recursive: true });
+  }
+  
+  // Copy logo assets
+  const logosToCopy = ['logo.png', 'logo-light.png'];
+  logosToCopy.forEach(asset => {
+    const srcPath = path.join(assetsDir, asset);
+    const destPath = path.join(distAssetsDir, asset);
+    if (fs.existsSync(srcPath)) {
       fs.copyFileSync(srcPath, destPath);
     }
   });
+  
+  // Favicons are already generated in dist/assets by generate:favicons script
+  // No need to copy them here
 
   // Copy bundled.yaml to dist for reference
   if (fs.existsSync(path.join(__dirname, '..', 'bundled.yaml'))) {
@@ -58,15 +88,25 @@ try {
   // Copy bundled.yaml to dist
   fs.copyFileSync('bundled.yaml', path.join(distDir, 'bundled.yaml'));
 
+  // Copy logo assets to dist/assets directory
+  const assetsDir = path.join(__dirname, '..', 'assets');
+  const distAssetsDir = path.join(distDir, 'assets');
+  if (!fs.existsSync(distAssetsDir)) {
+    fs.mkdirSync(distAssetsDir, { recursive: true });
+  }
+  
   // Copy logo assets
-  const assets = ['ilona-logo.png', 'ilona-light-logo.png', 'ilona-favicon.png'];
-  assets.forEach(asset => {
-    const srcPath = path.join(__dirname, '..', asset);
-    const destPath = path.join(distDir, asset);
+  const logosToCopy = ['logo.png', 'logo-light.png'];
+  logosToCopy.forEach(asset => {
+    const srcPath = path.join(assetsDir, asset);
+    const destPath = path.join(distAssetsDir, asset);
     if (fs.existsSync(srcPath)) {
       fs.copyFileSync(srcPath, destPath);
     }
   });
+  
+  // Favicons should already be generated in dist/assets by generate:favicons script
+  // If they don't exist (fallback scenario), they will be missing but build will continue
 
   // Create HTML template with Redoc
   const htmlTemplate = `<!DOCTYPE html>
@@ -75,7 +115,14 @@ try {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WRPay API Documentation</title>
-  <link rel="icon" type="image/png" href="/ilona-favicon.png">
+  <!-- Favicons for multiple sizes -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/android-chrome-512x512.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
   <style>
     body {
       margin: 0;
@@ -102,10 +149,12 @@ try {
   console.log('✓ Files created:');
   console.log('  - dist/index.html');
   console.log('  - dist/bundled.yaml');
-  assets.forEach(asset => {
-    if (fs.existsSync(path.join(__dirname, '..', asset))) {
-      console.log(`  - dist/${asset}`);
+  logosToCopy.forEach(asset => {
+    if (fs.existsSync(path.join(distAssetsDir, asset))) {
+      console.log(`  - dist/assets/${asset}`);
     }
   });
+  console.log('  - dist/assets/*.png (favicons)');
+  console.log('  - dist/assets/site.webmanifest');
 }
 

@@ -27,7 +27,6 @@
               type: object
               example:
                 code: '20002001'
-                status: completed
                 message: 'Payment status checked successfully.'
                 data:
                   trxId: TRX20241101001
@@ -44,8 +43,6 @@
                 code:
                   type: string
                   example: '20002001'
-                status:
-                  $ref: '#/components/schemas/TransactionStatus'
                 message:
                   type: string
                   example: 'Payment status checked successfully.'
@@ -70,7 +67,7 @@
                       type: string
                       example: IDR
                     status:
-                      $ref: '#/components/schemas/TransactionStatus'
+                      $ref: '#/components/schemas/PaymentTransactionStatus'
                     paymentMethod:
                       type: string
                       example: QRIS
@@ -154,7 +151,6 @@
               type: object
               example:
                 code: '20002004'
-                status: completed
                 message: 'Withdrawal status checked successfully.'
                 data:
                   trxId: TRX-2025.01.15-ABC123XYZ
@@ -179,8 +175,6 @@
                 code:
                   type: string
                   example: '20002004'
-                status:
-                  $ref: '#/components/schemas/TransactionStatus'
                 message:
                   type: string
                   example: 'Withdrawal status checked successfully.'
@@ -210,7 +204,7 @@
                       type: string
                       example: IDR
                     status:
-                      $ref: '#/components/schemas/TransactionStatus'
+                      $ref: '#/components/schemas/WithdrawalTransactionStatus'
                     withdrawalMethod:
                       type: string
                       example: Bank Transfer
@@ -402,7 +396,6 @@
               type: object
               example:
                 code: '20002003'
-                status: completed
                 message: 'Invoice retrieved successfully.'
                 data:
                   trxId: TRX20241101001
@@ -422,8 +415,6 @@
                 code:
                   type: string
                   example: '20002003'
-                status:
-                  $ref: '#/components/schemas/TransactionStatus'
                 message:
                   type: string
                   example: 'Invoice retrieved successfully.'
@@ -443,7 +434,7 @@
                       type: string
                       example: IDR
                     status:
-                      $ref: '#/components/schemas/TransactionStatus'
+                      $ref: '#/components/schemas/PaymentTransactionStatus'
                     customerName:
                       type: string
                       example: Budi Santoso

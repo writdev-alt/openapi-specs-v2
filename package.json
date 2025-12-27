@@ -7,11 +7,13 @@
     "bundle": "npm run merge && redocly bundle openapi.yaml -o bundled.yaml",
     "lint": "redocly lint openapi.yaml --extends recommended",
     "preview": "npm run bundle && node scripts/preview-redoc.js",
-    "build": "npm run bundle && node scripts/build-html.js",
-    "build:html": "node scripts/build-html.js"
+    "build": "npm run bundle && npm run generate:favicons && node scripts/build-html.js",
+    "build:html": "node scripts/build-html.js",
+    "generate:favicons": "node scripts/generate-favicons.js"
   },
   "devDependencies": {
     "@redocly/cli": "^2.12.0",
-    "js-yaml": "^4.1.1"
+    "js-yaml": "^4.1.1",
+    "sharp": "^0.33.0"
   }
 }

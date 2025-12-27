@@ -90,7 +90,7 @@
                         type: string
                         example: IDR
                       status:
-                        $ref: '#/components/schemas/TransactionStatus'
+                        $ref: '#/components/schemas/PaymentTransactionStatus'
                       paymentMethod:
                         type: string
                         example: QRIS

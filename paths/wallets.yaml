@@ -37,9 +37,9 @@
                   items:
                     type: object
                     properties:
-                      uuid:
+                      walletId:
                         type: string
-                        example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                        example: "1234567890"
                       currencyCode:
                         type: string
                         example: IDR
@@ -57,7 +57,7 @@
                 message: 'List of wallets retrieved successfully.'
                 data:
                   -
-                    uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                    walletId: "1234567890"
                     currencyCode: IDR
                     balance: 2500000
                     holdBalance: 0
@@ -101,9 +101,9 @@
                 data:
                   type: object
                   properties:
-                    uuid:
+                    walletId:
                       type: string
-                      example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                      example: "1234567890"
                     currencyCode:
                       type: string
                       example: IDR
@@ -120,7 +120,7 @@
                 code: '20003002'
                 message: 'Wallet details retrieved successfully.'
                 data:
-                  uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                  walletId: "1234567890"
                   currencyCode: IDR
                   balance: 2500000
                   holdBalance: 0
