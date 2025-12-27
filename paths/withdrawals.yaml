@@ -85,7 +85,7 @@
                         type: string
                         example: "1234567890"
                         nullable: true
-                        description: 'UUID of the wallet from which the withdrawal was made'
+                        description: 'Wallet ID of the wallet from which the withdrawal was made'
                       amount:
                         type: string
                         example: '250000.00'
@@ -255,8 +255,14 @@
                 pageSize: 20
                 hasNext: true
                 hasPrev: false
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -337,7 +343,7 @@
                     walletId:
                       type: string
                       example: "1234567890"
-                      description: 'UUID of the wallet from which the withdrawal was made'
+                      description: 'Wallet ID of the wallet from which the withdrawal was made'
                     amount:
                       type: string
                       example: '4000000.00'
@@ -433,8 +439,16 @@
                       example: null
                       nullable: true
                       description: 'Timestamp when the withdrawal was canceled (null if not canceled)'
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
+      500:
+        $ref: '#/components/responses/ServerError'
     tags:
       - Withdrawals
     requestBody:
@@ -446,7 +460,7 @@
             properties:
               walletId:
                 type: string
-                description: 'UUID of the wallet from which to withdraw funds. Retrieve wallet UUIDs from the `/api/v2/wallets` endpoint.'
+                description: 'Wallet ID of the wallet from which to withdraw funds. Retrieve wallet IDs from the `/api/v2/wallets` endpoint.'
                 example: "1234567890"
                 nullable: false
               trxRef:

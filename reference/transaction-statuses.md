@@ -1,13 +1,32 @@
 # Transaction Statuses
 
-This document describes all available transaction status values in the WRPay API.
+This document describes all available transaction status values in the WRPay API. The API uses different status enums for payments and withdrawals.
 
-## Available Statuses
+## Payment Transaction Statuses
 
-The following transaction statuses are used throughout the API:
+Payment transactions (QRIS) use the `PaymentTransactionStatus` enum with the following values:
 
 ### `pending`
-Transaction has been created and is waiting to be processed. This is the initial state when a payment request is first submitted.
+Payment has been created and is waiting to be processed. This is the initial state when a payment request is first submitted.
+
+### `completed`
+Payment has been successfully completed. The payment has been processed and funds have been transferred.
+
+### `expired`
+Payment has expired and is no longer valid. This typically occurs when:
+- The payment QR code expires
+- The transaction timeout period is exceeded
+- The payment window closes
+
+**Payment Status Flow:**
+```
+pending → completed
+pending → expired (if not paid within time limit)
+```
+
+## Withdrawal Transaction Statuses
+
+Withdrawal transactions use the `WithdrawalTransactionStatus` enum with the following values:
 
 ### `awaiting_fi_process`
 Transaction is waiting for financial institution processing. The payment gateway has received the request and is routing it to the financial institution.
@@ -15,65 +34,39 @@ Transaction is waiting for financial institution processing. The payment gateway
 ### `awaiting_pg_process`
 Transaction is waiting for payment gateway processing. The request is being processed by the payment gateway before being sent to the financial institution.
 
-### `awaiting_user_action`
-Transaction requires user action (e.g., payment confirmation, OTP verification, or completing a payment form). The transaction is paused until the user completes the required action.
-
-### `awaiting_admin_approval`
-Transaction is pending administrative approval. Some transactions may require manual review before processing can continue.
-
 ### `completed`
-Transaction has been successfully completed. The payment has been processed and funds have been transferred.
-
-### `canceled`
-Transaction was canceled before completion. This can occur if:
-- The user cancels the payment
-- The transaction times out
-- The merchant cancels the transaction
-- An administrative action cancels the transaction
+Transaction has been successfully completed. The withdrawal has been processed and funds have been transferred.
 
 ### `failed`
 Transaction processing failed. This indicates an error occurred during processing. Common causes include:
 - Insufficient funds
-- Invalid payment details
+- Invalid account details
 - Gateway errors
 - Network issues
 
 ### `refunded`
-Transaction has been refunded. The original payment was successful, but funds have been returned to the customer.
+Transaction has been refunded. The original withdrawal was successful, but funds have been returned to the wallet.
 
-### `expired`
-Transaction has expired and is no longer valid. This typically occurs when:
-- The payment QR code expires
-- The transaction timeout period is exceeded
-- The payment window closes
-
-## Status Flow
-
-A typical transaction follows this flow:
-
+**Withdrawal Status Flow:**
 ```
-pending → awaiting_pg_process → awaiting_fi_process → completed
-                                    ↓
-                              awaiting_user_action
-                                    ↓
-                              (user completes action)
-                                    ↓
-                              completed
+awaiting_pg_process → awaiting_fi_process → completed
+                          ↓
+                       failed
+completed → refunded
 ```
-
-Alternative flows:
-
-- **Cancellation**: `pending` → `canceled`
-- **Failure**: `pending` → `awaiting_pg_process` → `failed`
-- **Expiration**: `pending` → `expired`
-- **Refund**: `completed` → `refunded`
 
 ## Checking Transaction Status
 
-Use the Check Transaction Status endpoint to retrieve the current status of any transaction:
+Use the appropriate endpoint to retrieve the current status of any transaction:
 
+**For Payments:**
 ```bash
-GET /api/v2/check-status/{trx_id}
+GET /api/v2/check-payment-status/{trx_id}
+```
+
+**For Withdrawals:**
+```bash
+GET /api/v2/check-withdrawal-status/{trx_id}
 ```
 
 See the Transactions section in the API documentation for detailed endpoint information.
@@ -83,21 +76,37 @@ See the Transactions section in the API documentation for detailed endpoint info
 Transaction status appears in several API responses:
 
 - **Payment initiation responses** - Initial status (usually `pending`)
+- **Withdrawal creation responses** - Initial status (usually `awaiting_pg_process`)
 - **Status check responses** - Current status with full transaction details
 - **Callback notifications** - Status updates sent to your webhook endpoint
 
-## Example Response
+## Example Payment Response
 
 ```json
 {
-  "status": "completed",
-  "message": "Payment, request status checked successfully.",
+  "code": "20001001",
+  "message": "Payment status checked successfully.",
   "data": {
-    "trx_id": "TRX20241101001",
-    "trx_ref": "INV-2024-0001",
+    "trxId": "TRX20241101001",
+    "trxRef": "INV-2024-0001",
     "referenceNumber": "123456789012",
-    "amount": 150000,
-    "currency_code": "IDR",
+    "amount": "150000.00",
+    "currencyCode": "IDR",
+    "status": "completed"
+  }
+}
+```
+
+## Example Withdrawal Response
+
+```json
+{
+  "code": "20005001",
+  "message": "Withdrawal status checked successfully.",
+  "data": {
+    "trxId": "TRX-2025.01.15-ABC123XYZ",
+    "trxRef": "WD-2025-0001",
+    "amount": "250000.00",
     "status": "completed"
   }
 }

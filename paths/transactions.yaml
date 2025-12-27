@@ -84,10 +84,16 @@
                       type: string
                       example: '+628123456789'
                       nullable: true
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       404:
         $ref: '#/components/responses/NotFound'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -249,10 +255,16 @@
                       type: boolean
                       example: false
                       description: 'Whether the transaction is in sandbox mode'
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       404:
         $ref: '#/components/responses/NotFound'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -336,10 +348,16 @@
                       format: date-time
                       example: '2024-11-01T10:30:00Z'
                       description: 'Timestamp when the callback was queued for resending'
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       404:
         $ref: '#/components/responses/NotFound'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -471,10 +489,16 @@
                       format: date-time
                       example: '2024-11-01T10:15:00Z'
                       nullable: true
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       404:
         $ref: '#/components/responses/NotFound'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:

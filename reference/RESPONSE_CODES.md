@@ -113,7 +113,8 @@ All API responses follow a standardized format with composite response codes. Th
 | `2010301` | 201 | Withdrawal (03) | Withdrawal Success (01) | Withdrawal created | New withdrawal request |
 | `4000002` | 400 | General (00) | Error (02) | General error | Bad request |
 | `4010105` | 401 | Auth (01) | Auth Required (05) | Authentication required | Missing/invalid token |
-| `4030105` | 403 | Auth (01) | Forbidden (05) | Access forbidden | Insufficient permissions |
+| `4030101` | 403 | Auth (01) | Forbidden (01) | Access forbidden | Insufficient permissions |
+| `4030102` | 403 | Auth (01) | IP Not Whitelisted (02) | IP address not whitelisted | IP whitelist restriction |
 | `4040003` | 404 | General (00) | Not Found (03) | Resource not found | Generic not found |
 | `4040402` | 404 | Wallet (04) | Wallet Not Found (02) | Wallet not found | Wallet lookup failed |
 | `4040502` | 404 | Transaction (05) | Transaction Not Found (02) | Transaction not found | Transaction lookup failed |
@@ -149,14 +150,13 @@ All API responses follow a standardized format with composite response codes. Th
 
 ```json
 {
-  "success": true,
-  "code": "2010301",
+  "code": "20105001",
   "message": "Withdrawal has been created.",
   "data": {
-    "trx_id": "TXN123456",
-    "amount": 1000,
-    "account_id": 1,
-    "wallet_id": "wallet-uuid"
+    "trxId": "TXN123456",
+    "amount": "1000.00",
+    "accountId": 1,
+    "walletId": "wallet-uuid"
   }
 }
 ```
@@ -165,9 +165,8 @@ All API responses follow a standardized format with composite response codes. Th
 
 ```json
 {
-  "success": false,
-  "code": "4220601",
-  "message": "Validation failed",
+  "code": "42201001",
+  "message": "The given data was invalid.",
   "errors": {
     "email": ["The email field is required."],
     "amount": ["The amount must be greater than 0."]
@@ -179,8 +178,7 @@ All API responses follow a standardized format with composite response codes. Th
 
 ```json
 {
-  "success": false,
-  "code": "4040402",
+  "code": "40404002",
   "message": "Wallet not found"
 }
 ```

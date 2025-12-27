@@ -68,6 +68,12 @@
                   -
                     bankId: '009'
                     bankName: Bank BNI
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -143,6 +149,12 @@
                   -
                     wallet_id: DANA
                     wallet_name: DANA
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -208,10 +220,10 @@
                         type: string
                         example: BCA
                         description: 'Full name of the bank'
-                      supportsVirtualAccount:
-                        type: boolean
-                        example: true
-                        description: 'Indicates whether this bank supports virtual account payments'
+                    supportsVirtualAccount:
+                      type: boolean
+                      example: true
+                      description: 'Indicates whether this bank supports virtual account payments'
               example:
                 code: '20004010'
                 message: 'List of banks supporting virtual accounts retrieved successfully.'
@@ -228,6 +240,12 @@
                     bankId: '009'
                     bankName: Bank BNI
                     supports_virtual_account: true
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:

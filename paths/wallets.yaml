@@ -20,7 +20,7 @@
           type: string
     responses:
       200:
-        description: 'List of wallets retrieved successfully. Returns an array of wallet objects with UUID, currency, balance, hold balance, and available balance.'
+        description: 'List of wallets retrieved successfully. Returns an array of wallet objects with Wallet ID, currency, balance, hold balance, and available balance.'
         content:
           application/json:
             schema:
@@ -62,9 +62,17 @@
                     balance: 2500000
                     holdBalance: 0
                     availableBalance: 2500000
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
+      500:
+        $ref: '#/components/responses/ServerError'
     tags:
       - Wallets
-'/api/v2/wallets/{uuid}':
+'/api/v2/wallets/{walletId}':
   get:
     summary: 'Show wallet details.'
     operationId: showWalletDetails
@@ -86,7 +94,7 @@
           type: string
     responses:
       200:
-        description: 'Wallet details retrieved successfully. Returns wallet object with UUID, currency, balance, hold balance, and available balance.'
+        description: 'Wallet details retrieved successfully. Returns wallet object with Wallet ID, currency, balance, hold balance, and available balance.'
         content:
           application/json:
             schema:
@@ -125,16 +133,26 @@
                   balance: 2500000
                   holdBalance: 0
                   availableBalance: 2500000
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
+      404:
+        $ref: '#/components/responses/NotFound'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
+      500:
+        $ref: '#/components/responses/ServerError'
     tags:
       - Wallets
   parameters:
     -
       in: path
-      name: uuid
-      description: 'Wallet UUID returned by the list wallets endpoint.'
-      example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+      name: walletId
+      description: 'Wallet ID returned by the list wallets endpoint.'
+      example: "1234567890"
       required: true
       schema:
         type: string

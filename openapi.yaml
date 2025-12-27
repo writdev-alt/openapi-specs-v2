@@ -18,6 +18,8 @@ servers:
     description: Sandbox environment for testing and development
   - url: https://production.ilonapay.com
     description: Production environment for live transactions
+security:
+  - default: []
 tags:
   - name: Payments
     description: Endpoints for initiating and processing payment transactions
@@ -29,15 +31,6 @@ tags:
     description: Endpoints for managing withdrawal account configurations
   - name: Withdrawals
     description: Endpoints for creating and managing withdrawal requests
-components:
-  securitySchemes:
-    $ref: ./components/security.yaml#/securitySchemes
-  responses:
-    $ref: ./components/responses.yaml#/responses
-  schemas:
-    $ref: ./components/schemas.yaml#/schemas
-security:
-  - default: []
 paths:
   /api/v2/payments:
     get:
@@ -196,8 +189,14 @@ paths:
                   pageSize: 2
                   hasNext: true
                   hasPrev: false
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -297,8 +296,14 @@ paths:
                       merchantLocation:
                         type: string
                         example: SIMEULUE
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -428,8 +433,14 @@ paths:
                         format: date-time
                         example: '2024-11-02T10:00:00Z'
                         nullable: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -583,8 +594,14 @@ paths:
                         type: string
                         example: Please transfer the exact amount to the account above. Include your reference number in the transfer notes.
                         nullable: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -731,10 +748,16 @@ paths:
                         type: string
                         example: '+628123456789'
                         nullable: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -894,10 +917,16 @@ paths:
                         type: boolean
                         example: false
                         description: Whether the transaction is in sandbox mode
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -979,10 +1008,16 @@ paths:
                         format: date-time
                         example: '2024-11-01T10:30:00Z'
                         description: Timestamp when the callback was queued for resending
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -1112,10 +1147,16 @@ paths:
                         format: date-time
                         example: '2024-11-01T10:15:00Z'
                         nullable: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -1148,7 +1189,7 @@ paths:
             type: string
       responses:
         '200':
-          description: List of wallets retrieved successfully. Returns an array of wallet objects with UUID, currency, balance, hold balance, and available balance.
+          description: List of wallets retrieved successfully. Returns an array of wallet objects with Wallet ID, currency, balance, hold balance, and available balance.
           content:
             application/json:
               schema:
@@ -1189,9 +1230,17 @@ paths:
                       balance: 2500000
                       holdBalance: 0
                       availableBalance: 2500000
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/ServerError'
       tags:
         - Wallets
-  /api/v2/wallets/{uuid}:
+  /api/v2/wallets/{walletId}:
     get:
       summary: Show wallet details.
       operationId: showWalletDetails
@@ -1211,7 +1260,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Wallet details retrieved successfully. Returns wallet object with UUID, currency, balance, hold balance, and available balance.
+          description: Wallet details retrieved successfully. Returns wallet object with Wallet ID, currency, balance, hold balance, and available balance.
           content:
             application/json:
               schema:
@@ -1250,15 +1299,25 @@ paths:
                     balance: 2500000
                     holdBalance: 0
                     availableBalance: 2500000
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/ServerError'
       tags:
         - Wallets
     parameters:
       - in: path
-        name: uuid
-        description: Wallet UUID returned by the list wallets endpoint.
-        example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+        name: walletId
+        description: Wallet ID returned by the list wallets endpoint.
+        example: '1234567890'
         required: true
         schema:
           type: string
@@ -1324,6 +1383,12 @@ paths:
                       bankName: Bank Mandiri
                     - bankId: '009'
                       bankName: Bank BNI
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -1390,6 +1455,12 @@ paths:
                       wallet_name: OVO
                     - wallet_id: DANA
                       wallet_name: DANA
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -1449,10 +1520,10 @@ paths:
                           type: string
                           example: BCA
                           description: Full name of the bank
-                        supportsVirtualAccount:
-                          type: boolean
-                          example: true
-                          description: Indicates whether this bank supports virtual account payments
+                      supportsVirtualAccount:
+                        type: boolean
+                        example: true
+                        description: Indicates whether this bank supports virtual account payments
                 example:
                   code: '20004010'
                   message: List of banks supporting virtual accounts retrieved successfully.
@@ -1466,6 +1537,12 @@ paths:
                     - bankId: '009'
                       bankName: Bank BNI
                       supports_virtual_account: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -1527,6 +1604,14 @@ paths:
                     - id: 1
                       name: Bank Transfer
                       currency: IDR
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/ServerError'
       tags:
         - Withdraw Accounts
   /api/v2/withdraw-accounts/lists:
@@ -1602,6 +1687,12 @@ paths:
                     wallets:
                       - walletId: GOPAY
                         walletName: GoPay
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -1673,6 +1764,12 @@ paths:
                       conversionRate:
                         type: integer
                         example: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -1695,12 +1792,12 @@ paths:
       parameters:
         - in: query
           name: walletId
-          description: Filter accounts by wallet UUID so the currency matches.
+          description: Filter accounts by wallet Wallet ID so the currency matches.
           example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
           required: false
           schema:
             type: string
-            description: Filter accounts by wallet UUID so the currency matches.
+            description: Filter accounts by wallet Wallet ID so the currency matches.
             example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
             nullable: false
         - in: header
@@ -1774,8 +1871,16 @@ paths:
                             currency:
                               type: string
                               example: IDR
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/ServerError'
       tags:
         - Withdraw Accounts
     post:
@@ -1844,8 +1949,14 @@ paths:
                           currency:
                             type: string
                             example: IDR
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -1975,8 +2086,16 @@ paths:
                           currency:
                             type: string
                             example: IDR
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/ServerError'
       tags:
         - Withdraw Accounts
     put:
@@ -2045,8 +2164,14 @@ paths:
                           currency:
                             type: string
                             example: IDR
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -2237,7 +2362,7 @@ paths:
                           type: string
                           example: '1234567890'
                           nullable: true
-                          description: UUID of the wallet from which the withdrawal was made
+                          description: Wallet ID of the wallet from which the withdrawal was made
                         amount:
                           type: string
                           example: '250000.00'
@@ -2405,8 +2530,14 @@ paths:
                   pageSize: 20
                   hasNext: true
                   hasPrev: false
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/ServerError'
       tags:
@@ -2485,7 +2616,7 @@ paths:
                       walletId:
                         type: string
                         example: '1234567890'
-                        description: UUID of the wallet from which the withdrawal was made
+                        description: Wallet ID of the wallet from which the withdrawal was made
                       amount:
                         type: string
                         example: '4000000.00'
@@ -2581,8 +2712,16 @@ paths:
                         example: null
                         nullable: true
                         description: Timestamp when the withdrawal was canceled (null if not canceled)
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '422':
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/ServerError'
       tags:
         - Withdrawals
       requestBody:
@@ -2594,7 +2733,7 @@ paths:
               properties:
                 walletId:
                   type: string
-                  description: UUID of the wallet from which to withdraw funds. Retrieve wallet UUIDs from the `/api/v2/wallets` endpoint.
+                  description: Wallet ID of the wallet from which to withdraw funds. Retrieve wallet IDs from the `/api/v2/wallets` endpoint.
                   example: '1234567890'
                   nullable: false
                 trxRef:
@@ -2639,3 +2778,10 @@ paths:
                 - accountNumber
                 - amount
                 - paymentMethod
+components:
+  securitySchemes:
+    $ref: ./components/security.yaml#/securitySchemes
+  responses:
+    $ref: ./components/responses.yaml#/responses
+  schemas:
+    $ref: ./components/schemas.yaml#/schemas

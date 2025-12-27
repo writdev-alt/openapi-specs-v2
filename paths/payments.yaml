@@ -162,8 +162,14 @@
                 pageSize: 2
                 hasNext: true
                 hasPrev: false
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -262,8 +268,14 @@
                     merchantLocation:
                       type: string
                       example: SIMEULUE
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -395,8 +407,14 @@
                       format: date-time
                       example: '2024-11-02T10:00:00Z'
                       nullable: true
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -552,8 +570,14 @@
                       type: string
                       example: 'Please transfer the exact amount to the account above. Include your reference number in the transfer notes.'
                       nullable: true
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:

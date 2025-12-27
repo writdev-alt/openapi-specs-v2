@@ -116,7 +116,7 @@ function getHtmlTemplate() {
     function initRedoc() {
       const container = document.getElementById('redoc-container');
       container.innerHTML = '';
-      redocInstance = Redoc.init('/openapi.yaml?t=' + Date.now(), {}, container);
+      redocInstance = Redoc.init('/bundled.yaml?t=' + Date.now(), {}, container);
     }
     
     initRedoc();
@@ -124,7 +124,7 @@ function getHtmlTemplate() {
     // Hot reload: Poll for changes every 2 seconds
     setInterval(async () => {
       try {
-        const response = await fetch('/openapi.yaml?t=' + Date.now());
+        const response = await fetch('/bundled.yaml?t=' + Date.now());
         const headers = response.headers;
         const lastModifiedHeader = headers.get('last-modified');
         if (lastModifiedHeader) {
@@ -162,8 +162,10 @@ const server = http.createServer((req, res) => {
   if (requestPath === '/index.html') {
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
     res.end(getHtmlTemplate());
-  } else if (requestPath === '/openapi.yaml' || requestPath === '/bundled.yaml') {
-    const stats = fs.existsSync(BUNDLED_FILE) ? fs.statSync(BUNDLED_FILE) : null;
+  } else if (requestPath === '/bundled.yaml' || requestPath === '/openapi.yaml') {
+    // Serve bundled.yaml for Redoc, or openapi.yaml for reference
+    const fileToServe = requestPath === '/bundled.yaml' ? BUNDLED_FILE : OPENAPI_FILE;
+    const stats = fs.existsSync(fileToServe) ? fs.statSync(fileToServe) : null;
     const lastModifiedTime = stats ? stats.mtime.toUTCString() : new Date().toUTCString();
     
     res.writeHead(200, {
@@ -171,7 +173,13 @@ const server = http.createServer((req, res) => {
       'Last-Modified': lastModifiedTime,
       'Cache-Control': 'no-cache'
     });
-    res.end(bundledYaml);
+    if (requestPath === '/bundled.yaml') {
+      res.end(bundledYaml);
+    } else {
+      // Serve openapi.yaml content
+      const openapiContent = fs.existsSync(OPENAPI_FILE) ? fs.readFileSync(OPENAPI_FILE, 'utf8') : '';
+      res.end(openapiContent);
+    }
   } else {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('Not Found');

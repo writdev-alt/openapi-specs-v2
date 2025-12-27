@@ -34,6 +34,13 @@ responses:
         schema:
           $ref: './schemas.yaml#/schemas/Forbidden'
   
+  TooManyRequests:
+    description: 'Too Many Requests - Rate limit exceeded.'
+    content:
+      application/json:
+        schema:
+          $ref: './schemas.yaml#/schemas/TooManyRequests'
+  
   SuccessMessage:
     description: 'Success response with message.'
     content:

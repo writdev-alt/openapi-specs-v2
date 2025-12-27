@@ -59,6 +59,8 @@ All error responses follow a consistent format:
 
 ### Forbidden Errors (403)
 
+#### General Forbidden Access
+
 ```json
 {
   "code": "40301001",
@@ -66,13 +68,24 @@ All error responses follow a consistent format:
 }
 ```
 
+#### IP Not Whitelisted
+
+```json
+{
+  "code": "40301002",
+  "message": "IP address not whitelisted. Access denied."
+}
+```
+
 **Common scenarios:**
+- IP address not in the allowed whitelist
 - Insufficient permissions for the requested resource
 - Account restrictions prevent the action
 - Feature not available for your account tier
 - Resource access restricted by merchant settings
 
 **Solutions:**
+- **For IP whitelist errors**: Add your IP address to the whitelist in the merchant dashboard under API Access settings
 - Verify your account has the required permissions
 - Check your account tier and feature access
 - Contact support to upgrade your account if needed
@@ -106,7 +119,7 @@ All error responses follow a consistent format:
   "code": "42201001",
   "message": "The given data was invalid.",
   "errors": {
-    "wallet_id": [
+    "walletId": [
       "Wallet not found or does not belong to you."
     ]
   }
@@ -135,10 +148,10 @@ All error responses follow a consistent format:
   "code": "42201001",
   "message": "The given data was invalid.",
   "errors": {
-    "account_id": [
+    "accountId": [
       "Withdraw account not found"
     ],
-    "bank_code": [
+    "bankCode": [
       "Invalid Account Number"
     ]
   }
@@ -179,7 +192,7 @@ All error responses follow a consistent format:
 
 | Error Message | Cause | Solution |
 |--------------|-------|----------|
-| "Wallet not found or does not belong to you." | Invalid wallet UUID | Verify wallet UUID from list wallets endpoint |
+| "Wallet not found or does not belong to you." | Invalid walletId | Verify walletId from list wallets endpoint |
 | "Insufficient wallet balance" | Balance too low | Check wallet balance before withdrawal |
 
 ### Amount Field Errors

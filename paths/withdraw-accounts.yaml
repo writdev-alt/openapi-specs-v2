@@ -59,6 +59,14 @@
                     id: 1
                     name: 'Bank Transfer'
                     currency: IDR
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
+      500:
+        $ref: '#/components/responses/ServerError'
     tags:
       - 'Withdraw Accounts'
 /api/v2/withdraw-accounts/lists:
@@ -140,6 +148,12 @@
                     -
                       walletId: GOPAY
                       walletName: GoPay
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -213,6 +227,12 @@
                     conversionRate:
                       type: integer
                       example: 1
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -235,12 +255,12 @@
       -
         in: query
         name: walletId
-        description: 'Filter accounts by wallet UUID so the currency matches.'
+        description: 'Filter accounts by wallet Wallet ID so the currency matches.'
         example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
         required: false
         schema:
           type: string
-          description: 'Filter accounts by wallet UUID so the currency matches.'
+          description: 'Filter accounts by wallet Wallet ID so the currency matches.'
           example: f8f3e8f8-0b1a-4cd5-a8fc-3cf1328a0a6f
           nullable: false
       -
@@ -318,8 +338,16 @@
                           currency:
                             type: string
                             example: IDR
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
+      500:
+        $ref: '#/components/responses/ServerError'
     tags:
       - 'Withdraw Accounts'
   post:
@@ -390,8 +418,14 @@
                         currency:
                           type: string
                           example: IDR
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:
@@ -523,8 +557,16 @@
                         currency:
                           type: string
                           example: IDR
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       404:
         $ref: '#/components/responses/NotFound'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
+      500:
+        $ref: '#/components/responses/ServerError'
     tags:
       - 'Withdraw Accounts'
   put:
@@ -595,8 +637,14 @@
                         currency:
                           type: string
                           example: IDR
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
       422:
         $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
       500:
         $ref: '#/components/responses/ServerError'
     tags:

@@ -73,6 +73,33 @@ Returned when authentication fails or API keys are invalid:
 - Invalid API credentials
 - Expired API keys
 
+### 403 Forbidden
+
+Returned when access is denied due to insufficient permissions or security restrictions:
+
+```json
+{
+  "code": "40301001",
+  "message": "Access denied. You do not have permission to perform this action."
+}
+```
+
+**Common causes:**
+- IP address not whitelisted (40301002)
+- Insufficient permissions for the requested resource
+- Account restrictions prevent the action
+- Feature not available for your account tier
+
+**IP Whitelist Error:**
+```json
+{
+  "code": "40301002",
+  "message": "IP address not whitelisted. Access denied."
+}
+```
+
+To resolve IP whitelist errors, add your IP address to the whitelist in the merchant dashboard under API Access settings.
+
 ### 404 Not Found
 
 Returned when a requested resource doesn't exist:
@@ -96,14 +123,15 @@ Returned when request data fails validation:
 
 ```json
 {
+  "code": "42201001",
   "message": "The given data was invalid.",
   "errors": {
-    "field_name": [
-      "The field_name is required.",
-      "The field_name must be a string."
+    "fieldName": [
+      "The fieldName is required.",
+      "The fieldName must be a string."
     ],
-    "another_field": [
-      "The another_field must be a number."
+    "anotherField": [
+      "The anotherField must be a number."
     ]
   }
 }
@@ -170,16 +198,17 @@ Validation errors include field-specific error messages:
 
 ```json
 {
+  "code": "42201001",
   "message": "The given data was invalid.",
   "errors": {
-    "wallet_id": [
+    "walletId": [
       "Wallet not found or does not belong to you."
     ],
     "amount": [
       "Insufficient wallet balance for this withdrawal.",
       "Amount must be between 50000 and 50000000."
     ],
-    "account_id": [
+    "accountId": [
       "Withdraw account not found."
     ]
   }

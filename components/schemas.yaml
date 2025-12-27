@@ -114,11 +114,11 @@ schemas:
     properties:
       code:
         type: string
-        description: 'Response code following the formula: HTTP status code + service code + case code. Example: 40301001 (403 = HTTP status, 01 = service code, 001 = case code)'
+        description: 'Response code following the formula: HTTP status code + service code + case code. Examples: 40301001 (general forbidden), 40301002 (IP not whitelisted)'
         example: '40301001'
       message:
         type: string
-        description: 'Forbidden access message indicating insufficient permissions.'
+        description: 'Forbidden access message indicating insufficient permissions or security restrictions. Common messages include general access denial or IP whitelist restrictions.'
         example: 'Access denied. You do not have permission to perform this action.'
       success:
         type: boolean
@@ -128,6 +128,29 @@ schemas:
       code: '40301001'
       message: 'Access denied. You do not have permission to perform this action.'
       success: false
+  
+  TooManyRequests:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: string
+        description: 'Response code following the formula: HTTP status code + service code + case code. Example: 42901001 (429 = HTTP status, 01 = service code, 001 = case code)'
+        example: '42901001'
+      message:
+        type: string
+        description: 'Rate limit exceeded message.'
+        example: 'Too many requests. Please try again later.'
+      retryAfter:
+        type: integer
+        description: 'Number of seconds to wait before retrying the request.'
+        example: 180
+    example:
+      code: '42901001'
+      message: 'Too many requests. Please try again later.'
+      retryAfter: 180
   
   SuccessMessage:
     type: object
