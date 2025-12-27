@@ -242,7 +242,7 @@ schemas:
       data:
         trx_id: TRX-2025.11.12-3QS4LURBQ6
         trx_reference: ILONAPAY_69146275622d7
-        rrn: '1ittl5s63288'
+        referenceNumber: '1ittl5s63288'
         amount: '2000.00'
         currency_code: IDR
         description: null
@@ -275,7 +275,7 @@ schemas:
         nullable: true
         description: "Merchant's transaction reference (if provided)"
         example: ILONAPAY_69146275622d7
-      rrn:
+      referenceNumber:
         type: string
         nullable: true
         description: 'Retrieval Reference Number from the payment gateway'

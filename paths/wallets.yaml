@@ -29,6 +29,9 @@
                 code:
                   type: string
                   example: '20003001'
+                message:
+                  type: string
+                  example: 'List of wallets retrieved successfully.'
                 data:
                   type: array
                   items:
@@ -51,6 +54,7 @@
                         example: 2500000
               example:
                 code: '20003001'
+                message: 'List of wallets retrieved successfully.'
                 data:
                   -
                     uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
@@ -82,37 +86,45 @@
           type: string
     responses:
       200:
-        description: 'List of wallets retrieved successfully. Returns an array of wallet objects with UUID, currency, balance, hold balance, and available balance.'
+        description: 'Wallet details retrieved successfully. Returns wallet object with UUID, currency, balance, hold balance, and available balance.'
         content:
           application/json:
             schema:
               type: object
-              example:
-                code: '20003002'
-                uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                currencyCode: IDR
-                balance: 2500000
-                holdBalance: 0
-                availableBalance: 2500000
               properties:
                 code:
                   type: string
                   example: '20003002'
-                uuid:
+                message:
                   type: string
-                  example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
-                currencyCode:
-                  type: string
-                  example: IDR
-                balance:
-                  type: integer
-                  example: 2500000
-                holdBalance:
-                  type: integer
-                  example: 0
-                availableBalance:
-                  type: integer
-                  example: 2500000
+                  example: 'Wallet details retrieved successfully.'
+                data:
+                  type: object
+                  properties:
+                    uuid:
+                      type: string
+                      example: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                    currencyCode:
+                      type: string
+                      example: IDR
+                    balance:
+                      type: integer
+                      example: 2500000
+                    holdBalance:
+                      type: integer
+                      example: 0
+                    availableBalance:
+                      type: integer
+                      example: 2500000
+              example:
+                code: '20003002'
+                message: 'Wallet details retrieved successfully.'
+                data:
+                  uuid: c6c02b3e-5f5f-4f7b-b2c0-e7a01ad131ab
+                  currencyCode: IDR
+                  balance: 2500000
+                  holdBalance: 0
+                  availableBalance: 2500000
       422:
         $ref: '#/components/responses/ValidationError'
     tags:

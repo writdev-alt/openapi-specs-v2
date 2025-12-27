@@ -87,46 +87,7 @@ try {
   <div id="redoc-container"></div>
   <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
   <script>
-    Redoc.init('/bundled.yaml', {
-      scrollYOffset: 0,
-      hideDownloadButton: false,
-      theme: {
-        colors: {
-          primary: {
-            main: '#32329f'
-          }
-        },
-        typography: {
-          fontSize: '14px',
-          fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
-          code: {
-            fontSize: '13px',
-            fontFamily: 'Monaco, Consolas, "Courier New", monospace'
-          },
-          headings: {
-            fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
-            fontWeight: '600'
-          }
-        },
-        sidebar: {
-          backgroundColor: '#fafafa'
-        }
-      },
-      menuToggle: true,
-      nativeScrollbars: true,
-      hideHostname: false,
-      pathInMiddlePanel: true,
-      requiredPropsFirst: true,
-      sortPropsAlphabetically: false,
-      sortOperationsAlphabetically: false,
-      sortTagsAlphabetically: true,
-      payloadSampleIdx: 0,
-      jsonSampleExpandLevel: 2,
-      hideSingleRequestSampleTab: false,
-      expandResponses: '200,201',
-      hideSchemaPattern: false,
-      generatedPayloadSamplesMaxDepth: 10
-    }, document.getElementById('redoc-container'));
+    Redoc.init('/bundled.yaml', {}, document.getElementById('redoc-container'));
   </script>
 </body>
 </html>`;

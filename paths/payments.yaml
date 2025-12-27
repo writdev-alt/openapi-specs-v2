@@ -64,6 +64,9 @@
                 code:
                   type: string
                   example: '20001002'
+                message:
+                  type: string
+                  example: 'List of payment transactions retrieved successfully.'
                 data:
                   type: array
                   items:
@@ -72,11 +75,11 @@
                       trxId:
                         type: string
                         example: TRX20241101001
-                      trxReference:
+                      trxRef:
                         type: string
                         example: INV-2024-0001
                         nullable: true
-                      rrn:
+                      referenceNumber:
                         type: string
                         example: '123456789012'
                         nullable: true
@@ -113,82 +116,26 @@
                         format: date-time
                         example: '2024-11-01T10:15:00Z'
                         nullable: true
-                currentPage:
+                pageNumber:
                   type: integer
                   example: 1
-                firstPageUrl:
-                  type: string
-                  format: uri
-                  example: 'https://api.example.com/api/v2/payments?page=1'
-                from:
+                pageSize:
                   type: integer
-                  example: 1
-                lastPage:
-                  type: integer
-                  example: 5
-                lastPageUrl:
-                  type: string
-                  format: uri
-                  example: 'https://api.example.com/api/v2/payments?page=5'
-                links:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      url:
-                        type: string
-                        format: uri
-                        nullable: true
-                      label:
-                        type: string
-                      active:
-                        type: boolean
-                  example:
-                    -
-                      url: null
-                      label: '&laquo; Previous'
-                      active: false
-                    -
-                      url: 'https://api.example.com/api/v2/payments?page=1'
-                      label: '1'
-                      active: true
-                    -
-                      url: 'https://api.example.com/api/v2/payments?page=2'
-                      label: '2'
-                      active: false
-                    -
-                      url: 'https://api.example.com/api/v2/payments?page=2'
-                      label: 'Next &raquo;'
-                      active: false
-                nextPageUrl:
-                  type: string
-                  format: uri
-                  nullable: true
-                  example: 'https://api.example.com/api/v2/payments?page=2'
-                path:
-                  type: string
-                  example: '/api/v2/payments'
-                perPage:
-                  type: integer
-                  example: 20
-                prevPageUrl:
-                  type: string
-                  format: uri
-                  nullable: true
-                  example: null
-                to:
-                  type: integer
-                  example: 20
-                total:
-                  type: integer
-                  example: 100
+                  example: 2
+                hasNext:
+                  type: boolean
+                  example: true
+                hasPrev:
+                  type: boolean
+                  example: false
               example:
                 code: '20001002'
+                message: 'List of payment transactions retrieved successfully.'
                 data:
                   -
                     trxId: TRX20241101001
-                    trxReference: INV-2024-0001
-                    rrn: '123456789012'
+                    trxRef: INV-2024-0001
+                    referenceNumber: '123456789012'
                     amount: 150000
                     currencyCode: IDR
                     status: completed
@@ -200,8 +147,8 @@
                     paidAt: '2024-11-01T10:15:00Z'
                   -
                     trxId: TRX20241101002
-                    trxReference: INV-2024-0002
-                    rrn: null
+                    trxRef: INV-2024-0002
+                    referenceNumber: null
                     amount: 200000
                     currencyCode: IDR
                     status: pending
@@ -211,34 +158,10 @@
                     customerPhone: null
                     createdAt: '2024-11-01T11:00:00Z'
                     paidAt: null
-                currentPage: 1
-                firstPageUrl: 'https://api.example.com/api/v2/payments?page=1'
-                from: 1
-                lastPage: 5
-                lastPageUrl: 'https://api.example.com/api/v2/payments?page=5'
-                links:
-                  -
-                    url: null
-                    label: '&laquo; Previous'
-                    active: false
-                  -
-                    url: '/api/v2/payments?page=1'
-                    label: '1'
-                    active: true
-                  -
-                    url: '/api/v2/payments?page=2'
-                    label: '2'
-                    active: false
-                  -
-                    url: '/api/v2/payments?page=2'
-                    label: 'Next &raquo;'
-                    active: false
-                nextPageUrl: 'https://api.example.com/api/v2/payments?page=2'
-                path: '/api/v2/payments'
-                perPage: 20
-                prevPageUrl: null
-                to: 20
-                total: 100
+                pageNumber: 1
+                pageSize: 2
+                hasNext: true
+                hasPrev: false
       422:
         $ref: '#/components/responses/ValidationError'
       500:
@@ -274,22 +197,71 @@
               type: object
               example:
                 code: '20001001'
-                trxId: TRX20241101001
-                refTrx: INV-2024-0001
-                qrisContent: 00020101021226680012IDCO...
+                message: 'QRIS payment request created successfully.'
+                data:
+                  trxId: TRX20241101001
+                  trxRef: INV-2024-0001
+                  qrisContent: 00020101021226650013ID.NETZME.WWW01189360081401001083820215ID20240000002480303UKE51440014ID.CO.QRIS.WWW0215ID20240000002480303UKE5204413153033605405100005802ID5903RPD6008SIMEULUE61052389562690703A010812qris_invoice99420002000132377c254d3d0f4fbe8edce9b7d3d7a55a63047DD5
+                  createdAt: '2025-10-20T16:57:10.444+07:00'
+                  expiredAt: '2025-10-20T17:57:10.309+07:00'
+                  feeAmount: 70
+                  invoiceId: INV-M_JH8gxUJR17609542303095Up
+                  qrContent: 00020101021226650013ID.NETZME.WWW01189360081401001083820215ID20240000002480303UKE51440014ID.CO.QRIS.WWW0215ID20240000002480303UKE5204413153033605405100005802ID5903RPD6008SIMEULUE61052389562690703A010812qris_invoice99420002000132377c254d3d0f4fbe8edce9b7d3d7a55a63047DD5
+                  statistic: []
+                  terminalId: A01
+                  totalAmount: 10000
+                  merchantLocation: SIMEULUE
               properties:
                 code:
                   type: string
                   example: '20001001'
-                trxId:
+                message:
                   type: string
-                  example: TRX20241101001
-                refTrx:
-                  type: string
-                  example: INV-2024-0001
-                qrisContent:
-                  type: string
-                  example: 00020101021226680012IDCO...
+                  example: 'QRIS payment request created successfully.'
+                data:
+                  type: object
+                  properties:
+                    trxId:
+                      type: string
+                      example: TRX20241101001
+                    trxRef:
+                      type: string
+                      example: INV-2024-0001
+                      nullable: true
+                    qrisContent:
+                      type: string
+                      example: 00020101021226650013ID.NETZME.WWW01189360081401001083820215ID20240000002480303UKE51440014ID.CO.QRIS.WWW0215ID20240000002480303UKE5204413153033605405100005802ID5903RPD6008SIMEULUE61052389562690703A010812qris_invoice99420002000132377c254d3d0f4fbe8edce9b7d3d7a55a63047DD5
+                      nullable: true
+                    createdAt:
+                      type: string
+                      format: date-time
+                      example: '2025-10-20T16:57:10.444+07:00'
+                    expiredAt:
+                      type: string
+                      format: date-time
+                      example: '2025-10-20T17:57:10.309+07:00'
+                    feeAmount:
+                      type: integer
+                      example: 70
+                    invoiceId:
+                      type: string
+                      example: INV-M_JH8gxUJR17609542303095Up
+                    qrContent:
+                      type: string
+                      example: 00020101021226650013ID.NETZME.WWW01189360081401001083820215ID20240000002480303UKE51440014ID.CO.QRIS.WWW0215ID20240000002480303UKE5204413153033605405100005802ID5903RPD6008SIMEULUE61052389562690703A010812qris_invoice99420002000132377c254d3d0f4fbe8edce9b7d3d7a55a63047DD5
+                    statistic:
+                      type: array
+                      items: {}
+                      example: []
+                    terminalId:
+                      type: string
+                      example: A01
+                    totalAmount:
+                      type: integer
+                      example: 10000
+                    merchantLocation:
+                      type: string
+                      example: SIMEULUE
       422:
         $ref: '#/components/responses/ValidationError'
       500:
@@ -303,7 +275,7 @@
           schema:
             type: object
             properties:
-              refTrx:
+              trxRef:
                 type: string
                 description: 'Unique merchant transaction reference.'
                 example: INV-2024-0001
@@ -344,7 +316,7 @@
                 example: '+628123456789'
                 nullable: true
             required:
-              - refTrx
+              - trxRef
               - currencyCode
               - amount
 /api/v2/initiate-payment-virtual-account:
@@ -376,44 +348,53 @@
               type: object
               example:
                 code: '20101001'
-                trxId: TRX20241101002
-                refTrx: INV-2024-0002
-                virtualAccountNumber: '0141234567890123456'
-                bankCode: '014'
-                bankName: BCA
-                expirationTime: 1440
-                expirationAt: '2024-11-02T10:00:00Z'
+                message: 'Virtual account payment request created successfully.'
+                data:
+                  trxId: TRX20241101002
+                  trxRef: INV-2024-0002
+                  virtualAccountNumber: '0141234567890123456'
+                  bankCode: '014'
+                  bankName: BCA
+                  expirationTime: 1440
+                  expirationAt: '2024-11-02T10:00:00Z'
               properties:
                 code:
                   type: string
                   example: '20101001'
-                trxId:
+                message:
                   type: string
-                  example: TRX20241101002
-                refTrx:
-                  type: string
-                  example: INV-2024-0002
-                virtualAccountNumber:
-                  type: string
-                  example: '0141234567890123456'
-                  description: 'Virtual account number that customers can use to make payment'
-                bankCode:
-                  type: string
-                  example: '014'
-                  description: 'Bank code identifier'
-                bankName:
-                  type: string
-                  example: BCA
-                  description: 'Full name of the bank'
-                expirationTime:
-                  type: integer
-                  example: 1440
-                  description: 'Expiry time for the virtual account in minutes'
-                expirationAt:
-                  type: string
-                  format: date-time
-                  example: '2024-11-02T10:00:00Z'
-                  description: 'Expiration date and time for the virtual account'
+                  example: 'Virtual account payment request created successfully.'
+                data:
+                  type: object
+                  properties:
+                    trxId:
+                      type: string
+                      example: TRX20241101002
+                    trxRef:
+                      type: string
+                      example: INV-2024-0002
+                      nullable: true
+                    virtualAccountNumber:
+                      type: string
+                      example: '0141234567890123456'
+                      nullable: true
+                    bankCode:
+                      type: string
+                      example: '014'
+                      nullable: true
+                    bankName:
+                      type: string
+                      example: BCA
+                      nullable: true
+                    expirationTime:
+                      type: integer
+                      example: 1440
+                      nullable: true
+                    expirationAt:
+                      type: string
+                      format: date-time
+                      example: '2024-11-02T10:00:00Z'
+                      nullable: true
       422:
         $ref: '#/components/responses/ValidationError'
       500:
@@ -427,7 +408,7 @@
           schema:
             type: object
             properties:
-              refTrx:
+              trxRef:
                 type: string
                 description: 'Unique merchant transaction reference.'
                 example: INV-2024-0002
@@ -482,7 +463,7 @@
                 example: 'budi.santoso@example.com'
                 nullable: true
             required:
-              - refTrx
+              - trxRef
               - bankCode
               - currencyCode
               - amount
@@ -515,53 +496,62 @@
               type: object
               example:
                 code: '20101002'
-                trxId: TRX20241101003
-                refTrx: INV-2024-0003
-                bankCode: '014'
-                bankName: BCA
-                accountNumber: '1234567890'
-                accountHolderName: 'PT Merchant ABC'
-                amount: 300000
-                currencyCode: IDR
-                transferInstructions: 'Please transfer the exact amount to the account above. Include your reference number in the transfer notes.'
+                message: 'Bank transfer payment request created successfully.'
+                data:
+                  trxId: TRX20241101003
+                  trxRef: INV-2024-0003
+                  bankCode: '014'
+                  bankName: BCA
+                  accountNumber: '1234567890'
+                  accountHolderName: 'PT Merchant ABC'
+                  amount: 300000
+                  currencyCode: IDR
+                  transferInstructions: 'Please transfer the exact amount to the account above. Include your reference number in the transfer notes.'
               properties:
                 code:
                   type: string
                   example: '20101002'
-                trxId:
+                message:
                   type: string
-                  example: TRX20241101003
-                refTrx:
-                  type: string
-                  example: INV-2024-0003
-                bankCode:
-                  type: string
-                  example: '014'
-                  description: 'Bank code identifier'
-                bankName:
-                  type: string
-                  example: BCA
-                  description: 'Full name of the bank'
-                accountNumber:
-                  type: string
-                  example: '1234567890'
-                  description: 'Merchant bank account number for customer transfer'
-                accountHolderName:
-                  type: string
-                  example: 'PT Merchant ABC'
-                  description: 'Account holder name'
-                amount:
-                  type: number
-                  example: 300000
-                  description: 'Amount to be transferred (must match exactly)'
-                currencyCode:
-                  type: string
-                  example: IDR
-                  description: 'Currency code'
-                transferInstructions:
-                  type: string
-                  example: 'Please transfer the exact amount to the account above. Include your reference number in the transfer notes.'
-                  description: 'Instructions for the customer on how to complete the transfer'
+                  example: 'Bank transfer payment request created successfully.'
+                data:
+                  type: object
+                  properties:
+                    trxId:
+                      type: string
+                      example: TRX20241101003
+                    trxRef:
+                      type: string
+                      example: INV-2024-0003
+                      nullable: true
+                    bankCode:
+                      type: string
+                      example: '014'
+                      nullable: true
+                    bankName:
+                      type: string
+                      example: BCA
+                      nullable: true
+                    accountNumber:
+                      type: string
+                      example: '1234567890'
+                      nullable: true
+                    accountHolderName:
+                      type: string
+                      example: 'PT Merchant ABC'
+                      nullable: true
+                    amount:
+                      type: number
+                      example: 300000
+                      nullable: true
+                    currencyCode:
+                      type: string
+                      example: IDR
+                      nullable: true
+                    transferInstructions:
+                      type: string
+                      example: 'Please transfer the exact amount to the account above. Include your reference number in the transfer notes.'
+                      nullable: true
       422:
         $ref: '#/components/responses/ValidationError'
       500:
@@ -575,7 +565,7 @@
           schema:
             type: object
             properties:
-              refTrx:
+              trxRef:
                 type: string
                 description: 'Unique merchant transaction reference.'
                 example: INV-2024-0003
@@ -622,7 +612,7 @@
                 example: 'budi.santoso@example.com'
                 nullable: true
             required:
-              - refTrx
+              - trxRef
               - bankCode
               - currencyCode
               - amount

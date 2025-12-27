@@ -95,7 +95,7 @@ Transaction status appears in several API responses:
   "data": {
     "trx_id": "TRX20241101001",
     "trx_ref": "INV-2024-0001",
-    "rrn": "123456789012",
+    "referenceNumber": "123456789012",
     "amount": 150000,
     "currency_code": "IDR",
     "status": "completed"
