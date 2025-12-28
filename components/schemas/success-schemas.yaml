@@ -1,0 +1,53 @@
+schemas:
+  SuccessMessage:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: string
+        description: 'Response code following the formula: HTTP status code + service code + case code. Example: 20001001 (200 = HTTP status, 01 = service code, 001 = case code)'
+        example: '20001001'
+      message:
+        type: string
+        description: 'Success message.'
+        example: 'Withdrawal has been created.'
+      status:
+        type: string
+        description: 'Status indicator (optional).'
+        example: 'COMPLETED'
+    example:
+      code: '20001001'
+      message: 'Withdrawal has been created.'
+  
+  SuccessWithData:
+    type: object
+    required:
+      - code
+      - message
+      - data
+    properties:
+      code:
+        type: string
+        description: 'Response code following the formula: HTTP status code + service code + case code. Example: 20001001 (200 = HTTP status, 01 = service code, 001 = case code)'
+        example: '20001001'
+      message:
+        type: string
+        description: 'Success message.'
+        example: 'Account information retrieved successfully'
+      status:
+        type: string
+        description: 'Status indicator (optional).'
+        example: 'COMPLETED'
+      data:
+        type: object
+        description: 'Response data payload.'
+        additionalProperties: true
+    example:
+      code: '20001001'
+      message: 'Account information retrieved successfully'
+      data:
+        minLimit: 50000
+        maxLimit: 50000000
+

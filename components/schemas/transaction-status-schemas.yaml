@@ -1,0 +1,31 @@
+schemas:
+  PaymentTransactionStatus:
+    type: string
+    enum:
+      - pending
+      - completed
+      - expired
+    description: |
+      Transaction status values for payments (QRIS):
+      - **pending** - Payment has been created and is waiting to be processed
+      - **completed** - Payment has been successfully completed
+      - **expired** - Payment has expired and is no longer valid
+    example: completed
+  
+  WithdrawalTransactionStatus:
+    type: string
+    enum:
+      - awaiting_fi_process
+      - awaiting_pg_process
+      - completed
+      - failed
+      - refunded
+    description: |
+      Transaction status values for withdrawals:
+      - **awaiting_fi_process** - Transaction is waiting for financial institution processing
+      - **awaiting_pg_process** - Transaction is waiting for payment gateway processing
+      - **completed** - Transaction has been successfully completed
+      - **failed** - Transaction processing failed
+      - **refunded** - Transaction has been refunded
+    example: completed
+

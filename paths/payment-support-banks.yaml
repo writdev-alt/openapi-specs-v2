@@ -1,0 +1,81 @@
+/api/v2/banks:
+  get:
+    summary: 'List supported banks.'
+    operationId: listBanks
+    description: 'Retrieve the list of supported banks for payments and withdrawals. Returns banks with their IDs and names. Use bank codes for virtual account payments and withdrawal account setup.'
+    parameters:
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+    responses:
+      200:
+        description: 'List of supported banks retrieved successfully. Returns an array of banks with bank ID and bank name. These banks can be used for virtual account payments and withdrawal account setup.'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: '20004008'
+                message:
+                  type: string
+                  example: 'List of supported banks retrieved successfully.'
+                data:
+                  type: array
+                  example:
+                    -
+                      bankId: '014'
+                      bankName: BCA
+                    -
+                      bank_id: '008'
+                      bank_name: Bank Mandiri
+                    -
+                      bank_id: '009'
+                      bank_name: Bank BNI
+                  items:
+                    type: object
+                    properties:
+                      bankId:
+                        type: string
+                        example: '014'
+                        description: 'Bank code identifier. Use this code when creating virtual account payments via `/api/v2/initiate-payment-virtual-account` or withdrawal accounts.'
+                      bankName:
+                        type: string
+                        example: BCA
+                        description: 'Full name of the bank'
+              example:
+                code: '20004008'
+                message: 'List of supported banks retrieved successfully.'
+                data:
+                  -
+                    bank_id: '014'
+                    bank_name: BCA
+                  -
+                    bankId: '008'
+                    bankName: Bank Mandiri
+                  -
+                    bankId: '009'
+                    bankName: Bank BNI
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
+      500:
+        $ref: '#/components/responses/ServerError'
+    tags:
+      - Banks
+

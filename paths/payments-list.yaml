@@ -1,0 +1,177 @@
+/api/v2/payments:
+  get:
+    summary: 'List payment transactions.'
+    operationId: listPayments
+    description: 'Retrieve a list of payment transactions for the authenticated merchant. Returns payment transactions with their status, amounts, and transaction details.'
+    parameters:
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+      -
+        in: query
+        name: status
+        description: 'Filter payments by status (pending, completed, failed, canceled, expired).'
+        required: false
+        schema:
+          type: string
+          enum:
+            - pending
+            - completed
+            - failed
+            - canceled
+            - expired
+        example: completed
+      -
+        in: query
+        name: page
+        description: 'Page number for pagination. Default is 1.'
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+        example: 1
+      -
+        in: query
+        name: per_page
+        description: 'Number of payments per page. Default is 20, maximum is 100.'
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+        example: 20
+    responses:
+      200:
+        description: 'List of payment transactions retrieved successfully. Returns an array of payment transactions with their details.'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: '20001002'
+                message:
+                  type: string
+                  example: 'List of payment transactions retrieved successfully.'
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      trxId:
+                        type: string
+                        example: TRX20241101001
+                      trxRef:
+                        type: string
+                        example: INV-2024-0001
+                        nullable: true
+                      referenceNumber:
+                        type: string
+                        example: '123456789012'
+                        nullable: true
+                      amount:
+                        type: integer
+                        example: 150000
+                      currencyCode:
+                        type: string
+                        example: IDR
+                      status:
+                        $ref: '#/components/schemas/PaymentTransactionStatus'
+                      paymentMethod:
+                        type: string
+                        example: QRIS
+                        nullable: true
+                      description:
+                        type: string
+                        example: QRIS payment for invoice INV-2024-0001
+                        nullable: true
+                      customerName:
+                        type: string
+                        example: Budi Santoso
+                        nullable: true
+                      customerPhone:
+                        type: string
+                        example: '+628123456789'
+                        nullable: true
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: '2024-11-01T10:00:00Z'
+                      paidAt:
+                        type: string
+                        format: date-time
+                        example: '2024-11-01T10:15:00Z'
+                        nullable: true
+                pageNumber:
+                  type: integer
+                  example: 1
+                pageSize:
+                  type: integer
+                  example: 2
+                hasNext:
+                  type: boolean
+                  example: true
+                hasPrev:
+                  type: boolean
+                  example: false
+              example:
+                code: '20001002'
+                message: 'List of payment transactions retrieved successfully.'
+                data:
+                  -
+                    trxId: TRX20241101001
+                    trxRef: INV-2024-0001
+                    referenceNumber: '123456789012'
+                    amount: 150000
+                    currencyCode: IDR
+                    status: completed
+                    paymentMethod: QRIS
+                    description: QRIS payment for invoice INV-2024-0001
+                    customerName: Budi Santoso
+                    customerPhone: '+628123456789'
+                    createdAt: '2024-11-01T10:00:00Z'
+                    paidAt: '2024-11-01T10:15:00Z'
+                  -
+                    trxId: TRX20241101002
+                    trxRef: INV-2024-0002
+                    referenceNumber: null
+                    amount: 200000
+                    currencyCode: IDR
+                    status: pending
+                    paymentMethod: QRIS
+                    description: QRIS payment for invoice INV-2024-0002
+                    customerName: null
+                    customerPhone: null
+                    createdAt: '2024-11-01T11:00:00Z'
+                    paidAt: null
+                pageNumber: 1
+                pageSize: 2
+                hasNext: true
+                hasPrev: false
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
+      422:
+        $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
+      500:
+        $ref: '#/components/responses/ServerError'
+    tags:
+      - Payments
+

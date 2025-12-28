@@ -3,13 +3,10 @@
   "version": "1.0.0",
   "description": "WRPay API OpenAPI Specification",
   "scripts": {
-    "merge": "node scripts/merge-paths.js",
-    "bundle": "npm run merge && redocly bundle openapi.yaml -o bundled.yaml",
+    "bundle": "redocly bundle openapi.yaml -o bundled.yaml --force",
     "lint": "redocly lint openapi.yaml --extends recommended",
-    "preview": "npm run bundle && node scripts/preview-redoc.js",
-    "build": "npm run bundle && npm run generate:favicons && node scripts/build-html.js",
-    "build:html": "node scripts/build-html.js",
-    "generate:favicons": "node scripts/generate-favicons.js"
+    "preview": "redocly preview-docs openapi.yaml",
+    "build": "redocly build-docs openapi.yaml -o dist/index.html"
   },
   "devDependencies": {
     "@redocly/cli": "^2.12.0",

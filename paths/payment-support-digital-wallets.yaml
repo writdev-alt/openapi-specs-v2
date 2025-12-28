@@ -1,0 +1,81 @@
+/api/v2/digital-wallets:
+  get:
+    summary: 'List supported digital wallets.'
+    operationId: listDigitalWallets
+    description: 'Retrieve the list of supported digital wallets for payments and withdrawals. Returns wallets with their IDs and names. Use wallet IDs for payment processing and withdrawal account setup.'
+    parameters:
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+    responses:
+      200:
+        description: 'List of supported digital wallets retrieved successfully. Returns an array of wallets with wallet ID and wallet name. These wallets can be used for payment processing and withdrawal account setup.'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: '20004009'
+                message:
+                  type: string
+                  example: 'List of supported digital wallets retrieved successfully.'
+                data:
+                  type: array
+                  example:
+                    -
+                      walletId: GOPAY
+                      walletName: GoPay
+                    -
+                      wallet_id: OVO
+                      wallet_name: OVO
+                    -
+                      wallet_id: DANA
+                      wallet_name: DANA
+                  items:
+                    type: object
+                    properties:
+                      walletId:
+                        type: string
+                        example: GOPAY
+                        description: 'Digital wallet code identifier. Use this ID for payment processing or withdrawal account setup.'
+                      walletName:
+                        type: string
+                        example: GoPay
+                        description: 'Full name of the digital wallet'
+              example:
+                code: '20004009'
+                message: 'List of supported digital wallets retrieved successfully.'
+                data:
+                  -
+                    wallet_id: GOPAY
+                    wallet_name: GoPay
+                  -
+                    wallet_id: OVO
+                    wallet_name: OVO
+                  -
+                    wallet_id: DANA
+                    wallet_name: DANA
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
+      500:
+        $ref: '#/components/responses/ServerError'
+    tags:
+      - Digital Wallets
+

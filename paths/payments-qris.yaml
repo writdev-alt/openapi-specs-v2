@@ -1,0 +1,158 @@
+/api/v2/initiate-payment-qris:
+  post:
+    summary: 'Process QRIS payment request.'
+    operationId: processQRISPaymentRequest
+    description: "Create a QRIS (Quick Response Code Indonesian Standard) payment request that is routed\nthrough the Netzme payment gateway. The response contains the QR data needed for rendering\nthe QR code along with transaction identifiers."
+    parameters:
+      -
+        in: header
+        name: X-API-KEY
+        description: 'Merchant public API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-API-KEY}'
+        schema:
+          type: string
+      -
+        in: header
+        name: X-MERCHANT-KEY
+        description: 'Merchant secret API key for authentication. Obtain from the merchant dashboard under API Access.'
+        example: '{X-MERCHANT-KEY}'
+        schema:
+          type: string
+    responses:
+      200:
+        description: 'QRIS payment request created successfully. Returns transaction ID, reference, and QR code content.'
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                code: '20001001'
+                message: 'QRIS payment request created successfully.'
+                data:
+                  trxId: TRX20241101001
+                  trxRef: INV-2024-0001
+                  qrisContent: 00020101021226650013ID.NETZME.WWW01189360081401001083820215ID20240000002480303UKE51440014ID.CO.QRIS.WWW0215ID20240000002480303UKE5204413153033605405100005802ID5903RPD6008SIMEULUE61052389562690703A010812qris_invoice99420002000132377c254d3d0f4fbe8edce9b7d3d7a55a63047DD5
+                  createdAt: '2025-10-20T16:57:10.444+07:00'
+                  expiredAt: '2025-10-20T17:57:10.309+07:00'
+                  feeAmount: 70
+                  invoiceId: INV-M_JH8gxUJR17609542303095Up
+                  qrContent: 00020101021226650013ID.NETZME.WWW01189360081401001083820215ID20240000002480303UKE51440014ID.CO.QRIS.WWW0215ID20240000002480303UKE5204413153033605405100005802ID5903RPD6008SIMEULUE61052389562690703A010812qris_invoice99420002000132377c254d3d0f4fbe8edce9b7d3d7a55a63047DD5
+                  statistic: []
+                  terminalId: A01
+                  totalAmount: 10000
+                  merchantLocation: SIMEULUE
+              properties:
+                code:
+                  type: string
+                  example: '20001001'
+                message:
+                  type: string
+                  example: 'QRIS payment request created successfully.'
+                data:
+                  type: object
+                  properties:
+                    trxId:
+                      type: string
+                      example: TRX20241101001
+                    trxRef:
+                      type: string
+                      example: INV-2024-0001
+                      nullable: true
+                    qrisContent:
+                      type: string
+                      example: 00020101021226650013ID.NETZME.WWW01189360081401001083820215ID20240000002480303UKE51440014ID.CO.QRIS.WWW0215ID20240000002480303UKE5204413153033605405100005802ID5903RPD6008SIMEULUE61052389562690703A010812qris_invoice99420002000132377c254d3d0f4fbe8edce9b7d3d7a55a63047DD5
+                      nullable: true
+                    createdAt:
+                      type: string
+                      format: date-time
+                      example: '2025-10-20T16:57:10.444+07:00'
+                    expiredAt:
+                      type: string
+                      format: date-time
+                      example: '2025-10-20T17:57:10.309+07:00'
+                    feeAmount:
+                      type: integer
+                      example: 70
+                    invoiceId:
+                      type: string
+                      example: INV-M_JH8gxUJR17609542303095Up
+                    qrContent:
+                      type: string
+                      example: 00020101021226650013ID.NETZME.WWW01189360081401001083820215ID20240000002480303UKE51440014ID.CO.QRIS.WWW0215ID20240000002480303UKE5204413153033605405100005802ID5903RPD6008SIMEULUE61052389562690703A010812qris_invoice99420002000132377c254d3d0f4fbe8edce9b7d3d7a55a63047DD5
+                    statistic:
+                      type: array
+                      items: {}
+                      example: []
+                    terminalId:
+                      type: string
+                      example: A01
+                    totalAmount:
+                      type: integer
+                      example: 10000
+                    merchantLocation:
+                      type: string
+                      example: SIMEULUE
+      401:
+        $ref: '#/components/responses/Unauthorized'
+      403:
+        $ref: '#/components/responses/Forbidden'
+      422:
+        $ref: '#/components/responses/ValidationError'
+      429:
+        $ref: '#/components/responses/TooManyRequests'
+      500:
+        $ref: '#/components/responses/ServerError'
+    tags:
+      - Payments
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              trxRef:
+                type: string
+                description: 'Unique merchant transaction reference.'
+                example: INV-2024-0001
+                nullable: false
+              currencyCode:
+                type: string
+                description: 'Must be `IDR`.'
+                example: IDR
+                nullable: false
+              amount:
+                type: number
+                description: 'Total amount to be charged to the customer.'
+                example: 150000.5
+                nullable: false
+              expirationTime:
+                type: integer
+                description: 'Expiry time for the QR code in minutes (30 - 1440).'
+                example: 60
+                nullable: false
+              note:
+                type: string
+                description: 'A short internal note about the transaction.'
+                example: 'QRIS top-up'
+                nullable: true
+              description:
+                type: string
+                description: 'A customer-facing description that will appear on receipts.'
+                example: 'QRIS payment for invoice INV-2024-0001'
+                nullable: true
+              customerName:
+                type: string
+                description: 'Customer full name.'
+                example: 'Budi Santoso'
+                nullable: true
+              customerPhone:
+                type: string
+                description: 'Customer phone number in international format.'
+                example: '+628123456789'
+                nullable: true
+            required:
+              - trxRef
+              - currencyCode
+              - amount
+
