@@ -92,16 +92,6 @@
                     merchantLocation:
                       type: string
                       example: SIMEULUE
-      401:
-        $ref: '#/components/responses/Unauthorized'
-      403:
-        $ref: '#/components/responses/Forbidden'
-      422:
-        $ref: '#/components/responses/ValidationError'
-      429:
-        $ref: '#/components/responses/TooManyRequests'
-      500:
-        $ref: '#/components/responses/ServerError'
     tags:
       - Payments
     requestBody:

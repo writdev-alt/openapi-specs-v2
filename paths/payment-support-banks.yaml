@@ -68,14 +68,6 @@
                   -
                     bankId: '009'
                     bankName: Bank BNI
-      401:
-        $ref: '#/components/responses/Unauthorized'
-      403:
-        $ref: '#/components/responses/Forbidden'
-      429:
-        $ref: '#/components/responses/TooManyRequests'
-      500:
-        $ref: '#/components/responses/ServerError'
     tags:
       - Banks
 

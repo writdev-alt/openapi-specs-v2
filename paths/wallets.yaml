@@ -62,14 +62,6 @@
                     balance: 2500000
                     holdBalance: 0
                     availableBalance: 2500000
-      401:
-        $ref: '#/components/responses/Unauthorized'
-      403:
-        $ref: '#/components/responses/Forbidden'
-      429:
-        $ref: '#/components/responses/TooManyRequests'
-      500:
-        $ref: '#/components/responses/ServerError'
     tags:
       - Wallets
 '/api/v2/wallets/{walletId}':
@@ -133,18 +125,6 @@
                   balance: 2500000
                   holdBalance: 0
                   availableBalance: 2500000
-      401:
-        $ref: '#/components/responses/Unauthorized'
-      403:
-        $ref: '#/components/responses/Forbidden'
-      404:
-        $ref: '#/components/responses/NotFound'
-      422:
-        $ref: '#/components/responses/ValidationError'
-      429:
-        $ref: '#/components/responses/TooManyRequests'
-      500:
-        $ref: '#/components/responses/ServerError'
     tags:
       - Wallets
   parameters:

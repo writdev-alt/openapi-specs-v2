@@ -1,6 +1,21 @@
+extends:
+  - recommended
+
 apis:
   main:
     root: ./openapi.yaml
+
+rules:
+  operation-operationId: error
+  operation-description: warn
+  operation-summary: error
+  path-params-defined: error
+  parameter-description: warn
+  tag-description: warn
+  no-unused-components: warn
+  no-identical-paths: error
+  no-ambiguous-paths: error
+  path-declaration-must-exist: error
 
 resolve:
   yaml:

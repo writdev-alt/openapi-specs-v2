@@ -65,7 +65,12 @@
                       type: string
                       example: IDR
                     status:
-                      $ref: '#/components/schemas/PaymentTransactionStatus'
+                      type: string
+                      enum:
+                        - pending
+                        - completed
+                        - expired
+                      example: completed
                     customerName:
                       type: string
                       example: Budi Santoso
@@ -102,18 +107,6 @@
                       format: date-time
                       example: '2024-11-01T10:15:00Z'
                       nullable: true
-      401:
-        $ref: '#/components/responses/Unauthorized'
-      403:
-        $ref: '#/components/responses/Forbidden'
-      404:
-        $ref: '#/components/responses/NotFound'
-      422:
-        $ref: '#/components/responses/ValidationError'
-      429:
-        $ref: '#/components/responses/TooManyRequests'
-      500:
-        $ref: '#/components/responses/ServerError'
     tags:
       - Transactions
   parameters:

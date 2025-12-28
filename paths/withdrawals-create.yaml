@@ -92,7 +92,14 @@
                       example: IDR
                       description: 'Currency code (e.g., "IDR")'
                     status:
-                      $ref: '#/components/schemas/WithdrawalTransactionStatus'
+                      type: string
+                      enum:
+                        - awaiting_fi_process
+                        - awaiting_pg_process
+                        - completed
+                        - failed
+                        - refunded
+                      example: completed
                       description: 'Current status of the withdrawal transaction (typically "pending" for newly created withdrawals)'
                     withdrawalMethod:
                       type: string
@@ -170,16 +177,6 @@
                       example: null
                       nullable: true
                       description: 'Timestamp when the withdrawal was canceled (null if not canceled)'
-      401:
-        $ref: '#/components/responses/Unauthorized'
-      403:
-        $ref: '#/components/responses/Forbidden'
-      422:
-        $ref: '#/components/responses/ValidationError'
-      429:
-        $ref: '#/components/responses/TooManyRequests'
-      500:
-        $ref: '#/components/responses/ServerError'
     tags:
       - Withdrawals
     requestBody:

@@ -103,7 +103,14 @@
                         example: IDR
                         description: 'Currency code (e.g., "IDR")'
                       status:
-                        $ref: '#/components/schemas/WithdrawalTransactionStatus'
+                        type: string
+                        enum:
+                          - awaiting_fi_process
+                          - awaiting_pg_process
+                          - completed
+                          - failed
+                          - refunded
+                        example: completed
                       withdrawalMethod:
                         type: string
                         example: Bank Transfer
@@ -255,16 +262,6 @@
                 pageSize: 20
                 hasNext: true
                 hasPrev: false
-      401:
-        $ref: '#/components/responses/Unauthorized'
-      403:
-        $ref: '#/components/responses/Forbidden'
-      422:
-        $ref: '#/components/responses/ValidationError'
-      429:
-        $ref: '#/components/responses/TooManyRequests'
-      500:
-        $ref: '#/components/responses/ServerError'
     tags:
       - Withdrawals
 

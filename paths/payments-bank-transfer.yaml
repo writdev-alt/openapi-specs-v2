@@ -83,16 +83,6 @@
                       type: string
                       example: 'Please transfer the exact amount to the account above. Include your reference number in the transfer notes.'
                       nullable: true
-      401:
-        $ref: '#/components/responses/Unauthorized'
-      403:
-        $ref: '#/components/responses/Forbidden'
-      422:
-        $ref: '#/components/responses/ValidationError'
-      429:
-        $ref: '#/components/responses/TooManyRequests'
-      500:
-        $ref: '#/components/responses/ServerError'
     tags:
       - Payments
     requestBody:

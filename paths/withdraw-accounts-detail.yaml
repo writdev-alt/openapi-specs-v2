@@ -67,16 +67,6 @@
                         currency:
                           type: string
                           example: IDR
-      401:
-        $ref: '#/components/responses/Unauthorized'
-      403:
-        $ref: '#/components/responses/Forbidden'
-      404:
-        $ref: '#/components/responses/NotFound'
-      429:
-        $ref: '#/components/responses/TooManyRequests'
-      500:
-        $ref: '#/components/responses/ServerError'
     tags:
       - 'Withdraw Accounts'
   put:
@@ -147,16 +137,6 @@
                         currency:
                           type: string
                           example: IDR
-      401:
-        $ref: '#/components/responses/Unauthorized'
-      403:
-        $ref: '#/components/responses/Forbidden'
-      422:
-        $ref: '#/components/responses/ValidationError'
-      429:
-        $ref: '#/components/responses/TooManyRequests'
-      500:
-        $ref: '#/components/responses/ServerError'
     tags:
       - 'Withdraw Accounts'
     requestBody:
@@ -253,8 +233,6 @@
                 message:
                   type: string
                   example: 'Withdraw account deleted successfully'
-      404:
-        $ref: '#/components/responses/NotFound'
     tags:
       - 'Withdraw Accounts'
   parameters:

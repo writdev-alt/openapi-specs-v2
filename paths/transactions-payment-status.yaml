@@ -67,7 +67,12 @@
                       type: string
                       example: IDR
                     status:
-                      $ref: '#/components/schemas/PaymentTransactionStatus'
+                      type: string
+                      enum:
+                        - pending
+                        - completed
+                        - expired
+                      example: completed
                     paymentMethod:
                       type: string
                       example: QRIS
@@ -84,18 +89,6 @@
                       type: string
                       example: '+628123456789'
                       nullable: true
-      401:
-        $ref: '#/components/responses/Unauthorized'
-      403:
-        $ref: '#/components/responses/Forbidden'
-      404:
-        $ref: '#/components/responses/NotFound'
-      422:
-        $ref: '#/components/responses/ValidationError'
-      429:
-        $ref: '#/components/responses/TooManyRequests'
-      500:
-        $ref: '#/components/responses/ServerError'
     tags:
       - Transactions
     requestBody:
