@@ -74,6 +74,94 @@
                       format: date-time
                       example: '2024-11-02T10:00:00Z'
                       nullable: true
+      401:
+        description: 'Unauthorized - Authentication required.'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: '40101001'
+                message:
+                  type: string
+                  example: 'Unauthorized'
+              example:
+                code: '40101001'
+                message: 'Unauthorized'
+      403:
+        description: 'Forbidden - Access denied, insufficient permissions.'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: '40301001'
+                message:
+                  type: string
+                  example: 'Access denied. You do not have permission to perform this action.'
+                success:
+                  type: boolean
+                  example: false
+              example:
+                code: '40301001'
+                message: 'Access denied. You do not have permission to perform this action.'
+                success: false
+      422:
+        description: 'Validation error - The request data is invalid.'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: '42201001'
+                message:
+                  type: string
+                  example: 'The given data was invalid.'
+                errors:
+                  type: object
+                  additionalProperties:
+                    type: array
+                    items:
+                      type: string
+                  example:
+                    amount:
+                      - 'The amount field is required.'
+                    currencyCode:
+                      - 'Invalid or mismatched currency code.'
+              example:
+                code: '42201001'
+                message: 'The given data was invalid.'
+                errors:
+                  amount:
+                    - 'The amount field is required.'
+                  currencyCode:
+                    - 'Invalid or mismatched currency code.'
+      429:
+        description: 'Too Many Requests - Rate limit exceeded.'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: '42901001'
+                message:
+                  type: string
+                  example: 'Too many requests. Please try again later.'
+                retryAfter:
+                  type: integer
+                  example: 180
+              example:
+                code: '42901001'
+                message: 'Too many requests. Please try again later.'
+                retryAfter: 180
     tags:
       - Payments
     requestBody:

@@ -59,6 +59,62 @@
                     id: 1
                     name: 'Bank Transfer'
                     currency: IDR
+      401:
+        description: 'Unauthorized - Authentication required.'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: '40101001'
+                message:
+                  type: string
+                  example: 'Unauthorized'
+              example:
+                code: '40101001'
+                message: 'Unauthorized'
+      403:
+        description: 'Forbidden - Access denied, insufficient permissions.'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: '40301001'
+                message:
+                  type: string
+                  example: 'Access denied. You do not have permission to perform this action.'
+                success:
+                  type: boolean
+                  example: false
+              example:
+                code: '40301001'
+                message: 'Access denied. You do not have permission to perform this action.'
+                success: false
+      429:
+        description: 'Too Many Requests - Rate limit exceeded.'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: '42901001'
+                message:
+                  type: string
+                  example: 'Too many requests. Please try again later.'
+                retryAfter:
+                  type: integer
+                  example: 180
+              example:
+                code: '42901001'
+                message: 'Too many requests. Please try again later.'
+                retryAfter: 180
     tags:
       - 'Withdraw Accounts'
 

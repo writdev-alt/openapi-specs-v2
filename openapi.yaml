@@ -31,6 +31,8 @@ tags:
     description: Endpoints for managing withdrawal account configurations
   - name: Withdrawals
     description: Endpoints for creating and managing withdrawal requests
+  - name: Webhooks
+    description: Webhook endpoints that WRPay will POST to when events occur. Configure your webhook URL in the merchant dashboard.
 paths:
   /api/v2/payments:
     $ref: './paths/payments-list.yaml#/~1api~1v2~1payments'
@@ -72,10 +74,12 @@ paths:
     $ref: './paths/withdrawals-list.yaml#/~1api~1v2~1withdrawals'
   /api/v2/withdraw:
     $ref: './paths/withdrawals-create.yaml#/~1api~1v2~1withdraw'
+  /webhooks/payment:
+    $ref: './paths/webhooks-payment.yaml#/~1webhooks~1payment'
+  /webhooks/withdrawal:
+    $ref: './paths/webhooks-withdrawal.yaml#/~1webhooks~1withdrawal'
 components:
   securitySchemes:
     $ref: ./components/security.yaml#/securitySchemes
-  responses:
-    $ref: ./components/responses.yaml#/responses
   schemas:
     $ref: ./components/schemas.yaml#/schemas
